@@ -7,7 +7,10 @@ const projects = await getCollection('projects');
 ---
 
 <Layout title="Prosjekter" description="Ting vi har jobbet på">
-  <HeroSection title="Prosjekter" preamble="Her er en samling av prosjekter og erfaringer vi har med oss inn i Kynd, eller som vi jobbet med for Kynd sine – våre – kunder. " />
+  <HeroSection
+    title="Prosjekter"
+    preamble="Her er en samling av prosjekter og erfaringer vi har med oss inn i Kynd, eller som vi jobbet med for Kynd sine – våre – kunder. "
+  />
   <div class="project-grid">
     {
       projects.map((project) => (
