@@ -9,7 +9,7 @@ const projects = await getCollection('projects');
 <Layout title="Prosjekter" description="Ting vi har jobbet på">
   <HeroSection
     title="Prosjekter"
-    preamble="Her er en samling av prosjekter og erfaringer vi har med oss inn i Kynd, eller som vi jobbet med for Kynd sine – våre – kunder. "
+    preamble="Her er en samling av prosjekter og erfaringer vi har med oss inn i Kynd, eller som vi jobbet med for Kynds – våre – kunder."
   />
   <div class="project-grid">
     {
@@ -46,8 +46,7 @@ const projects = await getCollection('projects');
     img {
       width: 100%;
       margin-inline: auto;
-      aspect-ratio: 16/9;
-      object-fit: cover;
+      object-fit: contain;
       border: 2px solid var(--color-text);
       padding: 2rem;
       box-sizing: border-box;
