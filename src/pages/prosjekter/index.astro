@@ -7,13 +7,19 @@ const projects = await getCollection('projects');
 ---
 
 <Layout title="Prosjekter" description="Ting vi har jobbet på">
-  <HeroSection title="Prosjekter" preamble="Ting vi har jobbet på" />
+  <HeroSection
+    title="Prosjekter"
+    preamble="Her er en samling av prosjekter og erfaringer vi har med oss inn i Kynd, eller som vi jobbet med for Kynds – våre – kunder."
+  />
   <div class="project-grid">
     {
       projects.map((project) => (
         <div class="project-card">
           <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
-          <img src={project.data.image.src} alt={project.data.title} />
+          <img
+            src={project.data.fullLogo?.src || project.data.image.src}
+            alt={project.data.title}
+          />
         </div>
       ))
     }
@@ -23,10 +29,15 @@ const projects = await getCollection('projects');
 <style>
   .project-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
     column-gap: 2rem;
-    row-gap: 4rem;
+    row-gap: 2rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(5, 1fr);
+      row-gap: 4rem;
+    }
   }
 
   .project-card {
@@ -35,21 +46,31 @@ const projects = await getCollection('projects');
     flex-direction: column;
     align-items: start;
     gap: 1rem;
-    grid-column: span 2;
+
+    @media (--md) {
+      grid-column: span 2;
+    }
 
     img {
       width: 100%;
       margin-inline: auto;
-      height: 19rem;
+      object-fit: contain;
+      border: 2px solid var(--color-text);
+      padding: 2rem;
     }
   }
 
   .project-card:nth-child(4n - 3),
   .project-card:nth-child(4n) {
-    grid-column: span 3;
-
     img {
-      height: 28rem;
+      max-height: 28rem;
+    }
+
+    @media (--md) {
+      grid-column: span 3;
+      img {
+        height: 28rem;
+      }
     }
   }
 

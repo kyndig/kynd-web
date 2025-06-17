@@ -7,6 +7,7 @@
   padding-inline: calc(2.1875rem - var(--border-width));
   font-size: var(--fs-label-l);
   border: var(--border-width) solid transparent;
+  text-align: center;
 
   &:hover {
     box-shadow: var(--shadow);

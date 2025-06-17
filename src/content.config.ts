@@ -29,6 +29,7 @@ const projects = defineCollection({
       customer: z.string(),
       description: z.string(),
       image: image(),
+      fullLogo: image().optional(), // Optional alternate image for list/grid views
     }),
 });
 
