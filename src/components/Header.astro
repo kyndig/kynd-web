@@ -7,12 +7,9 @@ import NavLink from '@/components/NavLink.astro';
   <div class="header-content">
     <a href="/" aria-label="Forside" class="logo-link"><Logo /></a>
     <nav>
-      <!-- <NavLink href="/om-oss">Om oss</NavLink>
-      <NavLink href="/tjenester">Tjenester</NavLink> -->
-      <NavLink href="/prosjekter">Prosjekter</NavLink>
+      <!-- <NavLink href="/tjenester">Tjenester</NavLink> -->
       <!-- <NavLink href="/kontakt-oss" isButton>Kontakt oss</NavLink> -->
-    </nav>
-    <nav>
+      <NavLink href="/prosjekter">Prosjekter</NavLink>
       <NavLink href="/om-oss" isButton>Om oss</NavLink>
     </nav>
   </div>
@@ -33,6 +30,8 @@ import NavLink from '@/components/NavLink.astro';
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .logo-link {
@@ -43,7 +42,12 @@ import NavLink from '@/components/NavLink.astro';
 
   nav {
     display: flex;
-    column-gap: 2.5rem;
+    column-gap: 1rem;
     align-items: center;
+    margin-inline-start: auto;
+
+    @media (--md) {
+      column-gap: 2.5rem;
+    }
   }
 </style>
