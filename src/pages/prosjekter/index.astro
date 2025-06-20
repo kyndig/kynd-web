@@ -58,6 +58,12 @@ const projects = await getCollection('projects');
       border: 2px solid var(--color-text);
       padding: 2rem;
     }
+
+    &:hover {
+      img {
+        box-shadow: var(--shadow);
+      }
+    }
   }
 
   .project-card:nth-child(4n - 3),
