@@ -18,6 +18,6 @@ const { Content } = await render(project);
 ---
 
 <Layout title={title} description={`Vi har jobba med ${title} hos ${customer}`}>
-  <HeroSection title={customer} preamble={description} image={image.src} />
+  <HeroSection title={title} preamble={description} image={image.src} />
   <Content />
 </Layout>
