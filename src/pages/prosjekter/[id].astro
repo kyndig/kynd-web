@@ -13,11 +13,11 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<'projects'>;
 const project = Astro.props;
-const { title, customer, description, image } = project.data;
+const { title, customer, description, image, duration } = project.data;
 const { Content } = await render(project);
 ---
 
 <Layout title={title} description={`Vi har jobba med ${title} hos ${customer}`}>
-  <HeroSection title={title} preamble={description} image={image.src} />
+  <HeroSection title={title} preamble={description} image={image.src} duration={duration} />
   <Content />
 </Layout>

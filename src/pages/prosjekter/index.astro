@@ -16,10 +16,20 @@ const projects = await getCollection('projects');
       projects.map((project) => (
         <div class="project-card">
           <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
-          <img
-            src={project.data.fullLogo?.src || project.data.image.src}
-            alt={project.data.title}
-          />
+          <div class="logo-container">
+            <img
+              class="client-logo"
+              src={project.data.fullLogo?.src || project.data.image.src}
+              alt={project.data.title}
+            />
+            {project.data.kyndLogo && (
+              <img
+                class="kynd-logo"
+                src={project.data.kyndLogo.src}
+                alt={`${project.data.title} - Kynd`}
+              />
+            )}
+          </div>
         </div>
       ))
     }
@@ -51,17 +61,45 @@ const projects = await getCollection('projects');
       grid-column: span 2;
     }
 
-    img {
+    .logo-container {
+      position: relative;
       width: 100%;
-      margin-inline: auto;
-      object-fit: contain;
+      height: 100%;
       border: 2px solid var(--color-text);
       padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .client-logo,
+    .kynd-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.3s ease;
+    }
+
+    .kynd-logo {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      width: calc(100% - 4rem);
+      height: calc(100% - 4rem);
+      opacity: 0;
     }
 
     &:hover {
-      img {
+      .logo-container {
         box-shadow: var(--shadow);
+      }
+
+      .client-logo {
+        opacity: 0;
+      }
+
+      .kynd-logo {
+        opacity: 1;
       }
     }
   }
