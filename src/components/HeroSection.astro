@@ -3,13 +3,13 @@ import ButtonLink from './ButtonLink.astro';
 
 export type Props = {
   title: string;
-  preamble?: string;
+  preamble?: string | undefined;
   link?: {
     label: string;
     href: string;
-  };
-  image?: string;
-  duration?: string;
+  } | undefined;
+  image?: string | undefined;
+  duration?: string | undefined;
 };
 
 const { title, preamble, link, image, duration } = Astro.props;
