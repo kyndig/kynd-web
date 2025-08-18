@@ -59,7 +59,7 @@ const parseFlexibleDate = (val: string): Date => {
 // Duration calculation function
 const calculateDuration = (startDate: Date, endDate?: Date): string => {
   if (!endDate) {
-    return 'Ongoing';
+    return 'Pågående';
   }
 
   const start = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
