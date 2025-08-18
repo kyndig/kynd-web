@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import HeroSection from '@/components/HeroSection.astro';
 import Layout from '@/layouts/Base.astro';
+import { calculateDuration } from '@/utils/dateHelpers';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -13,7 +14,8 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<'projects'>;
 const project = Astro.props;
-const { title, customer, description, image, duration } = project.data;
+const { title, customer, description, image, startDate, endDate } = project.data;
+const duration = startDate ? calculateDuration(startDate, endDate) : undefined;
 const { Content } = await render(project);
 ---
 

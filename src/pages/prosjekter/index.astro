@@ -1,9 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Base.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import { getProjectsWithDuration } from '@/utils/projectHelpers';
 
-const projects = await getCollection('projects');
+const projects = await getProjectsWithDuration();
 ---
 
 <Layout title="Prosjekter" description="Ting vi har jobbet på">
