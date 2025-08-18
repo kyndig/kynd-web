@@ -10,9 +10,7 @@ export const parseDate = (val: string): Date => {
     }
   }
 
-  throw new Error(
-    `Invalid date format. Expected YYYY-MM format (e.g., "2023-12"). Got: ${val}`,
-  );
+  throw new Error(`Invalid date format. Expected YYYY-MM format (e.g., "2023-12"). Got: ${val}`);
 };
 
 // Duration calculation function
@@ -48,7 +46,11 @@ export const calculateDuration = (startDate: Date, endDate?: Date): string => {
 };
 
 // Helper to add duration to project data
-export const addDurationToProject = <T extends { startDate?: Date | undefined; endDate?: Date | undefined }>(project: T): T & { duration: string } => ({
+export const addDurationToProject = <
+  T extends { startDate?: Date | undefined; endDate?: Date | undefined },
+>(
+  project: T,
+): T & { duration: string } => ({
   ...project,
   duration: project.startDate
     ? calculateDuration(project.startDate, project.endDate)

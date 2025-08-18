@@ -4,10 +4,12 @@ import ButtonLink from './ButtonLink.astro';
 export type Props = {
   title: string;
   preamble?: string | undefined;
-  link?: {
-    label: string;
-    href: string;
-  } | undefined;
+  link?:
+    | {
+        label: string;
+        href: string;
+      }
+    | undefined;
   image?: string | undefined;
   duration?: string | undefined;
 };

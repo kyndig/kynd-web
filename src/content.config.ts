@@ -25,24 +25,22 @@ const employees = defineCollection({
 const projects = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/projects' }),
   schema: ({ image }) =>
-    z
-      .object({
-        title: z.string(),
-        customer: z.string(),
-        description: z.string(),
-        image: image(),
-        fullLogo: image().optional(), // Optional alternate image for list/grid views
-        kyndLogo: image().optional(), // Kynd-branded version for hover effects
-        startDate: z
-          .string()
-          .optional()
-          .transform((val) => (val ? parseDate(val) : undefined)),
-        endDate: z
-          .string()
-          .optional()
-          .transform((val) => (val ? parseDate(val) : undefined)),
-      })
-
+    z.object({
+      title: z.string(),
+      customer: z.string(),
+      description: z.string(),
+      image: image(),
+      fullLogo: image().optional(), // Optional alternate image for list/grid views
+      kyndLogo: image().optional(), // Kynd-branded version for hover effects
+      startDate: z
+        .string()
+        .optional()
+        .transform((val) => (val ? parseDate(val) : undefined)),
+      endDate: z
+        .string()
+        .optional()
+        .transform((val) => (val ? parseDate(val) : undefined)),
+    }),
 });
 
 export const collections = { blog, employees, projects };
