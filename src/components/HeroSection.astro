@@ -18,7 +18,7 @@ const { title, preamble, link, image, duration } = Astro.props;
 <div class="hero-section">
   <div>
     <h1>{title}</h1>
-    {preamble && <p>{preamble}</p>}
+    {preamble && <p class="preamble">{preamble}</p>}
     {duration && <p class="duration">Varighet: {duration}</p>}
     {link && <ButtonLink href={link.href}>{link.label}</ButtonLink>}
   </div>
