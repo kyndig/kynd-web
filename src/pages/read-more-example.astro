@@ -1,0 +1,83 @@
+---
+import Layout from '@/layouts/Base.astro';
+import PageSection from '@/components/PageSection.astro';
+import ReadMore from '@/components/ReadMore.astro';
+import Prose from '@/components/Prose.astro';
+---
+
+<Layout>
+  <PageSection
+    heading="ReadMore Component Examples"
+    subheading="Demonstrating the new ReadMore component"
+  >
+    <Prose>
+      <p>
+        This is an example of how the ReadMore component can be used. The component consists of a
+        circle with a skewed arrow and the text "Les mer" (Read more in Norwegian). It's designed to
+        be used below paragraphs or sections to provide navigation to related content.
+      </p>
+    </Prose>
+
+    <div class="examples">
+      <div class="example">
+        <h3>Standalone ReadMore Component</h3>
+        <p>
+          This is a paragraph with some content. Below it, you can see the ReadMore component that
+          links to the home page.
+        </p>
+        <ReadMore href="/" />
+      </div>
+
+      <div class="example">
+        <h3>ReadMore within Prose Component</h3>
+        <p>
+          This demonstrates how the ReadMore component can be automatically included when using the
+          Prose component with the readMore prop. This makes more semantic sense as the ReadMore is
+          directly connected to the text content.
+        </p>
+      </div>
+    </div>
+  </PageSection>
+
+  <PageSection
+    heading="Prose with ReadMore"
+    subheading="This section demonstrates ReadMore within Prose"
+  >
+    <Prose readMore={{ href: '/om-oss' }}>
+      <p>
+        This Prose component automatically includes a ReadMore component at the bottom because we
+        passed the readMore prop with an href. The component will appear below this text content,
+        making it semantically correct and reusable.
+      </p>
+    </Prose>
+
+    <p>
+      This paragraph is outside of Prose, so it won't have a ReadMore component. Only the text
+      content within Prose components can have ReadMore functionality.
+    </p>
+  </PageSection>
+</Layout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .example {
+    padding: 2rem;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 8px;
+  }
+
+  .example h3 {
+    margin-bottom: 1rem;
+    font-size: var(--fs-heading-s);
+    color: var(--color-primary);
+  }
+
+  .example p {
+    margin-bottom: 1.5rem;
+  }
+</style>
