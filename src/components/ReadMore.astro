@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import ReadMoreIcon from '@/icons/ReadMoreIcon.astro';
+
+type Props = HTMLAttributes<'a'> & {
+  href: string;
+  class?: string;
+};
+
+const { href, class: className, ...rest } = Astro.props;
+---
+
+<a href={href} class:list={['read-more', className]} {...rest}>
+  <div class="icon-container">
+    <ReadMoreIcon />
+  </div>
+  <span class="label">Les mer</span>
+</a>
+
+<style>
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--animation-duration) ease;
+
+    &:hover {
+      transform: translateX(4px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .icon-container {
+    flex-shrink: 0;
+    width: 41px;
+    height: 41px;
+    color: var(--color-black);
+  }
+
+  .label {
+    font-family: 'Mundial', sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--fs-label-l);
+    line-height: var(--line-height-m);
+    color: var(--color-dark-blue);
+  }
+</style>
