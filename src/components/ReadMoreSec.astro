@@ -1,0 +1,70 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import ArrowRightUp from '@/icons/ArrowRightUp.astro';
+
+type Props = HTMLAttributes<'a'> & {
+  href: string;
+  class?: string;
+  variant?: 'green' | 'white' | 'dark';
+};
+
+const { href, class: className, variant = 'green', ...rest } = Astro.props;
+---
+
+<a href={href} class:list={['read-more-sec', `read-more-sec--${variant}`, className]} {...rest}>
+  <span class="label">Les mer</span>
+  <div class="icon-container">
+    <ArrowRightUp />
+  </div>
+</a>
+
+<style>
+  .read-more-sec {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    transition: transform var(--animation-duration) ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateX(4px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .label {
+    font-family: 'Mundial', sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--fs-label-l);
+    line-height: var(--line-height-m);
+  }
+
+  .icon-container {
+    flex-shrink: 0;
+    width: 20px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Green variant */
+  .read-more-sec--green {
+    color: var(--color-light-green);
+  }
+
+  /* White variant */
+  .read-more-sec--white {
+    color: var(--color-white);
+  }
+
+  /* Dark variant */
+  .read-more-sec--dark {
+    color: var(--color-dark-blue);
+  }
+</style>
