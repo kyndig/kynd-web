@@ -6,6 +6,13 @@ export type Props = {
   readMore?: {
     href: string;
     class?: string;
+    variant?:
+      | 'light-primary'
+      | 'light-secondary'
+      | 'dark-primary'
+      | 'dark-secondary'
+      | 'green-primary'
+      | 'green-secondary';
   };
 };
 
@@ -19,7 +26,11 @@ const rightMargin = align === 'right' ? '0' : 'auto';
   <slot />
   {
     readMore && (
-      <ReadMore href={readMore.href} class:list={readMore.class ? [readMore.class] : []} />
+      <ReadMore
+        href={readMore.href}
+        {...(readMore.variant && { variant: readMore.variant })}
+        class:list={readMore.class ? [readMore.class] : []}
+      />
     )
   }
 </div>
