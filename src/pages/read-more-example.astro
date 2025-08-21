@@ -1,83 +1,139 @@
 ---
-import Layout from '@/layouts/Base.astro';
+import Base from '@/layouts/Base.astro';
 import PageSection from '@/components/PageSection.astro';
-import ReadMore from '@/components/ReadMore.astro';
 import Prose from '@/components/Prose.astro';
+import ReadMore from '@/components/ReadMore.astro';
+import ReadMoreSec from '@/components/ReadMoreSec.astro';
 ---
 
-<Layout>
+<Base title="ReadMore Component Examples">
   <PageSection
     heading="ReadMore Component Examples"
     subheading="Demonstrating the new ReadMore component"
   >
     <Prose>
-      <p>
-        This is an example of how the ReadMore component can be used. The component consists of a
-        circle with a skewed arrow and the text "Les mer" (Read more in Norwegian). It's designed to
-        be used below paragraphs or sections to provide navigation to related content.
-      </p>
+      This is an example of how the ReadMore component can be used. The component consists of a
+      circular icon container with an arrow icon and a label. It supports multiple variants for
+      different color schemes and use cases.
     </Prose>
 
-    <div class="examples">
-      <div class="example">
-        <h3>Standalone ReadMore Component</h3>
-        <p>
-          This is a paragraph with some content. Below it, you can see the ReadMore component that
-          links to the home page.
-        </p>
-        <ReadMore href="/" />
+    <h3>All ReadMore Variants</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
+      <div>
+        <h4>Light Primary (default)</h4>
+        <ReadMore href="/" variant="light-primary" />
       </div>
 
-      <div class="example">
-        <h3>ReadMore within Prose Component</h3>
-        <p>
-          This demonstrates how the ReadMore component can be automatically included when using the
-          Prose component with the readMore prop. This makes more semantic sense as the ReadMore is
-          directly connected to the text content.
-        </p>
+      <div>
+        <h4>Light Secondary</h4>
+        <ReadMore href="/" variant="light-secondary" />
+      </div>
+
+      <div>
+        <h4>Dark Primary</h4>
+        <ReadMore href="/" variant="dark-primary" />
+      </div>
+
+      <div>
+        <h4>Dark Secondary</h4>
+        <ReadMore href="/" variant="dark-secondary" />
+      </div>
+
+      <div>
+        <h4>Green Primary</h4>
+        <ReadMore href="/" variant="green-primary" />
+      </div>
+
+      <div>
+        <h4>Green Secondary</h4>
+        <ReadMore href="/" variant="green-secondary" />
       </div>
     </div>
   </PageSection>
 
   <PageSection
-    heading="Prose with ReadMore"
-    subheading="This section demonstrates ReadMore within Prose"
+    heading="ReadMoreSec Component Examples"
+    subheading="Demonstrating the new ReadMoreSec component with three variants"
   >
-    <Prose readMore={{ href: '/om-oss' }}>
-      <p>
-        This Prose component automatically includes a ReadMore component at the bottom because we
-        passed the readMore prop with an href. The component will appear below this text content,
-        making it semantically correct and reusable.
-      </p>
+    <Prose>
+      The ReadMoreSec component is a simpler alternative to the ReadMore component. It features a
+      clean design with just text and a small arrow icon, available in three color variants: green,
+      white, and dark.
     </Prose>
 
-    <p>
+    <h3>All ReadMoreSec Variants</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
+      <div>
+        <h4>Green Variant (default)</h4>
+        <ReadMoreSec href="/" />
+      </div>
+
+      <div>
+        <h4>White Variant</h4>
+        <ReadMoreSec href="/" variant="white" />
+      </div>
+
+      <div>
+        <h4>Dark Variant</h4>
+        <ReadMoreSec href="/" variant="dark" />
+      </div>
+    </div>
+
+    <h3>ReadMoreSec on Different Backgrounds</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
+      <div style="background: var(--color-dark-blue); padding: 2rem; border-radius: 8px;">
+        <h4 style="color: white;">Dark Background - White Variant</h4>
+        <ReadMoreSec href="/" variant="white" />
+      </div>
+
+      <div style="background: var(--color-light-green); padding: 2rem; border-radius: 8px;">
+        <h4 style="color: var(--color-dark-blue);">Green Background - Dark Variant</h4>
+        <ReadMoreSec href="/" variant="dark" />
+      </div>
+
+      <div style="background: var(--color-light-gray); padding: 2rem; border-radius: 8px;">
+        <h4 style="color: var(--color-dark-blue);">Light Gray Background - Green Variant</h4>
+        <ReadMoreSec href="/" variant="green" />
+      </div>
+    </div>
+  </PageSection>
+
+  <PageSection
+    heading="ReadMore within Prose Component"
+    subheading="Examples of different variants in Prose components"
+  >
+    <div style="margin: 2rem 0;">
+      <h4>Prose with Light Primary ReadMore</h4>
+      <Prose readMore={{ href: '/om-oss', variant: 'light-primary' }}>
+        This Prose component automatically includes a ReadMore component at the bottom because we
+        passed the readMore prop with an href and variant. The component will appear below this text
+        content, styled according to the specified variant.
+      </Prose>
+    </div>
+
+    <div style="margin: 2rem 0;">
+      <h4>Prose with Dark Primary ReadMore</h4>
+      <Prose readMore={{ href: '/folka', variant: 'dark-primary' }}>
+        This example shows a Prose component with a dark primary ReadMore variant. The black
+        background with green arrow creates a nice contrast and follows the design system.
+      </Prose>
+    </div>
+
+    <div style="margin: 2rem 0;">
+      <h4>Prose with Green Primary ReadMore</h4>
+      <Prose readMore={{ href: '/prosjekter', variant: 'green-primary' }}>
+        Here's a Prose component using the green primary variant. The green background with black
+        arrow and text provides a vibrant, energetic appearance suitable for call-to-action
+        sections.
+      </Prose>
+    </div>
+
+    <Prose>
       This paragraph is outside of Prose, so it won't have a ReadMore component. Only the text
       content within Prose components can have ReadMore functionality.
-    </p>
+    </Prose>
   </PageSection>
-</Layout>
-
-<style>
-  .examples {
-    display: grid;
-    gap: 3rem;
-    margin-top: 2rem;
-  }
-
-  .example {
-    padding: 2rem;
-    border: 1px solid var(--color-light-gray);
-    border-radius: 8px;
-  }
-
-  .example h3 {
-    margin-bottom: 1rem;
-    font-size: var(--fs-heading-s);
-    color: var(--color-primary);
-  }
-
-  .example p {
-    margin-bottom: 1.5rem;
-  }
-</style>
+</Base>
