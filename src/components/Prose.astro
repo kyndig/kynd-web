@@ -17,7 +17,11 @@ const rightMargin = align === 'right' ? '0' : 'auto';
 
 <div>
   <slot />
-  {readMore && <ReadMore href={readMore.href} class:list={readMore.class ? [readMore.class] : []} />}
+  {
+    readMore && (
+      <ReadMore href={readMore.href} class:list={readMore.class ? [readMore.class] : []} />
+    )
+  }
 </div>
 
 <style define:vars={{ leftMargin, rightMargin }}>
