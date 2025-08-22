@@ -58,9 +58,8 @@ const {
       <span class="card__link-text">{linkText}</span>
     </a>
   </div>
-  
-  
-  <div class:list={["card__pattern", `card__pattern--${variant}`]} aria-hidden="true"></div>
+
+  <div class:list={['card__pattern', `card__pattern--${variant}`]} aria-hidden="true"></div>
 </article>
 
 <style>
@@ -172,7 +171,7 @@ const {
     width: 100%;
     height: auto;
   }
-  
+
   .card__pattern--default {
     --pattern-top: 40%;
     --pattern-left: 100%;
@@ -194,12 +193,12 @@ const {
   /* Variant-specific styles */
   .card {
     color: var(--color-dark-blue);
-    --pattern-color: #ECECEC;
+    --pattern-color: #ececec;
   }
 
   .card--green {
     background-color: var(--color-accent);
-    --pattern-color: #1E292B;
+    --pattern-color: #1e292b;
   }
 
   .card--green .card__label {
@@ -218,7 +217,7 @@ const {
   .card--black {
     background-color: var(--color-dark-blue);
     color: var(--color-white);
-    --pattern-color: #FFFFFF;
+    --pattern-color: #ffffff;
   }
 
   .card--black .card__label {
@@ -260,7 +259,9 @@ const {
       font-size: 1rem;
     }
 
-    .card { --pattern-size: 24rem; }
+    .card {
+      --pattern-size: 24rem;
+    }
 
     .card__pattern--default {
       --pattern-top: 50%;
