@@ -80,23 +80,27 @@ const { href, class: className, variant = 'light-primary', ...rest } = Astro.pro
     color: var(--color-white);
   }
 
-  
-
   /* Dark Primary - White background with green arrow */
   .read-more--dark-primary .icon-container {
     background-color: var(--color-white);
     color: var(--color-light-green);
   }
 
-  
+  /* Dark Secondary - White background with black arrow and white text */
+  .read-more--dark-secondary .icon-container {
+    background-color: var(--color-white);
+    color: var(--color-black);
+  }
+
+  .read-more--dark-secondary .label {
+    color: var(--color-white);
+  }
 
   /* Green Primary - Green background with black arrow */
   .read-more--green-primary .icon-container {
     background-color: var(--color-light-green);
     color: var(--color-black);
   }
-
-  
 
   /* Green Secondary - Green background with white arrow */
   .read-more--green-secondary .icon-container {
