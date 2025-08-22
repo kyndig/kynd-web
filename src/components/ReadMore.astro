@@ -68,7 +68,9 @@ const { href, class: className, variant = 'light-primary', ...rest } = Astro.pro
     color: var(--color-light-green);
   }
 
-  .read-more--light-primary .label {
+  .read-more--light-primary .label,
+  .read-more--light-secondary .label,
+  .read-more--green-primary .label {
     color: var(--color-black);
   }
 
@@ -78,9 +80,7 @@ const { href, class: className, variant = 'light-primary', ...rest } = Astro.pro
     color: var(--color-white);
   }
 
-  .read-more--light-secondary .label {
-    color: var(--color-black);
-  }
+  
 
   /* Dark Primary - White background with green arrow */
   .read-more--dark-primary .icon-container {
@@ -88,20 +88,15 @@ const { href, class: className, variant = 'light-primary', ...rest } = Astro.pro
     color: var(--color-light-green);
   }
 
-  .read-more--dark-primary .label {
-    color: var(--color-dark-blue);
-  }
+  
 
-gpt
   /* Green Primary - Green background with black arrow */
   .read-more--green-primary .icon-container {
     background-color: var(--color-light-green);
     color: var(--color-black);
   }
 
-  .read-more--green-primary .label {
-    color: var(--color-black);
-  }
+  
 
   /* Green Secondary - Green background with white arrow */
   .read-more--green-secondary .icon-container {
