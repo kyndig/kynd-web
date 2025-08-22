@@ -62,6 +62,10 @@ const readMoreVariant =
     border: 2px solid var(--color-dark-blue);
     box-shadow: 0px 5px 0px 0px var(--color-shadow);
     overflow: hidden;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
   }
 
   .card__content {
@@ -92,8 +96,6 @@ const readMoreVariant =
     line-height: 1.276;
     color: var(--color-dark-blue);
   }
-
-  
 
   /* Pattern styles */
   .card__pattern {
@@ -152,7 +154,9 @@ const readMoreVariant =
   }
 
   /* Ensure readable text color on variants */
-  .card--green { color: var(--color-dark-blue); }
+  .card--green {
+    color: var(--color-dark-blue);
+  }
 
   .card--black {
     background-color: var(--color-dark-blue);
@@ -167,8 +171,6 @@ const readMoreVariant =
   .card--black .card__label-text {
     color: var(--color-dark-blue);
   }
-
-  
 
   /* Responsive adjustments */
   @media (max-width: 48em) {
@@ -188,8 +190,6 @@ const readMoreVariant =
     .card__label-text {
       font-size: 1.5rem;
     }
-
-    
 
     .card {
       --pattern-size: 24rem;
