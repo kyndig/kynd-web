@@ -1,0 +1,276 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'article'> & {
+  variant?: 'default' | 'green' | 'black';
+  heading: string;
+  subheading?: string;
+  linkText?: string;
+  linkHref?: string;
+  className?: string;
+};
+
+const {
+  variant = 'default',
+  heading,
+  subheading,
+  linkText = 'Learn more',
+  linkHref = '#',
+  className,
+  ...rest
+} = Astro.props;
+---
+
+<article class:list={['card', `card--${variant}`, className]} {...rest}>
+  <div class="card__content">
+    <div class="card__heading">
+      <div class="card__label">
+        <span class="card__label-text">{heading}</span>
+      </div>
+      {
+        subheading && (
+          <div class="card__label">
+            <span class="card__label-text">{subheading}</span>
+          </div>
+        )
+      }
+    </div>
+
+    <a href={linkHref} class="card__link">
+      <div class="card__link-icon">
+        <div class="card__link-circle"></div>
+        <svg
+          class="card__link-arrow"
+          width="18"
+          height="10"
+          viewBox="0 0 18 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1 5H17M17 5L13 1M17 5L13 9"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <span class="card__link-text">{linkText}</span>
+    </a>
+  </div>
+  
+  
+  <div class:list={["card__pattern", `card__pattern--${variant}`]} aria-hidden="true"></div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4.8125rem;
+    padding: 3.125rem;
+    width: 100%;
+    max-width: 36rem;
+    background-color: var(--color-light-gray);
+    border: 2px solid var(--color-dark-blue);
+    box-shadow: 0px 5px 0px 0px var(--color-shadow);
+    overflow: hidden;
+  }
+
+  .card__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .card__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .card__label {
+    display: inline-flex;
+    padding: 0.4375rem;
+    background-color: var(--color-accent);
+    border-radius: 0;
+  }
+
+  .card__label-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.276;
+    color: var(--color-dark-blue);
+  }
+
+  .card__link {
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem;
+    text-decoration: none;
+    color: var(--color-dark-blue);
+    transition: transform var(--animation-duration) ease;
+  }
+
+  .card__link:hover {
+    transform: translateX(0.25rem);
+  }
+
+  .card__link-icon {
+    position: relative;
+    width: 2.5625rem;
+    height: 2.5625rem;
+  }
+
+  .card__link-circle {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+  }
+
+  .card__link-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-dark-blue);
+  }
+
+  .card__link-text {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--color-dark-blue);
+  }
+
+  /* Pattern styles */
+  .card__pattern {
+    position: absolute;
+    top: var(--pattern-top, 50%);
+    left: var(--pattern-left, 65%);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    width: var(--pattern-size, 40rem);
+    aspect-ratio: var(--pattern-aspect, 1 / 1);
+    background-color: var(--pattern-color);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
+  .card__pattern svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card__pattern--default {
+    --pattern-top: 40%;
+    --pattern-left: 100%;
+    --pattern-aspect: 1219 / 878;
+    -webkit-mask-image: url('/patterns/pattern-2.svg');
+    mask-image: url('/patterns/pattern-2.svg');
+  }
+
+  .card__pattern--green,
+  .card__pattern--black {
+    /* Slightly different placement for non-default cards */
+    --pattern-top: 100%;
+    --pattern-left: 100%;
+    --pattern-aspect: 1099 / 755;
+    -webkit-mask-image: url('/patterns/pattern-1.svg');
+    mask-image: url('/patterns/pattern-1.svg');
+  }
+
+  /* Variant-specific styles */
+  .card {
+    color: var(--color-dark-blue);
+    --pattern-color: #ECECEC;
+  }
+
+  .card--green {
+    background-color: var(--color-accent);
+    --pattern-color: #1E292B;
+  }
+
+  .card--green .card__label {
+    background-color: var(--color-white);
+  }
+
+  .card--green .card__link-circle {
+    background-color: var(--color-white);
+  }
+
+  /* Set pattern colors using currentColor */
+  .card--green {
+    color: var(--color-dark-blue);
+  }
+
+  .card--black {
+    background-color: var(--color-dark-blue);
+    color: var(--color-white);
+    --pattern-color: #FFFFFF;
+  }
+
+  .card--black .card__label {
+    background-color: var(--color-white);
+  }
+
+  .card--black .card__label-text {
+    color: var(--color-dark-blue);
+  }
+
+  .card--black .card__link-text {
+    color: var(--color-white);
+  }
+
+  .card--black .card__link-arrow {
+    color: var(--color-white);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 48em) {
+    .card {
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem;
+      width: 100%;
+      max-width: 24rem;
+      align-items: flex-start;
+    }
+
+    .card__content {
+      gap: 2rem;
+    }
+
+    .card__label-text {
+      font-size: 1.5rem;
+    }
+
+    .card__link-text {
+      font-size: 1rem;
+    }
+
+    .card { --pattern-size: 24rem; }
+
+    .card__pattern--default {
+      --pattern-top: 50%;
+      --pattern-left: 100%;
+    }
+
+    .card__pattern--green,
+    .card__pattern--black {
+      --pattern-top: 100%;
+      --pattern-left: 100%;
+    }
+  }
+</style>
