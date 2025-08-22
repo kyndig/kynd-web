@@ -6,13 +6,14 @@ import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
+import Card from '@/components/Card.astro';
 ---
 
 <Layout>
   <HeroSection
     title="Something forfriskende, kynd"
     preamble="En gjeng kompetente folk som bygger et annerledes konsulentbyrå sammen."
-    image="/Layer_2.svg"
+            image="/patterns/pattern-0.svg"
   />
   <PageSection heading="Team" subheading="Vi skaper kynd sammen">
     <Prose align="right" readMore={{ href: '/folka' }}>
@@ -29,6 +30,34 @@ import Layout from '@/layouts/Base.astro';
       loading="eager"
     />
   </PageSection>
+
+  <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
+    <div class="services-grid">
+      <Card
+        variant="default"
+        heading="Fullstack"
+        subheading="Softwareutvikling"
+        linkText="Lær mer"
+        linkHref="/tjenester/fullstack"
+      />
+
+      <Card
+        variant="green"
+        heading="Design"
+        subheading="UX/UI"
+        linkText="Lær mer"
+        linkHref="/tjenester/design"
+      />
+
+      <Card
+        variant="black"
+        heading="Digital"
+        subheading="Strategi"
+        linkText="Lær mer"
+        linkHref="/tjenester/strategi"
+      />
+    </div>
+  </PageSection>
   <PageSection
     heading="Kontakt oss"
     subheading="Nysgjerrig på samarbeid, enten som medeier eller kunde? Hit us up!"
@@ -36,3 +65,19 @@ import Layout from '@/layouts/Base.astro';
     <ContactUs />
   </PageSection>
 </Layout>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  @media (max-width: 48em) {
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
