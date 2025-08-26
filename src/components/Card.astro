@@ -1,6 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import ReadMore from '@/components/ReadMore.astro';
+import Link from '@/components/Link.astro';
 
 type Props = HTMLAttributes<'article'> & {
   variant?: 'default' | 'green' | 'black';
@@ -42,7 +42,7 @@ const readMoreVariant =
       }
     </div>
 
-    <ReadMore href={linkHref} variant={readMoreVariant} />
+    <Link href={linkHref} variant={readMoreVariant} />
   </div>
 
   <div class:list={['card__pattern', `card__pattern--${variant}`]} aria-hidden="true"></div>
@@ -90,7 +90,6 @@ const readMoreVariant =
   }
 
   .card__label-text {
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     font-size: 1.875rem;
     line-height: 1.276;
