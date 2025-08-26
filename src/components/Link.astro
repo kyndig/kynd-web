@@ -26,10 +26,12 @@ const { href, class: className, variant = 'light-primary', label = 'Les mer', ..
     gap: 1rem;
     text-decoration: none;
     color: inherit;
-    transition: transform var(--animation-duration) ease;
+    transition: transform 0.3s ease-in-out 0.05s;
 
     &:hover {
-      transform: translateX(0.25rem);
+      .icon-container {
+        transform: rotate(30deg);
+      }
     }
 
     &:focus-visible {
@@ -47,6 +49,7 @@ const { href, class: className, variant = 'light-primary', label = 'Les mer', ..
     align-items: center;
     justify-content: center;
     background-color: var(--color-white);
+    transition: transform 0.3s ease-in-out 0.05s;
   }
 
   .label {
