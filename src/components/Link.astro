@@ -1,0 +1,121 @@
+---
+import type { LinkProps } from './types';
+import LinkIcon from '@/icons/LinkIcon.astro';
+
+type Props = LinkProps;
+
+const { href, class: className, variant = 'light-primary', label = 'Les mer', ...rest } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['read-more', 'link', `read-more--${variant}`, `link--${variant}`, className]}
+  {...rest}
+>
+  <div class="icon-container">
+    <LinkIcon />
+  </div>
+  <span class="label">{label}</span>
+</a>
+
+<style>
+  .read-more,
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--animation-duration) ease;
+
+    &:hover {
+      transform: translateX(0.25rem);
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid var(--color-focus);
+      outline-offset: 0.125rem;
+    }
+  }
+
+  .icon-container {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white);
+  }
+
+  .label {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--fs-label-l);
+    line-height: var(--line-height-m);
+    color: var(--color-dark-blue);
+  }
+
+  /* Light Primary (default) - Black background with green arrow */
+  .link--light-primary .icon-container,
+  .read-more--light-primary .icon-container {
+    background-color: var(--color-black);
+    color: var(--color-light-green);
+  }
+
+  .link--light-primary .label,
+  .link--light-secondary .label,
+  .link--green-primary .label,
+  .read-more--light-primary .label,
+  .read-more--light-secondary .label,
+  .read-more--green-primary .label {
+    color: var(--color-black);
+  }
+
+  /* Light Secondary - Black background with white arrow */
+  .link--light-secondary .icon-container,
+  .read-more--light-secondary .icon-container {
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  /* Dark Primary - White background with green arrow */
+  .link--dark-primary .icon-container,
+  .read-more--dark-primary .icon-container {
+    background-color: var(--color-white);
+    color: var(--color-light-green);
+  }
+
+  /* Dark Secondary - White background with black arrow and white text */
+  .link--dark-secondary .icon-container,
+  .read-more--dark-secondary .icon-container {
+    background-color: var(--color-white);
+    color: var(--color-black);
+  }
+
+  .link--dark-secondary .label,
+  .read-more--dark-secondary .label {
+    color: var(--color-white);
+  }
+
+  /* Green Primary - Green background with black arrow */
+  .link--green-primary .icon-container,
+  .read-more--green-primary .icon-container {
+    background-color: var(--color-light-green);
+    color: var(--color-black);
+  }
+
+  /* Green Secondary - Green background with white arrow */
+  .link--green-secondary .icon-container,
+  .read-more--green-secondary .icon-container {
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+  }
+
+  .link--green-secondary .label,
+  .read-more--green-secondary .label {
+    color: var(--color-white);
+  }
+</style>
+
+
