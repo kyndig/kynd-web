@@ -16,7 +16,7 @@ import Card from '@/components/Card.astro';
     image="/patterns/pattern-0.svg"
   />
   <PageSection heading="Team" subheading="Vi skaper kynd sammen">
-    <Prose align="right" readMore={{ href: '/folka' }}>
+    <Prose align="right" link={{ href: '/folka', label: 'Les mer' }}>
       <p>
         Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel - som har gått sammen om å
         lage en transparent, spennende og nytenkende arbeidsplass. Vi er et konsulentbyrå innen
@@ -37,7 +37,6 @@ import Card from '@/components/Card.astro';
         variant="default"
         heading="Fullstack"
         subheading="Softwareutvikling"
-        linkText="Lær mer"
         linkHref="/tjenester/fullstack"
       />
 
@@ -45,7 +44,6 @@ import Card from '@/components/Card.astro';
         variant="green"
         heading="Design"
         subheading="UX/UI"
-        linkText="Lær mer"
         linkHref="/tjenester/design"
       />
 
@@ -53,7 +51,6 @@ import Card from '@/components/Card.astro';
         variant="black"
         heading="Digital"
         subheading="Strategi"
-        linkText="Lær mer"
         linkHref="/tjenester/strategi"
       />
     </div>
