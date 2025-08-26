@@ -21,26 +21,26 @@ const rightMargin = align === 'right' ? '0' : 'auto';
 <style define:vars={{ leftMargin, rightMargin }}>
   div {
     font-size: var(--fs-body-l);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     margin-inline-start: var(--leftMargin);
     margin-inline-end: var(--rightMargin);
 
     @media (--md) {
-      max-width: min(65ch, 60%);
+      max-width: min(65rem, 60%);
     }
   }
 
   :global(p:not(:last-child)) {
-    margin-block-end: 1em;
+    margin-block-end: 1rem;
   }
 
   :global(ul),
   :global(ol) {
     list-style: revert;
-    padding-inline-start: 1em;
+    padding-inline-start: 1rem;
   }
 
   :global(li) {
-    margin-block: 0.5em;
+    margin-block: 0.5rem;
   }
 </style>
