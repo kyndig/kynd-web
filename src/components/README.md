@@ -37,11 +37,11 @@ A versatile card component with three variants, designed to match the Kynd.no de
 
 ```astro
 ---
-import Card from '@/components/Card.astro';
+import LinkCard from '@/components/LinkCard.astro';
 ---
 
 <!-- Default variant -->
-<Card
+<LinkCard
   heading="Fullstack"
   subheading="Softwareutvikling"
   linkText="Learn more"
@@ -49,7 +49,7 @@ import Card from '@/components/Card.astro';
 />
 
 <!-- Green variant -->
-<Card
+<LinkCard
   variant="green"
   heading="Design"
   subheading="UX/UI"
@@ -58,7 +58,7 @@ import Card from '@/components/Card.astro';
 />
 
 <!-- Black variant -->
-<Card
+<LinkCard
   variant="black"
   heading="Strategy"
   subheading="Digital"
@@ -67,7 +67,7 @@ import Card from '@/components/Card.astro';
 />
 
 <!-- Without illustration -->
-<Card variant="default" heading="Simple Card" illustration={false} />
+<LinkCard variant="default" heading="Simple Card" illustration={false} />
 ```
 
 ## Props

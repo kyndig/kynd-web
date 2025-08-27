@@ -19,12 +19,8 @@ const {
   ...rest
 } = Astro.props;
 
-const readMoreVariant =
-  variant === 'black'
-    ? 'dark-secondary'
-    : variant === 'green'
-      ? 'light-secondary'
-      : 'light-primary';
+const linkVariant =
+  variant === 'black' ? 'light-secondary' : variant === 'green' ? 'dark-secondary' : 'dark-primary';
 ---
 
 <article class:list={['card', `card--${variant}`, className]} {...rest}>
@@ -42,7 +38,7 @@ const readMoreVariant =
       }
     </div>
 
-    <Link href={linkHref} variant={readMoreVariant} />
+    <Link href={linkHref} variant={linkVariant} linkOverlay aria-label={heading} />
   </div>
 
   <div class:list={['card__pattern', `card__pattern--${variant}`]} aria-hidden="true"></div>
@@ -69,7 +65,6 @@ const readMoreVariant =
   }
 
   .card__content {
-    position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;

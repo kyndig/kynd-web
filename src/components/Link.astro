@@ -1,128 +1,83 @@
 ---
-import type { LinkProps } from './types';
+import type { HTMLAttributes } from 'astro/types';
+
 import LinkIcon from '@/icons/LinkIcon.astro';
 
-type Props = LinkProps;
+type Variant =
+  | 'light-primary'
+  | 'light-secondary'
+  | 'dark-primary'
+  | 'dark-secondary'
+  | 'green-primary'
+  | 'green-secondary';
+
+export type Props = HTMLAttributes<'a'> & {
+  label?: string;
+  variant?: Variant;
+  linkOverlay?: boolean;
+};
 
 const {
   href,
-  class: className,
-  variant = 'light-primary',
   label = 'Les mer',
+  variant = 'light-primary',
+  linkOverlay = false,
   ...rest
 } = Astro.props;
 ---
 
 <a
   href={href}
-  class:list={['read-more', 'link', `read-more--${variant}`, `link--${variant}`, className]}
+  class:list={['link', `link--${variant}`, linkOverlay && 'link--overlay', Astro.props.class]}
   {...rest}
 >
-  <div class="icon-container">
-    <LinkIcon />
-  </div>
+  <LinkIcon variant={variant} />
   <span class="label">{label}</span>
 </a>
 
 <style>
-  .read-more,
   .link {
     display: inline-flex;
     align-items: center;
     gap: 1rem;
     text-decoration: none;
-    color: inherit;
-    transition: transform 0.3s ease-in-out 0.05s;
+
+    & :global(svg) {
+      flex-shrink: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      transition: transform 0.2s ease-in-out 0.05s;
+    }
 
     &:hover {
-      .icon-container {
+      & :global(svg) {
         transform: rotate(30deg);
       }
     }
 
-    &:focus-visible {
-      outline: 0.125rem solid var(--color-focus);
-      outline-offset: 0.125rem;
+    &.link--overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
-  }
-
-  .icon-container {
-    flex-shrink: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-white);
-    transition: transform 0.3s ease-in-out 0.05s;
   }
 
   .label {
     font-weight: var(--font-weight-normal);
     font-size: var(--fs-label-l);
     line-height: var(--line-height-m);
-    color: var(--color-dark-blue);
-  }
-
-  /* Light Primary (default) - Black background with green arrow */
-  .link--light-primary .icon-container,
-  .read-more--light-primary .icon-container {
-    background-color: var(--color-black);
-    color: var(--color-light-green);
   }
 
   .link--light-primary .label,
   .link--light-secondary .label,
-  .link--green-primary .label,
-  .read-more--light-primary .label,
-  .read-more--light-secondary .label,
-  .read-more--green-primary .label {
-    color: var(--color-black);
+  .link--green-secondary .label {
+    color: var(--color-secondary);
   }
 
-  /* Light Secondary - Black background with white arrow */
-  .link--light-secondary .icon-container,
-  .read-more--light-secondary .icon-container {
-    background-color: var(--color-black);
-    color: var(--color-white);
-  }
-
-  /* Dark Primary - White background with green arrow */
-  .link--dark-primary .icon-container,
-  .read-more--dark-primary .icon-container {
-    background-color: var(--color-white);
-    color: var(--color-light-green);
-  }
-
-  /* Dark Secondary - White background with black arrow and white text */
-  .link--dark-secondary .icon-container,
-  .read-more--dark-secondary .icon-container {
-    background-color: var(--color-white);
-    color: var(--color-black);
-  }
-
+  .link--dark-primary .label,
   .link--dark-secondary .label,
-  .read-more--dark-secondary .label {
-    color: var(--color-white);
-  }
-
-  /* Green Primary - Green background with black arrow */
-  .link--green-primary .icon-container,
-  .read-more--green-primary .icon-container {
-    background-color: var(--color-light-green);
-    color: var(--color-black);
-  }
-
-  /* Green Secondary - Green background with white arrow */
-  .link--green-secondary .icon-container,
-  .read-more--green-secondary .icon-container {
-    background-color: var(--color-light-green);
-    color: var(--color-white);
-  }
-
-  .link--green-secondary .label,
-  .read-more--green-secondary .label {
-    color: var(--color-white);
+  .link--green-primary .label {
+    color: var(--color-primary);
   }
 </style>

@@ -1,11 +1,77 @@
+---
+export type Props = {
+  variant?:
+    | 'light-primary'
+    | 'light-secondary'
+    | 'dark-primary'
+    | 'dark-secondary'
+    | 'green-primary'
+    | 'green-secondary';
+};
+
+const { variant = 'light-primary' } = Astro.props;
+---
+
 <svg
-  width="40"
-  height="40"
-  viewBox="0 0 40 40"
-  fill="currentColor"
+  width="100%"
+  height="100%"
+  viewBox="0 0 41 41"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
+  class:list={[variant]}
 >
+  <circle cx="20.5" cy="20.5" r="20.5" fill="white"></circle>
   <path
-    d="M10.5 24.134C10.0217 24.4101 9.85783 25.0217 10.134 25.5C10.4101 25.9783 11.0217 26.1422 11.5 25.866L10.5 24.134ZM29.2864 15.2588C29.4294 14.7254 29.1128 14.177 28.5793 14.0341L19.886 11.7047C19.3525 11.5618 18.8042 11.8783 18.6612 12.4118C18.5183 12.9453 18.8349 13.4936 19.3684 13.6366L27.0958 15.7071L25.0252 23.4345C24.8823 23.968 25.1989 24.5163 25.7323 24.6593C26.2658 24.8022 26.8141 24.4856 26.9571 23.9522L29.2864 15.2588ZM11.5 25.866L28.8205 15.866L27.8205 14.134L10.5 24.134L11.5 25.866Z"
+    d="M11.5 25.134C11.0217 25.4101 10.8578 26.0217 11.134 26.5C11.4101 26.9783 12.0217 27.1422 12.5 26.866L11.5 25.134ZM30.2864 16.2588C30.4294 15.7254 30.1128 15.177 29.5793 15.0341L20.886 12.7047C20.3525 12.5618 19.8042 12.8783 19.6612 13.4118C19.5183 13.9453 19.8349 14.4936 20.3684 14.6366L28.0958 16.7071L26.0252 24.4345C25.8823 24.968 26.1989 25.5163 26.7323 25.6593C27.2658 25.8022 27.8141 25.4856 27.9571 24.9522L30.2864 16.2588ZM12.5 26.866L29.8205 16.866L28.8205 15.134L11.5 25.134L12.5 26.866Z"
     fill="currentColor"></path>
 </svg>
+
+<style>
+  .light-primary {
+    color: var(--color-accent);
+
+    & circle {
+      fill: var(--color-secondary);
+    }
+  }
+
+  .light-secondary {
+    color: var(--color-primary);
+
+    & circle {
+      fill: var(--color-secondary);
+    }
+  }
+
+  .dark-primary {
+    color: var(--color-accent);
+
+    & circle {
+      fill: var(--color-primary);
+    }
+  }
+
+  .dark-secondary {
+    color: var(--color-secondary);
+
+    & circle {
+      fill: var(--color-primary);
+    }
+  }
+
+  .green-primary {
+    color: var(--color-primary);
+
+    & circle {
+      fill: var(--color-accent);
+    }
+  }
+
+  .green-secondary {
+    color: var(--color-secondary);
+
+    & circle {
+      fill: var(--color-accent);
+    }
+  }
+</style>

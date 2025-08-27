@@ -6,7 +6,7 @@ import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
-import Card from '@/components/Card.astro';
+import LinkCard from '@/components/LinkCard.astro';
 import Link from '@/components/Link.astro';
 ---
 
@@ -24,7 +24,7 @@ import Link from '@/components/Link.astro';
         fullstack softwareutvikling, organisasjonsdesign og smidig produkt-, team og
         endringsledelse.
       </p>
-      <Link href="/folka">Les mer</Link>
+      <Link href="/folka" variant="dark-primary">Les mer</Link>
     </Prose>
     <Image
       src={teamImage}
@@ -35,16 +35,16 @@ import Link from '@/components/Link.astro';
 
   <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
     <div class="services-grid">
-      <Card
+      <LinkCard
         variant="default"
         heading="Fullstack"
         subheading="Softwareutvikling"
         linkHref="/tjenester/fullstack"
       />
 
-      <Card variant="green" heading="Design" subheading="UX/UI" linkHref="/tjenester/design" />
+      <LinkCard variant="green" heading="Design" subheading="UX/UI" linkHref="/tjenester/design" />
 
-      <Card
+      <LinkCard
         variant="black"
         heading="Digital"
         subheading="Strategi"
