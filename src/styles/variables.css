@@ -31,10 +31,6 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
 
-  --font:
-    'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', 'Liberation Sans', sans-serif;
-
   --size-header: 6.25rem;
 
   --shadow: -0.625rem 0.625rem 0 0 var(--color-shadow);

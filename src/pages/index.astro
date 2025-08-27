@@ -7,6 +7,7 @@ import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
 import Card from '@/components/Card.astro';
+import Link from '@/components/Link.astro';
 ---
 
 <Layout>
@@ -16,13 +17,14 @@ import Card from '@/components/Card.astro';
     image="/patterns/pattern-0.svg"
   />
   <PageSection heading="Team" subheading="Vi skaper kynd sammen">
-    <Prose align="right" link={{ href: '/folka', label: 'Les mer' }}>
+    <Prose align="right">
       <p>
         Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel - som har gått sammen om å
         lage en transparent, spennende og nytenkende arbeidsplass. Vi er et konsulentbyrå innen
         fullstack softwareutvikling, organisasjonsdesign og smidig produkt-, team og
         endringsledelse.
       </p>
+      <Link href="/folka">Les mer</Link>
     </Prose>
     <Image
       src={teamImage}

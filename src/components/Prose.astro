@@ -1,13 +1,9 @@
 ---
-import Link from './Link.astro';
-import type { LinkProps } from './types';
-
 export type Props = {
   align?: 'left' | 'right' | 'center';
-  link?: LinkProps;
 };
 
-const { align = 'left', link } = Astro.props;
+const { align = 'left' } = Astro.props;
 
 const leftMargin = align === 'left' ? '0' : 'auto';
 const rightMargin = align === 'right' ? '0' : 'auto';
@@ -15,7 +11,6 @@ const rightMargin = align === 'right' ? '0' : 'auto';
 
 <div>
   <slot />
-  {link && <Link {...link} />}
 </div>
 
 <style define:vars={{ leftMargin, rightMargin }}>
@@ -26,21 +21,21 @@ const rightMargin = align === 'right' ? '0' : 'auto';
     margin-inline-end: var(--rightMargin);
 
     @media (--md) {
-      max-width: min(65rem, 60%);
+      max-width: min(65ch, 60%);
     }
   }
 
   :global(p:not(:last-child)) {
-    margin-block-end: 1rem;
+    margin-block-end: 1em;
   }
 
   :global(ul),
   :global(ol) {
     list-style: revert;
-    padding-inline-start: 1rem;
+    padding-inline-start: 1em;
   }
 
   :global(li) {
-    margin-block: 0.5rem;
+    margin-block: 0.5em;
   }
 </style>

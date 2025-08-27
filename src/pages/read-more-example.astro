@@ -9,9 +9,11 @@ import LinkSec from '@/components/LinkSec.astro';
 <Base title="ReadMore Component Examples">
   <PageSection heading="Link Component Examples" subheading="Demonstrating the new Link component">
     <Prose>
-      This is an example of how the ReadMore component can be used. The component consists of a
-      circular icon container with an arrow icon and a label. It supports multiple variants for
-      different color schemes and use cases.
+      <p>
+        This is an example of how the ReadMore component can be used. The component consists of a
+        circular icon container with an arrow icon and a label. It supports multiple variants for
+        different color schemes and use cases.
+      </p>
     </Prose>
 
     <h3>All Link Variants</h3>
@@ -54,9 +56,11 @@ import LinkSec from '@/components/LinkSec.astro';
     subheading="Demonstrating the new LinkSec component with three variants"
   >
     <Prose>
-      The LinkSec component is a simpler alternative to the Link component. It features a clean
-      design with just text and a small arrow icon, available in three color variants: green, white,
-      and dark.
+      <p>
+        The LinkSec component is a simpler alternative to the Link component. It features a clean
+        design with just text and a small arrow icon, available in three color variants: green,
+        white, and dark.
+      </p>
     </Prose>
 
     <h3>All LinkSec Variants</h3>
@@ -104,33 +108,44 @@ import LinkSec from '@/components/LinkSec.astro';
   >
     <div style="margin: 2rem 0;">
       <h4>Prose with Light Primary Link</h4>
-      <Prose link={{ href: '/om-oss', variant: 'light-primary' }}>
-        This Prose component automatically includes a Link component at the bottom because we passed
-        the link prop with an href and variant. The component will appear below this text content,
-        styled according to the specified variant.
+      <Prose>
+        <p>
+          This Prose component automatically includes a Link component at the bottom because we
+          passed the link prop with an href and variant. The component will appear below this text
+          content, styled according to the specified variant.
+        </p>
+        <Link href="/folka" variant="light-primary" />
       </Prose>
     </div>
 
     <div style="margin: 2rem 0;">
       <h4>Prose with Dark Primary Link</h4>
-      <Prose link={{ href: '/folka', variant: 'dark-primary' }}>
-        This example shows a Prose component with a dark primary Link variant. The black background
-        with green arrow creates a nice contrast and follows the design system.
+      <Prose>
+        <p>
+          This example shows a Prose component with a dark primary Link variant. The black
+          background with green arrow creates a nice contrast and follows the design system.
+        </p>
+        <Link href="/folka" variant="dark-primary" />
       </Prose>
     </div>
 
     <div style="margin: 2rem 0;">
       <h4>Prose with Green Primary Link</h4>
-      <Prose link={{ href: '/prosjekter', variant: 'green-primary' }}>
-        Here's a Prose component using the green primary variant. The green background with black
-        arrow and text provides a vibrant, energetic appearance suitable for call-to-action
-        sections.
+      <Prose>
+        <p>
+          Here's a Prose component using the green primary variant. The green background with black
+          arrow and text provides a vibrant, energetic appearance suitable for call-to-action
+          sections.
+        </p>
+        <Link href="/folka" variant="green-primary" />
       </Prose>
     </div>
 
     <Prose>
-      This paragraph is outside of Prose, so it won't have a Link component. Only the text content
-      within Prose components can have Link functionality.
+      <p>
+        This paragraph is outside of Prose, so it won't have a Link component. Only the text content
+        within Prose components can have Link functionality.
+      </p>
     </Prose>
   </PageSection>
 </Base>
