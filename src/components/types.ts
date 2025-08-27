@@ -15,6 +15,4 @@ export type LinkProps = HTMLAttributes<'a'> & {
   label?: string;
 };
 
-// Backward-compatible aliases while migrating usages
-export type ReadMoreVariant = LinkVariant;
-export type ReadMoreProps = LinkProps;
+

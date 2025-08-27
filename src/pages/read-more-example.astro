@@ -3,7 +3,7 @@ import Base from '@/layouts/Base.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Link from '@/components/Link.astro';
-import ReadMoreSec from '@/components/ReadMoreSec.astro';
+import LinkSec from '@/components/LinkSec.astro';
 ---
 
 <Base title="ReadMore Component Examples">
@@ -53,50 +53,50 @@ import ReadMoreSec from '@/components/ReadMoreSec.astro';
   </PageSection>
 
   <PageSection
-    heading="ReadMoreSec Component Examples"
-    subheading="Demonstrating the new ReadMoreSec component with three variants"
+    heading="LinkSec Component Examples"
+    subheading="Demonstrating the new LinkSec component with three variants"
   >
     <Prose>
-      The ReadMoreSec component is a simpler alternative to the ReadMore component. It features a
+      The LinkSec component is a simpler alternative to the Link component. It features a
       clean design with just text and a small arrow icon, available in three color variants: green,
       white, and dark.
     </Prose>
 
-    <h3>All ReadMoreSec Variants</h3>
+    <h3>All LinkSec Variants</h3>
 
     <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
       <div>
         <h4>Green Variant (default)</h4>
-        <ReadMoreSec href="/" />
+        <LinkSec href="/" />
       </div>
 
       <div>
         <h4>White Variant</h4>
-        <ReadMoreSec href="/" variant="white" />
+        <LinkSec href="/" variant="white" />
       </div>
 
       <div>
         <h4>Dark Variant</h4>
-        <ReadMoreSec href="/" variant="dark" />
+        <LinkSec href="/" variant="dark" />
       </div>
     </div>
 
-    <h3>ReadMoreSec on Different Backgrounds</h3>
+    <h3>LinkSec on Different Backgrounds</h3>
 
     <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
       <div style="background: var(--color-dark-blue); padding: 2rem; border-radius: 8px;">
         <h4 style="color: white;">Dark Background - White Variant</h4>
-        <ReadMoreSec href="/" variant="white" />
+        <LinkSec href="/" variant="white" />
       </div>
 
       <div style="background: var(--color-light-green); padding: 2rem; border-radius: 8px;">
         <h4 style="color: var(--color-dark-blue);">Green Background - Dark Variant</h4>
-        <ReadMoreSec href="/" variant="dark" />
+        <LinkSec href="/" variant="dark" />
       </div>
 
       <div style="background: var(--color-light-gray); padding: 2rem; border-radius: 8px;">
         <h4 style="color: var(--color-dark-blue);">Light Gray Background - Green Variant</h4>
-        <ReadMoreSec href="/" variant="green" />
+        <LinkSec href="/" variant="green" />
       </div>
     </div>
   </PageSection>
@@ -132,8 +132,8 @@ import ReadMoreSec from '@/components/ReadMoreSec.astro';
     </div>
 
     <Prose>
-      This paragraph is outside of Prose, so it won't have a ReadMore component. Only the text
-      content within Prose components can have ReadMore functionality.
+      This paragraph is outside of Prose, so it won't have a Link component. Only the text
+      content within Prose components can have Link functionality.
     </Prose>
   </PageSection>
 </Base>

@@ -11,7 +11,7 @@ type Props = HTMLAttributes<'a'> & {
 const { href, class: className, variant = 'green', ...rest } = Astro.props;
 ---
 
-<a href={href} class:list={['read-more-sec', `read-more-sec--${variant}`, className]} {...rest}>
+<a href={href} class:list={['link-sec', `link-sec--${variant}`, className]} {...rest}>
   <span class="label">Les mer</span>
   <div class="icon-container">
     <ArrowRightUp />
@@ -19,16 +19,18 @@ const { href, class: className, variant = 'green', ...rest } = Astro.props;
 </a>
 
 <style>
-  .read-more-sec {
+  .link-sec {
     display: inline-flex;
     align-items: center;
     gap: 15px;
     text-decoration: none;
-    transition: transform var(--animation-duration) ease;
+    transition: transform 0.3s ease-in-out 0.05s;
     cursor: pointer;
 
     &:hover {
-      transform: translateX(4px);
+      .icon-container {
+        transform: rotate(30deg);
+      }
     }
 
     &:focus-visible {
@@ -38,7 +40,6 @@ const { href, class: className, variant = 'green', ...rest } = Astro.props;
   }
 
   .label {
-    font-family: 'Mundial', sans-serif;
     font-weight: var(--font-weight-normal);
     font-size: var(--fs-label-l);
     line-height: var(--line-height-m);
@@ -51,20 +52,21 @@ const { href, class: className, variant = 'green', ...rest } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.3s ease-in-out 0.05s;
   }
 
   /* Green variant */
-  .read-more-sec--green {
+  .link-sec--green {
     color: var(--color-light-green);
   }
 
   /* White variant */
-  .read-more-sec--white {
+  .link-sec--white {
     color: var(--color-white);
   }
 
   /* Dark variant */
-  .read-more-sec--dark {
+  .link-sec--dark {
     color: var(--color-dark-blue);
   }
 </style>
