@@ -4,7 +4,13 @@ import LinkIcon from '@/icons/LinkIcon.astro';
 
 type Props = LinkProps;
 
-const { href, class: className, variant = 'light-primary', label = 'Les mer', ...rest } = Astro.props;
+const {
+  href,
+  class: className,
+  variant = 'light-primary',
+  label = 'Les mer',
+  ...rest
+} = Astro.props;
 ---
 
 <a
@@ -120,5 +126,3 @@ const { href, class: className, variant = 'light-primary', label = 'Les mer', ..
     color: var(--color-white);
   }
 </style>
-
-

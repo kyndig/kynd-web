@@ -14,5 +14,3 @@ export type LinkProps = HTMLAttributes<'a'> & {
   variant?: LinkVariant;
   label?: string;
 };
-
-
