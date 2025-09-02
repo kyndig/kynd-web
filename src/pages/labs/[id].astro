@@ -27,23 +27,23 @@ const isMultiItemLab = lab.id === 'raycast-extensions';
   {
     isMultiItemLab ? (
       <section class="multi-item-section">
-                 <div class="link-cards-grid">
-           <LinkCard
-             heading="Kynd Time Tracker"
-             href="/labs/raycast-extensions/time-tracker"
-             variant="labs"
-           />
-           <LinkCard
-             heading="Kynd Project Manager"
-             href="/labs/raycast-extensions/project-manager"
-             variant="labs"
-           />
-           <LinkCard
-             heading="Kynd Slack Integration"
-             href="/labs/raycast-extensions/slack-integration"
-             variant="labs"
-           />
-         </div>
+        <div class="link-cards-grid">
+          <LinkCard
+            heading="Kynd Time Tracker"
+            href="/labs/raycast-extensions/time-tracker"
+            variant="default"
+          />
+          <LinkCard
+            heading="Kynd Project Manager"
+            href="/labs/raycast-extensions/project-manager"
+            variant="green"
+          />
+          <LinkCard
+            heading="Kynd Slack Integration"
+            href="/labs/raycast-extensions/slack-integration"
+            variant="black"
+          />
+        </div>
       </section>
     ) : (
       <section class="single-item-section">
