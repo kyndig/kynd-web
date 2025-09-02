@@ -1,6 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import WideCard from '@/components/WideCard.astro';
+import LinkCard from '@/components/LinkCard.astro';
 ---
 
 <Base title="WideCard Component Demo">
@@ -20,6 +21,14 @@ import WideCard from '@/components/WideCard.astro';
         imageSrc="/blog-placeholder-1.jpg"
         imageAlt="Default variant example"
       />
+    </section>
+
+    <section class="demo-section">
+      <h2>Comparing to regular cards</h2>
+      <div class="combination-grid">
+        <LinkCard variant="default" heading="LinkCard 1" href="/link1" />
+        <LinkCard variant="green" heading="LinkCard 2" href="/link2" />
+      </div>
     </section>
 
     <section class="demo-section">
@@ -71,6 +80,22 @@ import WideCard from '@/components/WideCard.astro';
       <h2>Minimal Content</h2>
       <WideCard variant="black" heading="Minimal WideCard" href="/minimal" />
     </section>
+
+    <section class="demo-section">
+      <h2>Alternative Combination Layout</h2>
+      <div class="alternative-grid">
+        <LinkCard variant="default" heading="LinkCard A" href="/link-a" />
+        <LinkCard variant="green" heading="LinkCard B" href="/link-b" />
+        <WideCard
+          variant="black"
+          heading="WideCard in Alternative Layout"
+          description="This WideCard spans the full width below the LinkCards."
+          href="/wide-alt"
+          imageSrc="/blog-placeholder-5.jpg"
+          imageAlt="Alternative layout WideCard"
+        />
+      </div>
+    </section>
   </main>
 </Base>
 
@@ -112,5 +137,29 @@ import WideCard from '@/components/WideCard.astro';
 
   .demo-section:last-child {
     margin-bottom: 0;
+  }
+
+  .combination-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .alternative-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (--md) {
+    .alternative-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .alternative-grid > :last-child {
+      grid-column: 1 / -1;
+    }
   }
 </style>
