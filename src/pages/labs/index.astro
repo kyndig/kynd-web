@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Base.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import WideCard from '@/components/WideCard.astro';
+
+const labs = await getCollection('labs');
+---
+
+<Layout title="Kynd Labs" description="Stæsj vi lager i Kynd">
+  <HeroSection title="Kynd Labs" preamble="Stæsj vi lager i Kynd" image="/patterns/pattern-0.svg" />
+  <section>
+         {
+       labs.map((lab) => (
+         <WideCard
+           heading={lab.data.title}
+           description={lab.data.description}
+           href={`/labs/${lab.id}`}
+           imageSrc={lab.data.image?.src || '/raycast-icon.png'}
+           imageAlt={lab.data.title}
+           variant="labs"
+         />
+       ))
+     }
+  </section>
+</Layout>
+
+<style>
+  section {
+    display: grid;
+    gap: 2rem;
+    justify-items: center;
+  }
+</style>
