@@ -1,0 +1,120 @@
+---
+import Base from '@/layouts/Base.astro';
+import WideCard from '@/components/WideCard.astro';
+---
+
+<Base title="WideCard Component Demo">
+  <main class="demo-container">
+    <header class="demo-header">
+      <h1>WideCard Component Demo</h1>
+      <p>Quality checking all three variants of the WideCard component</p>
+    </header>
+
+    <section class="demo-section">
+      <h2>Default Variant</h2>
+      <WideCard
+        variant="default"
+        heading="Default WideCard"
+        description="This is the default variant of the WideCard component. It features a light gray background with green accent highlights and uses pattern-2.svg for the background decoration."
+        href="/default"
+        imageSrc="/blog-placeholder-1.jpg"
+        imageAlt="Default variant example"
+      />
+    </section>
+
+    <section class="demo-section">
+      <h2>Green Variant</h2>
+      <WideCard
+        variant="green"
+        heading="Green WideCard"
+        description="This is the green variant of the WideCard component. It features a bright green background with white text and uses pattern-1.svg for the background decoration."
+        href="/green"
+        imageSrc="/blog-placeholder-2.jpg"
+        imageAlt="Green variant example"
+      />
+    </section>
+
+    <section class="demo-section">
+      <h2>Black Variant</h2>
+      <WideCard
+        variant="black"
+        heading="Black WideCard"
+        description="This is the black variant of the WideCard component. It features a dark blue background with white text and uses pattern-1.svg for the background decoration."
+        href="/black"
+        imageSrc="/blog-placeholder-3.jpg"
+        imageAlt="Black variant example"
+      />
+    </section>
+
+    <section class="demo-section">
+      <h2>Without Image</h2>
+      <WideCard
+        variant="default"
+        heading="WideCard Without Image"
+        description="This WideCard demonstrates the component without an image, showing how the layout adapts when no image is provided."
+        href="/no-image"
+      />
+    </section>
+
+    <section class="demo-section">
+      <h2>Without Link</h2>
+      <WideCard
+        variant="green"
+        heading="WideCard Without Link"
+        description="This WideCard demonstrates the component without a link, showing how the layout adapts when no href is provided."
+        imageSrc="/blog-placeholder-4.jpg"
+        imageAlt="No link example"
+      />
+    </section>
+
+    <section class="demo-section">
+      <h2>Minimal Content</h2>
+      <WideCard
+        variant="black"
+        heading="Minimal WideCard"
+        href="/minimal"
+      />
+    </section>
+  </main>
+</Base>
+
+<style>
+  .demo-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: var(--content-padding);
+  }
+
+  .demo-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .demo-header h1 {
+    font-size: var(--fs-heading-l);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 1rem 0;
+    color: var(--color-primary);
+  }
+
+  .demo-header p {
+    font-size: var(--fs-body-l);
+    color: var(--color-gray);
+    margin: 0;
+  }
+
+  .demo-section {
+    margin-bottom: 4rem;
+  }
+
+  .demo-section h2 {
+    font-size: var(--fs-heading-m);
+    font-weight: var(--font-weight-medium);
+    margin: 0 0 2rem 0;
+    color: var(--color-primary);
+  }
+
+  .demo-section:last-child {
+    margin-bottom: 0;
+  }
+</style>
