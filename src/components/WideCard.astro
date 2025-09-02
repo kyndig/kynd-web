@@ -10,13 +10,13 @@ export type Props = {
   imageAlt?: string;
 };
 
-const { 
-  variant = 'default', 
-  heading, 
-  description, 
-  href, 
-  imageSrc, 
-  imageAlt = heading 
+const {
+  variant = 'default',
+  heading,
+  description,
+  href,
+  imageSrc,
+  imageAlt = heading,
 } = Astro.props;
 
 const variantMap = {
@@ -34,22 +34,28 @@ const linkVariant = variantMap[variant];
       <div class="heading-container">
         <h2 class="heading">{heading}</h2>
       </div>
-      {description && (
-        <div class="description-container">
-          <p class="description">{description}</p>
-        </div>
-      )}
-      {href && (
-        <div class="link-container">
-          <Link href={href} variant={linkVariant} linkOverlay aria-label={heading} />
-        </div>
-      )}
+      {
+        description && (
+          <div class="description-container">
+            <p class="description">{description}</p>
+          </div>
+        )
+      }
+      {
+        href && (
+          <div class="link-container">
+            <Link href={href} variant={linkVariant} linkOverlay aria-label={heading} />
+          </div>
+        )
+      }
     </div>
-    {imageSrc && (
-      <div class="image-container">
-        <img src={imageSrc} alt={imageAlt} class="image" />
-      </div>
-    )}
+    {
+      imageSrc && (
+        <div class="image-container">
+          <img src={imageSrc} alt={imageAlt} class="image" />
+        </div>
+      )
+    }
   </div>
   <div class:list={['pattern', variant]} aria-hidden="true"></div>
 </div>
