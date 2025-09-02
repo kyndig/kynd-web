@@ -1,0 +1,219 @@
+---
+import Link from '@/components/Link.astro';
+
+export type Props = {
+  variant?: 'default' | 'green' | 'black';
+  heading: string;
+  description?: string;
+  href?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+};
+
+const { 
+  variant = 'default', 
+  heading, 
+  description, 
+  href, 
+  imageSrc, 
+  imageAlt = heading 
+} = Astro.props;
+
+const variantMap = {
+  default: 'dark-primary',
+  green: 'dark-secondary',
+  black: 'light-secondary',
+} as const;
+
+const linkVariant = variantMap[variant];
+---
+
+<div class:list={['wide-card', variant]}>
+  <div class="content-container">
+    <div class="text-content">
+      <div class="heading-container">
+        <h2 class="heading">{heading}</h2>
+      </div>
+      {description && (
+        <div class="description-container">
+          <p class="description">{description}</p>
+        </div>
+      )}
+      {href && (
+        <div class="link-container">
+          <Link href={href} variant={linkVariant} linkOverlay aria-label={heading} />
+        </div>
+      )}
+    </div>
+    {imageSrc && (
+      <div class="image-container">
+        <img src={imageSrc} alt={imageAlt} class="image" />
+      </div>
+    )}
+  </div>
+  <div class:list={['pattern', variant]} aria-hidden="true"></div>
+</div>
+
+<style>
+  .wide-card {
+    position: relative;
+    inline-size: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: var(--background-color);
+    border: 2px solid var(--color-dark-blue);
+    overflow: hidden;
+    color: var(--color-text);
+    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+
+    &.default {
+      --background-color: var(--color-secondary-shade);
+      --highlight-color: var(--color-accent);
+      --pattern-color: #ececec;
+    }
+
+    &.green {
+      --background-color: var(--color-accent);
+      --highlight-color: var(--color-secondary);
+      --pattern-color: var(--color-primary);
+    }
+
+    &.black {
+      --background-color: var(--color-primary);
+      --highlight-color: var(--color-secondary);
+      --pattern-color: var(--color-secondary);
+    }
+
+    @media (--md) {
+      padding: 3.125rem;
+      gap: 4rem;
+    }
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    inline-size: 100%;
+    z-index: 1;
+
+    @media (--md) {
+      flex-direction: row;
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+
+  .text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @media (--md) {
+      gap: 2rem;
+    }
+  }
+
+  .image-container {
+    flex-shrink: 0;
+    inline-size: 100%;
+    max-inline-size: 20rem;
+    z-index: 1;
+
+    @media (--md) {
+      inline-size: 20rem;
+    }
+  }
+
+  .image {
+    inline-size: 100%;
+    block-size: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .heading-container {
+    z-index: 1;
+  }
+
+  .description-container {
+    z-index: 1;
+  }
+
+  .link-container {
+    z-index: 1;
+  }
+
+  .heading {
+    font-size: var(--fs-heading-s);
+    font-weight: var(--font-weight-medium);
+    line-height: 2;
+    margin: 0;
+    background-color: var(--highlight-color);
+    padding: 0.5em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+
+    @media (--md) {
+      font-size: var(--fs-heading-m);
+    }
+  }
+
+  .description {
+    font-size: var(--fs-body-m);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-m);
+    margin: 0;
+    color: var(--color-text);
+
+    @media (--md) {
+      font-size: var(--fs-body-l);
+    }
+  }
+
+  .pattern {
+    position: absolute;
+    top: var(--pattern-top, 50%);
+    left: var(--pattern-left, 65%);
+    transform: translate(-50%, var(--pattern-transform-y, -50%));
+    z-index: 0;
+    height: var(--pattern-size, 100%);
+    aspect-ratio: var(--pattern-aspect, 1 / 1);
+    background-color: var(--pattern-color);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
+  .pattern.default {
+    --pattern-top: 0%;
+    --pattern-left: 100%;
+    --pattern-size: 100%;
+    --pattern-transform-y: 0%;
+    --pattern-aspect: 1219 / 878;
+    -webkit-mask-image: url('/patterns/pattern-2.svg');
+    mask-image: url('/patterns/pattern-2.svg');
+  }
+
+  .pattern.green,
+  .pattern.black {
+    --pattern-top: 100%;
+    --pattern-left: 100%;
+    --pattern-size: 100%;
+    --pattern-aspect: 1099 / 755;
+    -webkit-mask-image: url('/patterns/pattern-1.svg');
+    mask-image: url('/patterns/pattern-1.svg');
+  }
+</style>
