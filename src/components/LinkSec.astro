@@ -1,0 +1,72 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import ArrowRightUp from '@/icons/ArrowRightUp.astro';
+
+type Props = HTMLAttributes<'a'> & {
+  href: string;
+  class?: string;
+  variant?: 'green' | 'white' | 'dark';
+};
+
+const { href, class: className, variant = 'green', ...rest } = Astro.props;
+---
+
+<a href={href} class:list={['link-sec', `link-sec--${variant}`, className]} {...rest}>
+  <span class="label">Les mer</span>
+  <div class="icon-container">
+    <ArrowRightUp />
+  </div>
+</a>
+
+<style>
+  .link-sec {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out 0.05s;
+    cursor: pointer;
+
+    &:hover {
+      .icon-container {
+        transform: rotate(30deg);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .label {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--fs-label-l);
+    line-height: var(--line-height-m);
+  }
+
+  .icon-container {
+    flex-shrink: 0;
+    width: 20px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out 0.05s;
+  }
+
+  /* Green variant */
+  .link-sec--green {
+    color: var(--color-light-green);
+  }
+
+  /* White variant */
+  .link-sec--white {
+    color: var(--color-white);
+  }
+
+  /* Dark variant */
+  .link-sec--dark {
+    color: var(--color-dark-blue);
+  }
+</style>

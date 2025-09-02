@@ -1,0 +1,78 @@
+---
+export type Props = {
+  variant?:
+    | 'light-primary'
+    | 'light-secondary'
+    | 'dark-primary'
+    | 'dark-secondary'
+    | 'green-primary'
+    | 'green-secondary';
+};
+
+const { variant = 'light-primary' } = Astro.props;
+---
+
+<svg
+  width="100%"
+  height="100%"
+  viewBox="0 0 41 41"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class:list={[variant]}
+  aria-hidden="true"
+>
+  <circle cx="20.5" cy="20.5" r="20.5" fill="white"></circle>
+  <path
+    d="M11.5 25.134C11.0217 25.4101 10.8578 26.0217 11.134 26.5C11.4101 26.9783 12.0217 27.1422 12.5 26.866L11.5 25.134ZM30.2864 16.2588C30.4294 15.7254 30.1128 15.177 29.5793 15.0341L20.886 12.7047C20.3525 12.5618 19.8042 12.8783 19.6612 13.4118C19.5183 13.9453 19.8349 14.4936 20.3684 14.6366L28.0958 16.7071L26.0252 24.4345C25.8823 24.968 26.1989 25.5163 26.7323 25.6593C27.2658 25.8022 27.8141 25.4856 27.9571 24.9522L30.2864 16.2588ZM12.5 26.866L29.8205 16.866L28.8205 15.134L11.5 25.134L12.5 26.866Z"
+    fill="currentColor"></path>
+</svg>
+
+<style>
+  .light-primary {
+    color: var(--color-accent);
+
+    & circle {
+      fill: var(--color-secondary);
+    }
+  }
+
+  .light-secondary {
+    color: var(--color-primary);
+
+    & circle {
+      fill: var(--color-secondary);
+    }
+  }
+
+  .dark-primary {
+    color: var(--color-accent);
+
+    & circle {
+      fill: var(--color-primary);
+    }
+  }
+
+  .dark-secondary {
+    color: var(--color-secondary);
+
+    & circle {
+      fill: var(--color-primary);
+    }
+  }
+
+  .green-primary {
+    color: var(--color-primary);
+
+    & circle {
+      fill: var(--color-accent);
+    }
+  }
+
+  .green-secondary {
+    color: var(--color-secondary);
+
+    & circle {
+      fill: var(--color-accent);
+    }
+  }
+</style>

@@ -16,22 +16,22 @@ const { bigImage, smallImage, text } = Astro.props;
     <Image {...smallImage} />
     <p>{text}</p>
   </div>
-
-  <style>
-    .dual-image {
-      display: grid;
-      row-gap: 2rem;
-      column-gap: 4rem;
-
-      @media (--md) {
-        grid-template-columns: 3fr 2fr;
-      }
-    }
-
-    .small-image-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-  </style>
 </div>
+
+<style>
+  .dual-image {
+    display: grid;
+    row-gap: 2rem;
+    column-gap: 4rem;
+
+    @media (--md) {
+      grid-template-columns: 3fr 2fr;
+    }
+  }
+
+  .small-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>

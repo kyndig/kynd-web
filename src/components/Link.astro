@@ -1,0 +1,83 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+import LinkIcon from '@/icons/LinkIcon.astro';
+
+type Variant =
+  | 'light-primary'
+  | 'light-secondary'
+  | 'dark-primary'
+  | 'dark-secondary'
+  | 'green-primary'
+  | 'green-secondary';
+
+export type Props = HTMLAttributes<'a'> & {
+  label?: string;
+  variant?: Variant;
+  linkOverlay?: boolean;
+};
+
+const {
+  href,
+  label = 'Les mer',
+  variant = 'light-primary',
+  linkOverlay = false,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['link', `link--${variant}`, linkOverlay && 'link--overlay', Astro.props.class]}
+  {...rest}
+>
+  <LinkIcon variant={variant} />
+  <span class="label">{label}</span>
+</a>
+
+<style>
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+
+    & :global(svg) {
+      flex-shrink: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      transition: transform 0.2s ease-in-out 0.05s;
+    }
+
+    &:hover {
+      & :global(svg) {
+        transform: rotate(30deg);
+      }
+    }
+
+    &.link--overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+  }
+
+  .label {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--fs-label-l);
+    line-height: var(--line-height-m);
+  }
+
+  .link--light-primary .label,
+  .link--light-secondary .label,
+  .link--green-secondary .label {
+    color: var(--color-secondary);
+  }
+
+  .link--dark-primary .label,
+  .link--dark-secondary .label,
+  .link--green-primary .label {
+    color: var(--color-primary);
+  }
+</style>

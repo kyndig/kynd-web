@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { parseDate } from './utils/dateHelpers';
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
@@ -30,6 +31,15 @@ const projects = defineCollection({
       description: z.string(),
       image: image(),
       fullLogo: image().optional(), // Optional alternate image for list/grid views
+      kyndLogo: image().optional(), // Kynd-branded version for hover effects
+      startDate: z
+        .string()
+        .optional()
+        .transform((val) => (val ? parseDate(val) : undefined)),
+      endDate: z
+        .string()
+        .optional()
+        .transform((val) => (val ? parseDate(val) : undefined)),
     }),
 });
 

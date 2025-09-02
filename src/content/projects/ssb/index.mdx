@@ -1,0 +1,53 @@
+---
+title: 'Digital forbrukerundersøkelse'
+customer: 'Statistisk sentralbyrå'
+image: './ssb-dark.svg'
+fullLogo: './ssb-dark.svg'
+kyndLogo: './ssb-kynd-dark.svg'
+description: 'Daniel hjalp SSB med å digitalisere undersøkelsen som kartlegger den norske befolkningens forbruksmønster. '
+startDate: '2024-03'
+---
+
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
+
+<PageSection heading="Digital forbrukerundersøkelse" subheading="◃ Prosjektet">
+  <Prose align="left">
+    <p>
+      SSB er et norsk statistisk institutt som samler inn og analyserer data om befolkningen. SSB
+      har en undersøkelse som kartlegger den norske befolkningens forbruksmønster. Undersøkelsen
+      kalles Konsumundersøkelsen. Undersøkelsen er en av de største undersøkelsene i Norge, og har
+      vært i bruk siden 1960.
+    </p>
+    <p>
+      Tidligere ble forbrukerdata samlet inn ved hjelp av skjema som måtte fylles ut med penn og
+      papir. Teamet, inkludert Daniel, laget en ny app hvor man kunne samle forbruk ved hjelp av
+      scanning av kvittering, automatisk henting av kvitteringer fra dagligvarekjeder, og manuell
+      registrering ved hjelp av et spørreskjema i appen.
+    </p>
+  </Prose>
+</PageSection>
+
+<PageSection heading="Fullstack utvikling" subheading="◃ Kynds rolle">
+  <Prose align="right">
+    <p>
+      Daniel jobbet med å etablere infrastruktur, sette opp pipelines i Azure Pipelines,
+      datamodellering, utvikling av microservices i Kotlin/Java og hadde spesielt hovedansvar for å
+      lage en skalerende ETL-pipeline (Apache Beam, Google Dataflow) for å håndtere transaksjonsdata
+      fra app og kvitteringer fra dagligvarekjedene. Denne pipelinen håndterte 2-3 millioner
+      kvitteringer daglig, og hadde en peak på 40 000 kvitteringer i sekundet (batch-prosessering).
+      Hovedtyngden har vært på design og utvikling av apper basert på moderne REST-prinsipper med
+      Spring Boot, Docker, Kotlin, Java og frontend-apper i React med Typescript. Konsulenten har
+      også jobbet med applikasjoner som kommuniserte event-driven via Google PUB/SUB.
+    </p>
+  </Prose>
+  <Prose align="left">
+    <p>
+      Daniel utviklet nytt hendelsesorientert system for kommunikasjon mellom on-premise løsninger
+      og løsninger på Google Cloud ved hjelp av Google Pub/Sub. Dette ble brukt for å integrere et
+      on-prem software med egne utviklede løsninger på Google Cloud. Dette ble brukt for å enklere
+      administrere og få oversikt over data som tidligere var utilgjengelig, og som økte
+      produktiviteten og rekrutteringen til intervjuere for SSB sine undersøkelser.
+    </p>
+  </Prose>
+</PageSection>

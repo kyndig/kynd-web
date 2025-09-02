@@ -6,13 +6,15 @@ import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
+import LinkCard from '@/components/LinkCard.astro';
+import Link from '@/components/Link.astro';
 ---
 
 <Layout>
   <HeroSection
     title="Something forfriskende, kynd"
     preamble="En gjeng kompetente folk som bygger et annerledes konsulentbyrå sammen."
-    image="/Layer_2.svg"
+    image="/patterns/pattern-0.svg"
   />
   <PageSection heading="Team" subheading="Vi skaper kynd sammen">
     <Prose align="right">
@@ -22,12 +24,25 @@ import Layout from '@/layouts/Base.astro';
         fullstack softwareutvikling, organisasjonsdesign og smidig produkt-, team og
         endringsledelse.
       </p>
+      <Link href="/folka" variant="dark-primary">Les mer</Link>
     </Prose>
     <Image
       src={teamImage}
       alt="Tre amigos - Axel, Daniel og Frederik - står foran en gul vegg med armene i kryss og ser ganske så fornøyde ut"
       loading="eager"
     />
+  </PageSection>
+
+  <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
+    <div class="services-grid">
+      <LinkCard
+        variant="default"
+        heading="Fullstack Softwareutvikling"
+        href="/tjenester/fullstack"
+      />
+      <LinkCard variant="green" heading="Design UX/UI" href="/tjenester/design" />
+      <LinkCard variant="black" heading="Digital Strategi" href="/tjenester/strategi" />
+    </div>
   </PageSection>
   <PageSection
     heading="Kontakt oss"
@@ -36,3 +51,19 @@ import Layout from '@/layouts/Base.astro';
     <ContactUs />
   </PageSection>
 </Layout>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  @media (max-width: 48em) {
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
