@@ -38,20 +38,41 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
       background-color: var(--color-accent);
     }
 
-    /* In mobile menu, optimize for scrollable layout */
-    @media (max-width: 768px) {
-      &:not(.button) {
-        padding-inline: 1rem;
-        font-size: var(--fs-label-m);
-        min-width: fit-content;
-      }
+    /* Mobile-first: start with mobile styles */
+    &:not(.button) {
+      padding-inline: 1rem;
+      font-size: var(--fs-label-m);
+      min-width: fit-content;
+      white-space: nowrap; /* Prevent text wrapping */
+      text-align: center; /* Center text within each item */
+      flex-shrink: 0; /* Prevent shrinking to maintain readability */
     }
 
     /* For very small screens, reduce padding but maintain readability */
-    @media (max-width: 400px) {
+    @media (--xs) {
       &:not(.button) {
         padding-inline: 0.75rem;
         font-size: var(--fs-label-s);
+      }
+    }
+
+    /* Desktop overrides */
+    @media (--lg) {
+      &:not(.button) {
+        padding-inline: 1rem;
+        font-size: var(--fs-label-l);
+      }
+    }
+
+    @media (--xl) {
+      &:not(.button) {
+        padding-inline: 1.25rem;
+      }
+    }
+
+    @media (--2xl) {
+      &:not(.button) {
+        padding-inline: 1.5rem;
       }
     }
   }

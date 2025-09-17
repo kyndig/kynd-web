@@ -1,24 +1,47 @@
 ---
 import Logo from '@/components/Logo.astro';
 import NavLink from '@/components/NavLink.astro';
+
+// Define navigation items in one place
+const navItems = [
+  { href: '/labs', text: 'Labs' },
+  { href: '/folka', text: 'Folka' },
+  { href: '/prosjekter', text: 'Prosjekter' },
+  { href: '/bok', text: 'Håndbok' },
+  { href: '/om-oss', text: 'Om oss', isButton: true },
+];
+
+// Navigation items configuration
 ---
 
 <header>
+  <!-- Main navigation header -->
   <div class="header-content">
     <a href="/" aria-label="Forside" class="logo-link"><Logo /></a>
-    
+
     <!-- Desktop Navigation -->
     <nav class="desktop-nav">
-      <!-- <NavLink href="/tjenester">Tjenester</NavLink> -->
-      <!-- <NavLink href="/kontakt-oss" isButton>Kontakt oss</NavLink> -->
-      <NavLink href="/prosjekter">Prosjekter</NavLink>
-      <NavLink href="/bok">Håndbok</NavLink>
-      <NavLink href="/om-oss" isButton>Om oss</NavLink>
+      {
+        navItems.map((item) =>
+          item.isButton ? (
+            <NavLink href={item.href} isButton>
+              {item.text}
+            </NavLink>
+          ) : (
+            <NavLink href={item.href}>{item.text}</NavLink>
+          ),
+        )
+      }
     </nav>
 
     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
-      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <button
+        class="mobile-menu-toggle"
+        id="mobile-menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
         <span class="burger-line"></span>
         <span class="burger-line"></span>
         <span class="burger-line"></span>
@@ -26,13 +49,24 @@ import NavLink from '@/components/NavLink.astro';
     </nav>
   </div>
 
-  <!-- Mobile Menu Dropdown -->
-  <div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-menu-content">
-      <NavLink href="/prosjekter">Prosjekter</NavLink>
-      <NavLink href="/bok">Håndbok</NavLink>
-      <NavLink href="/om-oss" isButton>Om oss</NavLink>
-    </div>
+  <!-- Drawer Overlay -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- Drawer Menu -->
+  <div class="drawer-menu" id="drawer-menu">
+    <nav class="drawer-nav">
+      {
+        navItems.map((item) =>
+          item.isButton ? (
+            <NavLink href={item.href} isButton>
+              {item.text}
+            </NavLink>
+          ) : (
+            <NavLink href={item.href}>{item.text}</NavLink>
+          ),
+        )
+      }
+    </nav>
   </div>
 </header>
 
@@ -63,28 +97,28 @@ import NavLink from '@/components/NavLink.astro';
 
   /* Desktop Navigation */
   .desktop-nav {
-    display: flex;
-    column-gap: 1rem;
+    display: none;
+    column-gap: 0.5rem;
     align-items: center;
     margin-inline-start: auto;
 
     @media (--md) {
-      column-gap: 2.5rem;
+      display: flex;
+      column-gap: 1rem;
     }
 
-    /* Hide on mobile when space is tight */
-    @media (max-width: 768px) {
-      display: none;
+    @media (--xl) {
+      column-gap: 1.5rem;
     }
   }
 
   /* Mobile Navigation */
   .mobile-nav {
-    display: none;
+    display: block;
     margin-inline-start: auto;
 
-    @media (max-width: 768px) {
-      display: block;
+    @media (--md) {
+      display: none;
     }
   }
 
@@ -108,7 +142,7 @@ import NavLink from '@/components/NavLink.astro';
       transform-origin: center;
     }
 
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       .burger-line:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
       }
@@ -123,19 +157,41 @@ import NavLink from '@/components/NavLink.astro';
     }
   }
 
-  /* Mobile Menu Dropdown */
-  .mobile-menu {
-    position: absolute;
-    top: 100%;
+  /* Drawer Overlay */
+  .drawer-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 8;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.open {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  /* Drawer Menu */
+  .drawer-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 280px;
     background-color: var(--color-background);
-    border-bottom: 1px solid var(--color-border);
-    transform: translateY(-100%);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    transform: translateY(-10px);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 5;
+    overflow: hidden;
 
     &.open {
       transform: translateY(0);
@@ -144,128 +200,83 @@ import NavLink from '@/components/NavLink.astro';
     }
   }
 
-  .mobile-menu-content {
-    inline-size: min(var(--content-max-width), 100% - 2 * var(--content-padding));
-    margin-inline: auto;
-    padding: 1rem 0;
+  .drawer-nav {
+    padding: 1rem;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     gap: 0.5rem;
-    overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE */
-    scroll-behavior: smooth;
-    position: relative;
 
-    /* Hide scrollbar for webkit browsers */
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    a {
+      display: block;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--color-text);
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
 
-    /* Add subtle fade indicators for scrollable content */
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 20px;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+      &:hover {
+        background-color: var(--color-accent);
+      }
 
-    &::before {
-      left: 0;
-      background: linear-gradient(to right, var(--color-background), transparent);
-    }
+      &.button {
+        background-color: var(--color-primary);
+        color: var(--color-secondary);
+        text-align: center;
+        font-weight: 600;
 
-    &::after {
-      right: 0;
-      background: linear-gradient(to left, var(--color-background), transparent);
-    }
-
-    /* Show indicators when scrolling is possible */
-    &.can-scroll-left::before {
-      opacity: 1;
-    }
-
-    &.can-scroll-right::after {
-      opacity: 1;
-    }
-
-    /* Ensure items don't shrink below minimum width */
-    > * {
-      flex-shrink: 0;
-      min-width: fit-content;
+        &:hover {
+          background-color: var(--color-primary-shade);
+        }
+      }
     }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuContent = mobileMenu?.querySelector('.mobile-menu-content') as HTMLElement;
-    
-    if (mobileMenuToggle && mobileMenu) {
-      mobileMenuToggle.addEventListener('click', function() {
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const drawerMenu = document.getElementById('drawer-menu');
+
+    function openDrawer() {
+      drawerOverlay?.classList.add('open');
+      drawerMenu?.classList.add('open');
+      mobileMenuToggle?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden'; // Prevent body scroll
+    }
+
+    function closeDrawerMenu() {
+      drawerOverlay?.classList.remove('open');
+      drawerMenu?.classList.remove('open');
+      mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = ''; // Restore body scroll
+    }
+
+    if (mobileMenuToggle && drawerOverlay && drawerMenu) {
+      // Open drawer when burger menu is clicked
+      mobileMenuToggle.addEventListener('click', function () {
         const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-        
-        // Toggle aria-expanded
-        mobileMenuToggle.setAttribute('aria-expanded', String(!isExpanded));
-        
-        // Toggle menu visibility
-        mobileMenu.classList.toggle('open');
-        
-        // Update scroll indicators when menu opens
-        if (!isExpanded && mobileMenuContent) {
-          updateScrollIndicators(mobileMenuContent);
+
+        if (isExpanded) {
+          closeDrawerMenu();
+        } else {
+          openDrawer();
         }
       });
-      
-      // Close menu when clicking on a link
-      const mobileNavLinks = mobileMenu.querySelectorAll('a');
-      mobileNavLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          mobileMenuToggle.setAttribute('aria-expanded', 'false');
-          mobileMenu.classList.remove('open');
-        });
-      });
-      
-      // Close menu when clicking outside
-      document.addEventListener('click', function(event) {
-        if (event.target &&
-            !mobileMenuToggle.contains(event.target as Node) && 
-            !mobileMenu.contains(event.target as Node)) {
-          mobileMenuToggle.setAttribute('aria-expanded', 'false');
-          mobileMenu.classList.remove('open');
-        }
-      });
-    }
 
-    // Function to update scroll indicators
-    function updateScrollIndicators(container: HTMLElement) {
-      const canScrollLeft = container.scrollLeft > 0;
-      const canScrollRight = container.scrollLeft < (container.scrollWidth - container.clientWidth);
-      
-      // Add/remove classes for scroll indicators
-      container.classList.toggle('can-scroll-left', canScrollLeft);
-      container.classList.toggle('can-scroll-right', canScrollRight);
-    }
+      // Close drawer when overlay is clicked
+      drawerOverlay.addEventListener('click', closeDrawerMenu);
 
-    // Update scroll indicators on scroll
-    if (mobileMenuContent) {
-      mobileMenuContent.addEventListener('scroll', function() {
-        updateScrollIndicators(mobileMenuContent);
+      // Close drawer when clicking on navigation links
+      const drawerNavLinks = drawerMenu.querySelectorAll('a');
+      drawerNavLinks.forEach((link) => {
+        link.addEventListener('click', closeDrawerMenu);
       });
 
-      // Update indicators on resize
-      window.addEventListener('resize', function() {
-        if (mobileMenu?.classList.contains('open') && mobileMenuContent) {
-          updateScrollIndicators(mobileMenuContent);
+      // Close drawer when pressing Escape key
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && drawerMenu.classList.contains('open')) {
+          closeDrawerMenu();
         }
       });
     }
