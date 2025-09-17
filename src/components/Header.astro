@@ -6,13 +6,33 @@ import NavLink from '@/components/NavLink.astro';
 <header>
   <div class="header-content">
     <a href="/" aria-label="Forside" class="logo-link"><Logo /></a>
-    <nav>
+    
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
       <!-- <NavLink href="/tjenester">Tjenester</NavLink> -->
       <!-- <NavLink href="/kontakt-oss" isButton>Kontakt oss</NavLink> -->
       <NavLink href="/prosjekter">Prosjekter</NavLink>
       <NavLink href="/bok">Håndbok</NavLink>
       <NavLink href="/om-oss" isButton>Om oss</NavLink>
     </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-content">
+      <NavLink href="/prosjekter">Prosjekter</NavLink>
+      <NavLink href="/bok">Håndbok</NavLink>
+      <NavLink href="/om-oss" isButton>Om oss</NavLink>
+    </div>
   </div>
 </header>
 
@@ -32,7 +52,7 @@ import NavLink from '@/components/NavLink.astro';
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Prevent wrapping */
   }
 
   .logo-link {
@@ -41,7 +61,8 @@ import NavLink from '@/components/NavLink.astro';
     flex-shrink: 0;
   }
 
-  nav {
+  /* Desktop Navigation */
+  .desktop-nav {
     display: flex;
     column-gap: 1rem;
     align-items: center;
@@ -50,5 +71,203 @@ import NavLink from '@/components/NavLink.astro';
     @media (--md) {
       column-gap: 2.5rem;
     }
+
+    /* Hide on mobile when space is tight */
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  /* Mobile Navigation */
+  .mobile-nav {
+    display: none;
+    margin-inline-start: auto;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+
+    .burger-line {
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-text);
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    &[aria-expanded="true"] {
+      .burger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .burger-line:nth-child(2) {
+        opacity: 0;
+      }
+
+      .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+    }
+  }
+
+  /* Mobile Menu Dropdown */
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 5;
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .mobile-menu-content {
+    inline-size: min(var(--content-max-width), 100% - 2 * var(--content-padding));
+    margin-inline: auto;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE */
+    scroll-behavior: smooth;
+    position: relative;
+
+    /* Hide scrollbar for webkit browsers */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Add subtle fade indicators for scrollable content */
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, var(--color-background), transparent);
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, var(--color-background), transparent);
+    }
+
+    /* Show indicators when scrolling is possible */
+    &.can-scroll-left::before {
+      opacity: 1;
+    }
+
+    &.can-scroll-right::after {
+      opacity: 1;
+    }
+
+    /* Ensure items don't shrink below minimum width */
+    > * {
+      flex-shrink: 0;
+      min-width: fit-content;
+    }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuContent = mobileMenu?.querySelector('.mobile-menu-content') as HTMLElement;
+    
+    if (mobileMenuToggle && mobileMenu) {
+      mobileMenuToggle.addEventListener('click', function() {
+        const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+        
+        // Toggle aria-expanded
+        mobileMenuToggle.setAttribute('aria-expanded', String(!isExpanded));
+        
+        // Toggle menu visibility
+        mobileMenu.classList.toggle('open');
+        
+        // Update scroll indicators when menu opens
+        if (!isExpanded && mobileMenuContent) {
+          updateScrollIndicators(mobileMenuContent);
+        }
+      });
+      
+      // Close menu when clicking on a link
+      const mobileNavLinks = mobileMenu.querySelectorAll('a');
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.remove('open');
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (event.target &&
+            !mobileMenuToggle.contains(event.target as Node) && 
+            !mobileMenu.contains(event.target as Node)) {
+          mobileMenuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.remove('open');
+        }
+      });
+    }
+
+    // Function to update scroll indicators
+    function updateScrollIndicators(container: HTMLElement) {
+      const canScrollLeft = container.scrollLeft > 0;
+      const canScrollRight = container.scrollLeft < (container.scrollWidth - container.clientWidth);
+      
+      // Add/remove classes for scroll indicators
+      container.classList.toggle('can-scroll-left', canScrollLeft);
+      container.classList.toggle('can-scroll-right', canScrollRight);
+    }
+
+    // Update scroll indicators on scroll
+    if (mobileMenuContent) {
+      mobileMenuContent.addEventListener('scroll', function() {
+        updateScrollIndicators(mobileMenuContent);
+      });
+
+      // Update indicators on resize
+      window.addEventListener('resize', function() {
+        if (mobileMenu?.classList.contains('open') && mobileMenuContent) {
+          updateScrollIndicators(mobileMenuContent);
+        }
+      });
+    }
+  });
+</script>

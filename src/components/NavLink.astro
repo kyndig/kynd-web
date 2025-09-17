@@ -27,11 +27,32 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
       padding-inline: 1.5rem;
       font-size: var(--fs-label-l);
       line-height: var(--line-height-m);
+      text-align: center;
+      white-space: nowrap; /* Prevent text wrapping */
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
     }
 
     &:hover:not(.button),
     &.active {
       background-color: var(--color-accent);
+    }
+
+    /* In mobile menu, optimize for scrollable layout */
+    @media (max-width: 768px) {
+      &:not(.button) {
+        padding-inline: 1rem;
+        font-size: var(--fs-label-m);
+        min-width: fit-content;
+      }
+    }
+
+    /* For very small screens, reduce padding but maintain readability */
+    @media (max-width: 400px) {
+      &:not(.button) {
+        padding-inline: 0.75rem;
+        font-size: var(--fs-label-s);
+      }
     }
   }
 </style>
