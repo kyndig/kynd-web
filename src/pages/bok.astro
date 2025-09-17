@@ -11,19 +11,18 @@ import Prose from '@/components/Prose.astro';
     preamble="Her kan du lese mer om oss og hvordan vi gjør ting. Det er bare å snoke i vei."
   />
 
-
   <!-- Mobile sticky navigation -->
   <nav class="mobile-nav" id="mobile-nav">
-    <div class="mobile-nav-content">
-      <button
-        class="handbook-menu-toggle"
-        id="handbook-menu-toggle"
-        aria-label="Toggle handbook navigation menu"
-        aria-expanded="false"
-      >
-        <span class="triangle-icon">▶</span>
-      </button>
-      <h3 class="nav-title" id="current-section">Innhold</h3>
+    <div
+      class="mobile-nav-content"
+      id="handbook-menu-toggle"
+      tabindex="0"
+      role="button"
+      aria-label="Toggle handbook navigation menu"
+      aria-expanded="false"
+    >
+      <span class="triangle-icon">▶</span>
+      <h3 class="nav-title" id="current-section">Introduksjon</h3>
 
       <!-- Dropdown menu -->
       <div class="handbook-dropdown" id="handbook-dropdown">
@@ -366,10 +365,22 @@ import Prose from '@/components/Prose.astro';
   .mobile-nav-content {
     display: flex;
     align-items: center;
-    max-width: var(--content-max-width);
-    margin: 0 auto;
     position: relative;
     gap: 0.5rem;
+    cursor: pointer;
+    padding-left: var(--content-padding);
+    outline: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    &:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    &:hover {
+      background-color: var(--color-accent);
+    }
   }
 
   .nav-title {
@@ -379,30 +390,15 @@ import Prose from '@/components/Prose.astro';
     color: var(--color-text);
   }
 
-  .handbook-menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: var(--handbook-z-index-toggle);
+  .triangle-icon {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition: var(--handbook-transition-smooth);
+    transform-origin: center;
+  }
 
-    .triangle-icon {
-      font-size: 0.875rem;
-      color: var(--color-text);
-      transition: var(--handbook-transition-smooth);
-      transform-origin: center;
-    }
-
-    &[aria-expanded='true'] {
-      .triangle-icon {
-        transform: rotate(90deg);
-      }
-    }
+  .mobile-nav-content[aria-expanded='true'] .triangle-icon {
+    transform: rotate(90deg);
   }
 
   /* Dropdown menu */
@@ -517,7 +513,6 @@ import Prose from '@/components/Prose.astro';
     const currentSection = document.getElementById('current-section');
     const navLinks = document.querySelectorAll('.nav-menu a');
 
-
     // Section data for tracking
     const sections = [
       { id: 'om-kynd', title: 'Om Kynd' },
@@ -525,7 +520,6 @@ import Prose from '@/components/Prose.astro';
       { id: 'arbeidsforhold', title: 'Arbeidsforhold' },
       { id: 'ferie-og-permisjon', title: 'Ferie og permisjon' },
       { id: 'kompetanseutvikling', title: 'Kompetanseutvikling' },
-      { id: 'miljø-og-bærekraft', title: 'Miljø og bærekraft' },
       { id: 'miljø-og-bærekraft', title: 'Miljø og bærekraft' },
     ];
 
@@ -537,6 +531,8 @@ import Prose from '@/components/Prose.astro';
         if (isExpanded) {
           handbookMenuToggle.setAttribute('aria-expanded', 'false');
           handbookDropdown.classList.remove('open');
+          // Remove focus to hide the outline when closing
+          handbookMenuToggle.blur();
         } else {
           handbookMenuToggle.setAttribute('aria-expanded', 'true');
           handbookDropdown.classList.add('open');
@@ -549,6 +545,8 @@ import Prose from '@/components/Prose.astro';
       if (handbookMenuToggle && handbookDropdown) {
         handbookMenuToggle.setAttribute('aria-expanded', 'false');
         handbookDropdown.classList.remove('open');
+        // Remove focus to hide the outline
+        handbookMenuToggle.blur();
       }
     }
 
@@ -558,11 +556,9 @@ import Prose from '@/components/Prose.astro';
 
       const scrollPosition = window.scrollY + 200; // Offset for better detection
 
-
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (!section) continue;
-
 
         const sectionElement = document.getElementById(section.id);
         if (sectionElement) {
@@ -579,7 +575,6 @@ import Prose from '@/components/Prose.astro';
     // Update active link in navigation
     function updateActiveLink(activeId: string) {
       navLinks.forEach((link) => {
-      navLinks.forEach((link) => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${activeId}`) {
           link.classList.add('active');
@@ -590,6 +585,14 @@ import Prose from '@/components/Prose.astro';
     // Event listeners
     if (handbookMenuToggle) {
       handbookMenuToggle.addEventListener('click', toggleDropdown);
+
+      // Keyboard support
+      handbookMenuToggle.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleDropdown();
+        }
+      });
     }
 
     // Close dropdown when clicking on navigation links
@@ -623,7 +626,6 @@ import Prose from '@/components/Prose.astro';
     function handleScroll() {
       if (!ticking) {
         requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
           updateCurrentSection();
           ticking = false;
         });
@@ -632,7 +634,6 @@ import Prose from '@/components/Prose.astro';
     }
 
     window.addEventListener('scroll', handleScroll);
-
 
     // Initial call to set current section
     updateCurrentSection();
