@@ -1,4 +1,5 @@
 :root {
+  @custom-media --xs (min-width: 25em);
   @custom-media --sm (min-width: 40em);
   @custom-media --md (min-width: 48em);
   @custom-media --lg (min-width: 64em);
