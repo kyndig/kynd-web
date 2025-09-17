@@ -1,0 +1,558 @@
+---
+import Layout from '@/layouts/Base.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
+---
+
+<Layout title="Håndbok" description="Kynds håndbok for ansatte">
+  <HeroSection
+    title="Kynds håndbok"
+    preamble="Her kan du lese mer om oss og hvordan vi gjør ting. Det er bare å snoke i vei."
+  />
+  
+  <!-- Mobile sticky navigation -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-content">
+      <h3 class="nav-title" id="current-section">Innhold</h3>
+      <button class="burger-menu" id="burger-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Drawer overlay -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- Drawer menu -->
+  <nav class="drawer-menu" id="drawer-menu">
+    <div class="drawer-header">
+      <h3>Innhold</h3>
+      <button class="close-drawer" id="close-drawer" aria-label="Close navigation menu">
+        <span class="close-icon">×</span>
+      </button>
+    </div>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="#om-kynd" data-section="Om Kynd">Om Kynd</a></li>
+      <li><a href="#lønn-og-goder" data-section="Lønn og goder">Lønn og goder</a></li>
+      <li><a href="#arbeidsforhold" data-section="Arbeidsforhold">Arbeidsforhold</a></li>
+      <li><a href="#ferie-og-permisjon" data-section="Ferie og permisjon">Ferie og permisjon</a></li>
+      <li><a href="#kompetanseutvikling" data-section="Kompetanseutvikling">Kompetanseutvikling</a></li>
+      <li><a href="#miljø-og-bærekraft" data-section="Miljø og bærekraft">Miljø og bærekraft</a></li>
+    </ul>
+  </nav>
+
+  <div class="handbook-container">
+    <!-- Desktop sidebar navigation -->
+    <nav class="handbook-nav desktop-nav">
+      <ul class="nav-menu">
+        <li><a href="#om-kynd">Om Kynd</a></li>
+        <li><a href="#lønn-og-goder">Lønn og goder</a></li>
+        <li><a href="#arbeidsforhold">Arbeidsforhold</a></li>
+        <li><a href="#ferie-og-permisjon">Ferie og permisjon</a></li>
+        <li><a href="#kompetanseutvikling">Kompetanseutvikling</a></li>
+        <li><a href="#miljø-og-bærekraft">Miljø og bærekraft</a></li>
+      </ul>
+    </nav>
+
+    <main class="handbook-content">
+      <section id="om-kynd">
+        <PageSection heading="Om Kynd">
+        <Prose align="left">
+          <p>
+            Kynd er et konsulentbyrå innen fullstack softwareutvikling, organisasjonsdesign og smidig 
+            produkt-, team og endringsledelse. Vi ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel.
+          </p>
+          <p>
+            Vi er et selskap laget av de ansatte, for de ansatte. Vi ønsker å lage verdens beste arbeidsplass, 
+            og det gjør vi ved å sette menneskene i fokus.
+          </p>
+        </Prose>
+        <Prose align="right">
+          <h3>Grunnverdier</h3>
+          <ul>
+            <li>Åpenhet</li>
+            <li>Samhold</li>
+            <li>Enkelhet</li>
+            <li>Dristighet</li>
+            <li>Relasjonsorientering</li>
+          </ul>
+        </Prose>
+        </PageSection>
+      </section>
+
+      <section id="lønn-og-goder">
+        <PageSection heading="Lønn og goder">
+        <Prose align="left">
+          <p>
+            Vi har åpen lønn, som vil si at alle i selskapet vet hva de andre tjener. 
+            Du slipper også å forhandle på lønnen din.
+          </p>
+          <p>
+            Vi oppjusterer lønnen din 1. januar hvert år basert på resultatet til Kynd. 
+            Vi passer på at lønna holder seg konkurransedyktig og tar også høyde for inflasjon.
+          </p>
+        </Prose>
+        <Prose align="right">
+          <h3>Goder</h3>
+          <ul>
+            <li>Konkurransedyktig lønn</li>
+            <li>Åpen økonomi</li>
+            <li>Likeverdig eierskap</li>
+            <li>Fleksible arbeidsforhold</li>
+            <li>Kompetanseutvikling</li>
+            <li>Moderne utstyr</li>
+          </ul>
+        </Prose>
+        </PageSection>
+      </section>
+
+      <section id="arbeidsforhold">
+        <PageSection heading="Arbeidsforhold">
+        <Prose align="left">
+          <p>
+            Vi tror på tillit og fleksibilitet. Du kan jobbe der du er mest produktiv, 
+            enten det er på kontoret eller hjemmefra.
+          </p>
+          <p>
+            Vi har ikke tradisjonelle arbeidstider, men forventer at du leverer kvalitet 
+            og er tilgjengelig når det trengs.
+          </p>
+        </Prose>
+        <Prose align="right">
+          <h3>Arbeidssted</h3>
+          <ul>
+            <li>Hjemmekontor</li>
+            <li>Kontor i Oslo</li>
+            <li>Kundens lokaler</li>
+            <li>Hybridløsninger</li>
+          </ul>
+        </Prose>
+        </PageSection>
+      </section>
+
+      <section id="ferie-og-permisjon">
+        <PageSection heading="Ferie og permisjon">
+        <Prose align="left">
+          <p>
+            Du har rett på 25 feriedager per år. Vi oppfordrer til å ta ferie, 
+            og vi dekker feriepenger i henhold til loven.
+          </p>
+          <p>
+            Ved sykdom eller andre behov for fravær, er vi fleksible og forståelsesfulle. 
+            Vi tror på at hvis vi gir deg tiden du trenger, vil du komme sterkere tilbake.
+          </p>
+        </Prose>
+        <Prose align="right">
+          <h3>Permisjon</h3>
+          <ul>
+            <li>25 feriedager</li>
+            <li>Feriepenger</li>
+            <li>Sykefravær</li>
+            <li>Foreldrepermisjon</li>
+            <li>Utdanningspermisjon</li>
+          </ul>
+        </Prose>
+        </PageSection>
+      </section>
+
+      <section id="kompetanseutvikling">
+        <PageSection heading="Kompetanseutvikling">
+        <Prose align="left">
+          <p>
+            Vi investerer tungt i kompetanseutvikling. Du får tid og ressurser til å 
+            lære nye teknologier og metoder.
+          </p>
+          <p>
+            Vi deler kunnskap aktivt gjennom interne presentasjoner, workshops og 
+            konferansebesøk.
+          </p>
+        </Prose>
+        <Prose align="right">
+          <h3>Muligheter</h3>
+          <ul>
+            <li>Konferansebesøk</li>
+            <li>Kurs og sertifiseringer</li>
+            <li>Interne workshops</li>
+            <li>Mentoring</li>
+            <li>Open source bidrag</li>
+          </ul>
+        </Prose>
+        </PageSection>
+      </section>
+
+      <section id="miljø-og-bærekraft">
+        <PageSection heading="Miljø og bærekraft">
+        <Prose align="left">
+          <p>
+            Som selskap ønsker vi å ta ansvar og gjøre vår del for å begrense 
+            belastningen på miljøet og bli mer bærekraftige.
+          </p>
+          <p>
+            Vi jobber aktivt med å redusere vår klimafotavtrykk og støtter 
+            bærekraftige løsninger i våre prosjekter.
+          </p>
+        </Prose>
+        <Prose align="right">
+          <h3>Tiltak</h3>
+          <ul>
+            <li>Grønn teknologi</li>
+            <li>Remote-first arbeid</li>
+            <li>Bærekraftige leverandører</li>
+            <li>Miljøvennlige kontorer</li>
+            <li>Klimakompensasjon</li>
+          </ul>
+        </Prose>
+        </PageSection>
+      </section>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  /* Mobile sticky navigation */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: calc(4rem + 1rem); /* Position below main header */
+    left: 0;
+    right: 0;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 5; /* Lower than main header (z-index: 10) */
+    padding: 0.5rem var(--content-padding);
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+
+  .mobile-nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+  }
+
+  .nav-title {
+    font-size: var(--fs-body-s);
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+
+    .burger-line {
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-text);
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    &[aria-expanded="true"] {
+      .burger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .burger-line:nth-child(2) {
+        opacity: 0;
+      }
+
+      .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+    }
+  }
+
+  /* Drawer overlay */
+  .drawer-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 15; /* Above mobile nav but below main header */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.open {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  /* Drawer menu */
+  .drawer-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--color-background);
+    border-left: 1px solid var(--color-border);
+    z-index: 20; /* Above overlay */
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+
+    h3 {
+      font-size: var(--fs-body-l);
+      font-weight: 600;
+      margin: 0;
+      color: var(--color-text);
+    }
+  }
+
+  .close-drawer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    .close-icon {
+      font-size: 1.5rem;
+      color: var(--color-text);
+      line-height: 1;
+    }
+  }
+
+  /* Desktop navigation */
+  .handbook-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--content-padding);
+
+    @media (--md) {
+      grid-template-columns: 250px 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .desktop-nav {
+    position: sticky;
+    top: calc(4rem + 1rem); /* Account for header height */
+    height: fit-content;
+    background-color: var(--color-background);
+    padding: 1rem 0;
+    border-right: 1px solid var(--color-border);
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: var(--color-text);
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--color-accent);
+      }
+
+      &:focus {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      &.active {
+        background-color: var(--color-accent);
+        font-weight: 600;
+      }
+    }
+  }
+
+  .handbook-content {
+    padding-top: 1rem;
+
+    @media (max-width: 768px) {
+      padding-top: calc(4rem + 1rem + 3rem + 1rem); /* Account for main header + mobile nav height */
+    }
+
+    @media (--md) {
+      padding-top: 0;
+    }
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Offset for fixed header */
+  .handbook-content section[id] {
+    scroll-margin-top: calc(4rem + 2rem);
+
+    @media (max-width: 768px) {
+      scroll-margin-top: calc(4rem + 1rem + 3rem + 1rem); /* Account for main header + mobile nav */
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const burgerMenu = document.getElementById('burger-menu');
+    const drawerMenu = document.getElementById('drawer-menu');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const closeDrawer = document.getElementById('close-drawer');
+    const currentSection = document.getElementById('current-section');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    
+    // Section data for tracking
+    const sections = [
+      { id: 'om-kynd', title: 'Om Kynd' },
+      { id: 'lønn-og-goder', title: 'Lønn og goder' },
+      { id: 'arbeidsforhold', title: 'Arbeidsforhold' },
+      { id: 'ferie-og-permisjon', title: 'Ferie og permisjon' },
+      { id: 'kompetanseutvikling', title: 'Kompetanseutvikling' },
+      { id: 'miljø-og-bærekraft', title: 'Miljø og bærekraft' }
+    ];
+
+    // Open drawer menu
+    function openDrawer() {
+      if (burgerMenu && drawerMenu && drawerOverlay) {
+        burgerMenu.setAttribute('aria-expanded', 'true');
+        drawerMenu.classList.add('open');
+        drawerOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Close drawer menu
+    function closeDrawerMenu() {
+      if (burgerMenu && drawerMenu && drawerOverlay) {
+        burgerMenu.setAttribute('aria-expanded', 'false');
+        drawerMenu.classList.remove('open');
+        drawerOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Update current section based on scroll position
+    function updateCurrentSection() {
+      if (!currentSection) return;
+
+      const scrollPosition = window.scrollY + 200; // Offset for better detection
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (!section) continue;
+        
+        const sectionElement = document.getElementById(section.id);
+        if (sectionElement) {
+          const elementTop = sectionElement.offsetTop;
+          if (elementTop <= scrollPosition) {
+            currentSection.textContent = section.title;
+            updateActiveLink(section.id);
+            break;
+          }
+        }
+      }
+    }
+
+    // Update active link in navigation
+    function updateActiveLink(activeId: string) {
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${activeId}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Event listeners
+    if (burgerMenu) {
+      burgerMenu.addEventListener('click', openDrawer);
+    }
+
+    if (closeDrawer) {
+      closeDrawer.addEventListener('click', closeDrawerMenu);
+    }
+
+    if (drawerOverlay) {
+      drawerOverlay.addEventListener('click', closeDrawerMenu);
+    }
+
+    // Close drawer when clicking on navigation links
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+          closeDrawerMenu();
+        }
+      });
+    });
+
+    // Scroll tracking
+    let ticking = false;
+    function handleScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          updateCurrentSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial call to set current section
+    updateCurrentSection();
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        closeDrawerMenu();
+      }
+    });
+  });
+</script>
