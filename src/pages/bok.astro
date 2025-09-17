@@ -10,12 +10,17 @@ import Prose from '@/components/Prose.astro';
     title="Kynds håndbok"
     preamble="Her kan du lese mer om oss og hvordan vi gjør ting. Det er bare å snoke i vei."
   />
-  
+
   <!-- Mobile sticky navigation -->
   <nav class="mobile-nav" id="mobile-nav">
     <div class="mobile-nav-content">
       <h3 class="nav-title" id="current-section">Innhold</h3>
-      <button class="burger-menu" id="burger-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+      <button
+        class="burger-menu"
+        id="burger-menu"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
         <span class="burger-line"></span>
         <span class="burger-line"></span>
         <span class="burger-line"></span>
@@ -38,9 +43,15 @@ import Prose from '@/components/Prose.astro';
       <li><a href="#om-kynd" data-section="Om Kynd">Om Kynd</a></li>
       <li><a href="#lønn-og-goder" data-section="Lønn og goder">Lønn og goder</a></li>
       <li><a href="#arbeidsforhold" data-section="Arbeidsforhold">Arbeidsforhold</a></li>
-      <li><a href="#ferie-og-permisjon" data-section="Ferie og permisjon">Ferie og permisjon</a></li>
-      <li><a href="#kompetanseutvikling" data-section="Kompetanseutvikling">Kompetanseutvikling</a></li>
-      <li><a href="#miljø-og-bærekraft" data-section="Miljø og bærekraft">Miljø og bærekraft</a></li>
+      <li>
+        <a href="#ferie-og-permisjon" data-section="Ferie og permisjon">Ferie og permisjon</a>
+      </li>
+      <li>
+        <a href="#kompetanseutvikling" data-section="Kompetanseutvikling">Kompetanseutvikling</a>
+      </li>
+      <li>
+        <a href="#miljø-og-bærekraft" data-section="Miljø og bærekraft">Miljø og bærekraft</a>
+      </li>
     </ul>
   </nav>
 
@@ -60,151 +71,151 @@ import Prose from '@/components/Prose.astro';
     <main class="handbook-content">
       <section id="om-kynd">
         <PageSection heading="Om Kynd">
-        <Prose align="left">
-          <p>
-            Kynd er et konsulentbyrå innen fullstack softwareutvikling, organisasjonsdesign og smidig 
-            produkt-, team og endringsledelse. Vi ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel.
-          </p>
-          <p>
-            Vi er et selskap laget av de ansatte, for de ansatte. Vi ønsker å lage verdens beste arbeidsplass, 
-            og det gjør vi ved å sette menneskene i fokus.
-          </p>
-        </Prose>
-        <Prose align="right">
-          <h3>Grunnverdier</h3>
-          <ul>
-            <li>Åpenhet</li>
-            <li>Samhold</li>
-            <li>Enkelhet</li>
-            <li>Dristighet</li>
-            <li>Relasjonsorientering</li>
-          </ul>
-        </Prose>
+          <Prose align="left">
+            <p>
+              Kynd er et konsulentbyrå innen fullstack softwareutvikling, organisasjonsdesign og
+              smidig produkt-, team og endringsledelse. Vi ble stiftet i 2024 av tre amigos -
+              Daniel, Frederik og Axel.
+            </p>
+            <p>
+              Vi er et selskap laget av de ansatte, for de ansatte. Vi ønsker å lage verdens beste
+              arbeidsplass, og det gjør vi ved å sette menneskene i fokus.
+            </p>
+          </Prose>
+          <Prose align="right">
+            <h3>Grunnverdier</h3>
+            <ul>
+              <li>Åpenhet</li>
+              <li>Samhold</li>
+              <li>Enkelhet</li>
+              <li>Dristighet</li>
+              <li>Relasjonsorientering</li>
+            </ul>
+          </Prose>
         </PageSection>
       </section>
 
       <section id="lønn-og-goder">
         <PageSection heading="Lønn og goder">
-        <Prose align="left">
-          <p>
-            Vi har åpen lønn, som vil si at alle i selskapet vet hva de andre tjener. 
-            Du slipper også å forhandle på lønnen din.
-          </p>
-          <p>
-            Vi oppjusterer lønnen din 1. januar hvert år basert på resultatet til Kynd. 
-            Vi passer på at lønna holder seg konkurransedyktig og tar også høyde for inflasjon.
-          </p>
-        </Prose>
-        <Prose align="right">
-          <h3>Goder</h3>
-          <ul>
-            <li>Konkurransedyktig lønn</li>
-            <li>Åpen økonomi</li>
-            <li>Likeverdig eierskap</li>
-            <li>Fleksible arbeidsforhold</li>
-            <li>Kompetanseutvikling</li>
-            <li>Moderne utstyr</li>
-          </ul>
-        </Prose>
+          <Prose align="left">
+            <p>
+              Vi har åpen lønn, som vil si at alle i selskapet vet hva de andre tjener. Du slipper
+              også å forhandle på lønnen din.
+            </p>
+            <p>
+              Vi oppjusterer lønnen din 1. januar hvert år basert på resultatet til Kynd. Vi passer
+              på at lønna holder seg konkurransedyktig og tar også høyde for inflasjon.
+            </p>
+          </Prose>
+          <Prose align="right">
+            <h3>Goder</h3>
+            <ul>
+              <li>Konkurransedyktig lønn</li>
+              <li>Åpen økonomi</li>
+              <li>Likeverdig eierskap</li>
+              <li>Fleksible arbeidsforhold</li>
+              <li>Kompetanseutvikling</li>
+              <li>Moderne utstyr</li>
+            </ul>
+          </Prose>
         </PageSection>
       </section>
 
       <section id="arbeidsforhold">
         <PageSection heading="Arbeidsforhold">
-        <Prose align="left">
-          <p>
-            Vi tror på tillit og fleksibilitet. Du kan jobbe der du er mest produktiv, 
-            enten det er på kontoret eller hjemmefra.
-          </p>
-          <p>
-            Vi har ikke tradisjonelle arbeidstider, men forventer at du leverer kvalitet 
-            og er tilgjengelig når det trengs.
-          </p>
-        </Prose>
-        <Prose align="right">
-          <h3>Arbeidssted</h3>
-          <ul>
-            <li>Hjemmekontor</li>
-            <li>Kontor i Oslo</li>
-            <li>Kundens lokaler</li>
-            <li>Hybridløsninger</li>
-          </ul>
-        </Prose>
+          <Prose align="left">
+            <p>
+              Vi tror på tillit og fleksibilitet. Du kan jobbe der du er mest produktiv, enten det
+              er på kontoret eller hjemmefra.
+            </p>
+            <p>
+              Vi har ikke tradisjonelle arbeidstider, men forventer at du leverer kvalitet og er
+              tilgjengelig når det trengs.
+            </p>
+          </Prose>
+          <Prose align="right">
+            <h3>Arbeidssted</h3>
+            <ul>
+              <li>Hjemmekontor</li>
+              <li>Kontor i Oslo</li>
+              <li>Kundens lokaler</li>
+              <li>Hybridløsninger</li>
+            </ul>
+          </Prose>
         </PageSection>
       </section>
 
       <section id="ferie-og-permisjon">
         <PageSection heading="Ferie og permisjon">
-        <Prose align="left">
-          <p>
-            Du har rett på 25 feriedager per år. Vi oppfordrer til å ta ferie, 
-            og vi dekker feriepenger i henhold til loven.
-          </p>
-          <p>
-            Ved sykdom eller andre behov for fravær, er vi fleksible og forståelsesfulle. 
-            Vi tror på at hvis vi gir deg tiden du trenger, vil du komme sterkere tilbake.
-          </p>
-        </Prose>
-        <Prose align="right">
-          <h3>Permisjon</h3>
-          <ul>
-            <li>25 feriedager</li>
-            <li>Feriepenger</li>
-            <li>Sykefravær</li>
-            <li>Foreldrepermisjon</li>
-            <li>Utdanningspermisjon</li>
-          </ul>
-        </Prose>
+          <Prose align="left">
+            <p>
+              Du har rett på 25 feriedager per år. Vi oppfordrer til å ta ferie, og vi dekker
+              feriepenger i henhold til loven.
+            </p>
+            <p>
+              Ved sykdom eller andre behov for fravær, er vi fleksible og forståelsesfulle. Vi tror
+              på at hvis vi gir deg tiden du trenger, vil du komme sterkere tilbake.
+            </p>
+          </Prose>
+          <Prose align="right">
+            <h3>Permisjon</h3>
+            <ul>
+              <li>25 feriedager</li>
+              <li>Feriepenger</li>
+              <li>Sykefravær</li>
+              <li>Foreldrepermisjon</li>
+              <li>Utdanningspermisjon</li>
+            </ul>
+          </Prose>
         </PageSection>
       </section>
 
       <section id="kompetanseutvikling">
         <PageSection heading="Kompetanseutvikling">
-        <Prose align="left">
-          <p>
-            Vi investerer tungt i kompetanseutvikling. Du får tid og ressurser til å 
-            lære nye teknologier og metoder.
-          </p>
-          <p>
-            Vi deler kunnskap aktivt gjennom interne presentasjoner, workshops og 
-            konferansebesøk.
-          </p>
-        </Prose>
-        <Prose align="right">
-          <h3>Muligheter</h3>
-          <ul>
-            <li>Konferansebesøk</li>
-            <li>Kurs og sertifiseringer</li>
-            <li>Interne workshops</li>
-            <li>Mentoring</li>
-            <li>Open source bidrag</li>
-          </ul>
-        </Prose>
+          <Prose align="left">
+            <p>
+              Vi investerer tungt i kompetanseutvikling. Du får tid og ressurser til å lære nye
+              teknologier og metoder.
+            </p>
+            <p>
+              Vi deler kunnskap aktivt gjennom interne presentasjoner, workshops og konferansebesøk.
+            </p>
+          </Prose>
+          <Prose align="right">
+            <h3>Muligheter</h3>
+            <ul>
+              <li>Konferansebesøk</li>
+              <li>Kurs og sertifiseringer</li>
+              <li>Interne workshops</li>
+              <li>Mentoring</li>
+              <li>Open source bidrag</li>
+            </ul>
+          </Prose>
         </PageSection>
       </section>
 
       <section id="miljø-og-bærekraft">
         <PageSection heading="Miljø og bærekraft">
-        <Prose align="left">
-          <p>
-            Som selskap ønsker vi å ta ansvar og gjøre vår del for å begrense 
-            belastningen på miljøet og bli mer bærekraftige.
-          </p>
-          <p>
-            Vi jobber aktivt med å redusere vår klimafotavtrykk og støtter 
-            bærekraftige løsninger i våre prosjekter.
-          </p>
-        </Prose>
-        <Prose align="right">
-          <h3>Tiltak</h3>
-          <ul>
-            <li>Grønn teknologi</li>
-            <li>Remote-first arbeid</li>
-            <li>Bærekraftige leverandører</li>
-            <li>Miljøvennlige kontorer</li>
-            <li>Klimakompensasjon</li>
-          </ul>
-        </Prose>
+          <Prose align="left">
+            <p>
+              Som selskap ønsker vi å ta ansvar og gjøre vår del for å begrense belastningen på
+              miljøet og bli mer bærekraftige.
+            </p>
+            <p>
+              Vi jobber aktivt med å redusere vår klimafotavtrykk og støtter bærekraftige løsninger
+              i våre prosjekter.
+            </p>
+          </Prose>
+          <Prose align="right">
+            <h3>Tiltak</h3>
+            <ul>
+              <li>Grønn teknologi</li>
+              <li>Remote-first arbeid</li>
+              <li>Bærekraftige leverandører</li>
+              <li>Miljøvennlige kontorer</li>
+              <li>Klimakompensasjon</li>
+            </ul>
+          </Prose>
         </PageSection>
       </section>
     </main>
@@ -214,7 +225,7 @@ import Prose from '@/components/Prose.astro';
 <style>
   /* Mobile sticky navigation */
   .mobile-nav {
-    display: none;
+    display: block;
     position: fixed;
     top: calc(4rem + 1rem); /* Position below main header */
     left: 0;
@@ -224,8 +235,8 @@ import Prose from '@/components/Prose.astro';
     z-index: 5; /* Lower than main header (z-index: 10) */
     padding: 0.5rem var(--content-padding);
 
-    @media (max-width: 768px) {
-      display: block;
+    @media (--md) {
+      display: none;
     }
   }
 
@@ -264,7 +275,7 @@ import Prose from '@/components/Prose.astro';
       transform-origin: center;
     }
 
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       .burger-line:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
       }
@@ -366,6 +377,7 @@ import Prose from '@/components/Prose.astro';
   }
 
   .desktop-nav {
+    display: none;
     position: sticky;
     top: calc(4rem + 1rem); /* Account for header height */
     height: fit-content;
@@ -373,8 +385,8 @@ import Prose from '@/components/Prose.astro';
     padding: 1rem 0;
     border-right: 1px solid var(--color-border);
 
-    @media (max-width: 768px) {
-      display: none;
+    @media (--md) {
+      display: block;
     }
   }
 
@@ -412,11 +424,7 @@ import Prose from '@/components/Prose.astro';
   }
 
   .handbook-content {
-    padding-top: 1rem;
-
-    @media (max-width: 768px) {
-      padding-top: calc(4rem + 1rem + 3rem + 1rem); /* Account for main header + mobile nav height */
-    }
+    padding-top: calc(4rem + 1rem + 3rem + 1rem); /* Account for main header + mobile nav height */
 
     @media (--md) {
       padding-top: 0;
@@ -430,23 +438,23 @@ import Prose from '@/components/Prose.astro';
 
   /* Offset for fixed header */
   .handbook-content section[id] {
-    scroll-margin-top: calc(4rem + 2rem);
+    scroll-margin-top: calc(4rem + 1rem + 3rem + 1rem); /* Account for main header + mobile nav */
 
-    @media (max-width: 768px) {
-      scroll-margin-top: calc(4rem + 1rem + 3rem + 1rem); /* Account for main header + mobile nav */
+    @media (--md) {
+      scroll-margin-top: calc(4rem + 2rem);
     }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const burgerMenu = document.getElementById('burger-menu');
     const drawerMenu = document.getElementById('drawer-menu');
     const drawerOverlay = document.getElementById('drawer-overlay');
     const closeDrawer = document.getElementById('close-drawer');
     const currentSection = document.getElementById('current-section');
     const navLinks = document.querySelectorAll('.nav-menu a');
-    
+
     // Section data for tracking
     const sections = [
       { id: 'om-kynd', title: 'Om Kynd' },
@@ -454,7 +462,7 @@ import Prose from '@/components/Prose.astro';
       { id: 'arbeidsforhold', title: 'Arbeidsforhold' },
       { id: 'ferie-og-permisjon', title: 'Ferie og permisjon' },
       { id: 'kompetanseutvikling', title: 'Kompetanseutvikling' },
-      { id: 'miljø-og-bærekraft', title: 'Miljø og bærekraft' }
+      { id: 'miljø-og-bærekraft', title: 'Miljø og bærekraft' },
     ];
 
     // Open drawer menu
@@ -482,11 +490,11 @@ import Prose from '@/components/Prose.astro';
       if (!currentSection) return;
 
       const scrollPosition = window.scrollY + 200; // Offset for better detection
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (!section) continue;
-        
+
         const sectionElement = document.getElementById(section.id);
         if (sectionElement) {
           const elementTop = sectionElement.offsetTop;
@@ -501,7 +509,7 @@ import Prose from '@/components/Prose.astro';
 
     // Update active link in navigation
     function updateActiveLink(activeId: string) {
-      navLinks.forEach(link => {
+      navLinks.forEach((link) => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${activeId}`) {
           link.classList.add('active');
@@ -523,9 +531,9 @@ import Prose from '@/components/Prose.astro';
     }
 
     // Close drawer when clicking on navigation links
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 768) {
+    navLinks.forEach((link) => {
+      link.addEventListener('click', function () {
+        if (window.matchMedia('(max-width: 47.999em)').matches) {
           closeDrawerMenu();
         }
       });
@@ -535,7 +543,7 @@ import Prose from '@/components/Prose.astro';
     let ticking = false;
     function handleScroll() {
       if (!ticking) {
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
           updateCurrentSection();
           ticking = false;
         });
@@ -544,13 +552,13 @@ import Prose from '@/components/Prose.astro';
     }
 
     window.addEventListener('scroll', handleScroll);
-    
+
     // Initial call to set current section
     updateCurrentSection();
 
     // Handle window resize
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
+    window.addEventListener('resize', function () {
+      if (window.matchMedia('(min-width: 48em)').matches) {
         closeDrawerMenu();
       }
     });
