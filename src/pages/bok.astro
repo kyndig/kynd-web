@@ -341,8 +341,20 @@ import Prose from '@/components/Prose.astro';
     --handbook-z-index-nav: 3;
     --handbook-z-index-dropdown: 4;
     --handbook-z-index-toggle: 10;
-    --handbook-transition-fast: background-color 0.2s ease;
+    --handbook-transition-fast: background-color var(--animation-duration) ease;
     --handbook-transition-smooth: transform 0.3s ease;
+    --handbook-gap-sm: 0.5rem;
+    --handbook-gap-md: 2rem;
+    --handbook-gap-lg: 4rem;
+    --handbook-border-radius: 4px;
+    --handbook-padding-sm: 0.75rem;
+    --handbook-outline-width: 2px;
+    --handbook-outline-offset: 2px;
+    --handbook-triangle-size: 0.875rem;
+    --handbook-desktop-nav-width: 250px;
+    --handbook-shadow-blur: 6px;
+    --handbook-rotation: 90deg;
+    --handbook-focus-outline: var(--handbook-outline-width) solid var(--color-accent);
   }
 
   /* Mobile sticky navigation */
@@ -355,7 +367,7 @@ import Prose from '@/components/Prose.astro';
     background-color: var(--color-background);
     border-bottom: 1px solid var(--color-border);
     z-index: var(--handbook-z-index-nav);
-    padding: 0.5rem var(--content-padding);
+    padding: var(--handbook-gap-sm) var(--content-padding);
 
     @media (--md) {
       display: none;
@@ -366,16 +378,16 @@ import Prose from '@/components/Prose.astro';
     display: flex;
     align-items: center;
     position: relative;
-    gap: 0.5rem;
+    gap: var(--handbook-gap-sm);
     cursor: pointer;
     padding-left: var(--content-padding);
     outline: none;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+    border-radius: var(--handbook-border-radius);
+    transition: var(--handbook-transition-fast);
 
     &:focus {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 2px;
+      outline: var(--handbook-focus-outline);
+      outline-offset: var(--handbook-outline-offset);
     }
 
     &:hover {
@@ -391,14 +403,14 @@ import Prose from '@/components/Prose.astro';
   }
 
   .triangle-icon {
-    font-size: 0.875rem;
+    font-size: var(--handbook-triangle-size);
     color: var(--color-text);
     transition: var(--handbook-transition-smooth);
     transform-origin: center;
   }
 
   .mobile-nav-content[aria-expanded='true'] .triangle-icon {
-    transform: rotate(90deg);
+    transform: rotate(var(--handbook-rotation));
   }
 
   /* Dropdown menu */
@@ -412,7 +424,7 @@ import Prose from '@/components/Prose.astro';
     border: 1px solid var(--color-border);
     border-top: none;
     z-index: var(--handbook-z-index-dropdown);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px var(--handbook-shadow-blur) -1px rgba(0, 0, 0, 0.1);
 
     &.open {
       display: block;
@@ -423,14 +435,14 @@ import Prose from '@/components/Prose.astro';
   .handbook-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: var(--handbook-gap-md);
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 0 var(--content-padding);
 
     @media (--md) {
-      grid-template-columns: 250px 1fr;
-      gap: 4rem;
+      grid-template-columns: var(--handbook-desktop-nav-width) 1fr;
+      gap: var(--handbook-gap-lg);
     }
   }
 
@@ -459,7 +471,7 @@ import Prose from '@/components/Prose.astro';
 
     a {
       display: block;
-      padding: 0.75rem var(--content-padding);
+      padding: var(--handbook-padding-sm) var(--content-padding);
       text-decoration: none;
       color: var(--color-text);
       font-size: var(--fs-body-s);
@@ -471,8 +483,8 @@ import Prose from '@/components/Prose.astro';
       }
 
       &:focus {
-        outline: 2px solid var(--color-accent);
-        outline-offset: 2px;
+        outline: var(--handbook-focus-outline);
+        outline-offset: var(--handbook-outline-offset);
       }
 
       &.active {
