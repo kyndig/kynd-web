@@ -28,7 +28,7 @@ import Prose from '@/components/Prose.astro';
       <div class="handbook-dropdown" id="handbook-dropdown">
         <ul class="nav-menu" id="nav-menu">
           <li><a href="#om-kynd" data-section="Om Kynd">Om Kynd</a></li>
-          <li><a href="#lønn-og-goder" data-section="Lønn og goder">Lønn og goder</a></li>
+          <li><a href="#lonn-og-goder" data-section="Lønn og goder">Lønn og goder</a></li>
           <li><a href="#arbeidsforhold" data-section="Arbeidsforhold">Arbeidsforhold</a></li>
           <li>
             <a href="#ferie-og-permisjon" data-section="Ferie og permisjon">Ferie og permisjon</a>
@@ -38,7 +38,7 @@ import Prose from '@/components/Prose.astro';
             >
           </li>
           <li>
-            <a href="#miljø-og-bærekraft" data-section="Miljø og bærekraft">Miljø og bærekraft</a>
+            <a href="#miljo-og-barekraft" data-section="Miljø og bærekraft">Miljø og bærekraft</a>
           </li>
         </ul>
       </div>
@@ -50,11 +50,11 @@ import Prose from '@/components/Prose.astro';
     <nav class="handbook-nav desktop-nav">
       <ul class="nav-menu">
         <li><a href="#om-kynd">Om Kynd</a></li>
-        <li><a href="#lønn-og-goder">Lønn og goder</a></li>
+        <li><a href="#lonn-og-goder">Lønn og goder</a></li>
         <li><a href="#arbeidsforhold">Arbeidsforhold</a></li>
         <li><a href="#ferie-og-permisjon">Ferie og permisjon</a></li>
         <li><a href="#kompetanseutvikling">Kompetanseutvikling</a></li>
-        <li><a href="#miljø-og-bærekraft">Miljø og bærekraft</a></li>
+        <li><a href="#miljo-og-barekraft">Miljø og bærekraft</a></li>
       </ul>
     </nav>
 
@@ -106,7 +106,7 @@ import Prose from '@/components/Prose.astro';
         </PageSection>
       </section>
 
-      <section id="lønn-og-goder">
+      <section id="lonn-og-goder">
         <PageSection heading="Lønn og goder">
           <Prose align="left">
             <p>
@@ -284,7 +284,7 @@ import Prose from '@/components/Prose.astro';
         </PageSection>
       </section>
 
-      <section id="miljø-og-bærekraft">
+      <section id="miljo-og-barekraft">
         <PageSection heading="Miljø og bærekraft">
           <Prose align="left">
             <p>
@@ -338,9 +338,9 @@ import Prose from '@/components/Prose.astro';
     --handbook-header-height: 4rem;
     --handbook-nav-height: 3rem;
     --handbook-nav-padding: 1rem;
-    --handbook-z-index-nav: 3;
-    --handbook-z-index-dropdown: 4;
-    --handbook-z-index-toggle: 10;
+    --handbook-z-index-nav: 15;
+    --handbook-z-index-dropdown: 16;
+    --handbook-z-index-toggle: 17;
     --handbook-transition-fast: background-color var(--animation-duration) ease;
     --handbook-transition-smooth: transform 0.3s ease;
     --handbook-gap-sm: 0.5rem;
@@ -354,7 +354,7 @@ import Prose from '@/components/Prose.astro';
     --handbook-desktop-nav-width: 250px;
     --handbook-shadow-blur: 6px;
     --handbook-rotation: 90deg;
-    --handbook-focus-outline: var(--handbook-outline-width) solid var(--color-accent);
+    --handbook-focus-outline: var(--handbook-outline-width) solid var(--color-focus);
   }
 
   /* Mobile sticky navigation */
@@ -525,14 +525,17 @@ import Prose from '@/components/Prose.astro';
     const currentSection = document.getElementById('current-section');
     const navLinks = document.querySelectorAll('.nav-menu a');
 
+    // Track current focused index for keyboard navigation
+    let currentIndex = 0;
+
     // Section data for tracking
     const sections = [
       { id: 'om-kynd', title: 'Om Kynd' },
-      { id: 'lønn-og-goder', title: 'Lønn og goder' },
+      { id: 'lonn-og-goder', title: 'Lønn og goder' },
       { id: 'arbeidsforhold', title: 'Arbeidsforhold' },
       { id: 'ferie-og-permisjon', title: 'Ferie og permisjon' },
       { id: 'kompetanseutvikling', title: 'Kompetanseutvikling' },
-      { id: 'miljø-og-bærekraft', title: 'Miljø og bærekraft' },
+      { id: 'miljo-og-barekraft', title: 'Miljø og bærekraft' },
     ];
 
     // Toggle dropdown menu
@@ -543,11 +546,18 @@ import Prose from '@/components/Prose.astro';
         if (isExpanded) {
           handbookMenuToggle.setAttribute('aria-expanded', 'false');
           handbookDropdown.classList.remove('open');
-          // Remove focus to hide the outline when closing
           handbookMenuToggle.blur();
         } else {
           handbookMenuToggle.setAttribute('aria-expanded', 'true');
           handbookDropdown.classList.add('open');
+
+          const allLinks = Array.from(
+            handbookDropdown.querySelectorAll('a'),
+          ) as HTMLAnchorElement[];
+          if (allLinks.length > 0) {
+            currentIndex = 0;
+            allLinks[0]?.focus();
+          }
         }
       }
     }
@@ -557,7 +567,6 @@ import Prose from '@/components/Prose.astro';
       if (handbookMenuToggle && handbookDropdown) {
         handbookMenuToggle.setAttribute('aria-expanded', 'false');
         handbookDropdown.classList.remove('open');
-        // Remove focus to hide the outline
         handbookMenuToggle.blur();
       }
     }
@@ -566,7 +575,7 @@ import Prose from '@/components/Prose.astro';
     function updateCurrentSection() {
       if (!currentSection) return;
 
-      const scrollPosition = window.scrollY + 200; // Offset for better detection
+      const scrollPosition = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -599,19 +608,88 @@ import Prose from '@/components/Prose.astro';
       handbookMenuToggle.addEventListener('click', toggleDropdown);
 
       // Keyboard support
-      handbookMenuToggle.addEventListener('keydown', function (event) {
+      handbookMenuToggle.addEventListener('keydown', function (event: KeyboardEvent) {
         if (event.key === 'Enter' || event.key === ' ') {
+          if (event.target === handbookMenuToggle) {
+            event.preventDefault();
+            toggleDropdown();
+          }
+        } else if (
+          event.key === 'ArrowDown' &&
+          handbookDropdown &&
+          handbookDropdown.classList.contains('open')
+        ) {
           event.preventDefault();
-          toggleDropdown();
+          const firstLink = handbookDropdown.querySelector('a') as HTMLAnchorElement;
+          if (firstLink) {
+            firstLink.focus();
+          }
         }
       });
     }
+
+    // Global keyboard navigation for dropdown
+    document.addEventListener('keydown', function (event: KeyboardEvent) {
+      const isDropdownOpen = handbookDropdown?.classList.contains('open');
+      const allLinks = Array.from(
+        handbookDropdown?.querySelectorAll('a') || [],
+      ) as HTMLAnchorElement[];
+
+      if (!isDropdownOpen || allLinks.length === 0) return;
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        currentIndex = (currentIndex + 1) % allLinks.length;
+        allLinks[currentIndex]?.focus();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        currentIndex = (currentIndex - 1 + allLinks.length) % allLinks.length;
+        allLinks[currentIndex]?.focus();
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        currentIndex = 0;
+        allLinks[currentIndex]?.focus();
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        currentIndex = allLinks.length - 1;
+        allLinks[currentIndex]?.focus();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        closeDropdown();
+        if (handbookMenuToggle) {
+          handbookMenuToggle.focus();
+        }
+      }
+    });
 
     // Close dropdown when clicking on navigation links
     navLinks.forEach((link) => {
       link.addEventListener('click', function () {
         if (window.matchMedia('(max-width: 47.999em)').matches) {
           closeDropdown();
+        }
+      });
+
+      // Handle Enter/Space on links
+      link.addEventListener('keydown', function (event) {
+        const keyboardEvent = event as KeyboardEvent;
+
+        if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+          keyboardEvent.preventDefault();
+
+          // Close the dropdown first
+          if (window.matchMedia('(max-width: 47.999em)').matches) {
+            closeDropdown();
+          }
+
+          // Then navigate to the target
+          const href = link.getAttribute('href');
+          if (href) {
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
         }
       });
     });
