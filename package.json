@@ -26,6 +26,7 @@
     "prettier:check": "prettier --check . --plugin=prettier-plugin-astro",
     "prettier:format": "prettier --write . --plugin=prettier-plugin-astro",
     "check": "pnpm astro:check && pnpm typecheck && pnpm lint && pnpm prettier:check",
+    "check:fix": "pnpm lint --fix && pnpm prettier:format",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
