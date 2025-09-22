@@ -132,7 +132,7 @@ const navItems = [
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 10;
+    z-index: 15;
 
     .burger-line {
       width: 100%;
@@ -152,7 +152,7 @@ const navItems = [
       }
 
       .burger-line:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
+        transform: rotate(-45deg) translate(10px, -10px);
       }
     }
   }
@@ -184,9 +184,8 @@ const navItems = [
     width: 280px;
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+    z-index: 12;
     transform: translateY(-10px);
     opacity: 0;
     visibility: hidden;
@@ -200,6 +199,7 @@ const navItems = [
     }
   }
 
+
   .drawer-nav {
     padding: 1rem;
     display: flex;
@@ -211,7 +211,6 @@ const navItems = [
       padding: 0.75rem 1rem;
       text-decoration: none;
       color: var(--color-text);
-      border-radius: 4px;
       transition: background-color 0.2s ease;
 
       &:hover {
@@ -219,15 +218,11 @@ const navItems = [
       }
 
       &.button {
-        background-color: var(--color-primary);
-        color: var(--color-secondary);
-        text-align: center;
-        font-weight: 600;
-
         &:hover {
-          background-color: var(--color-primary-shade);
+          background-color: transparent;
         }
       }
+
     }
   }
 </style>
