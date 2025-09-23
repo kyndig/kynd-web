@@ -1,16 +1,53 @@
 ---
 import Logo from '@/components/Logo.astro';
 import NavLink from '@/components/NavLink.astro';
+
+const navItems = [
+  // { href: '/labs', text: 'Labs' },
+  // { href: '/folka', text: 'Folka' },
+  { href: '/prosjekter', text: 'Prosjekter' },
+  // { href: '/bok', text: 'Håndbok' },
+  { href: '/om-oss', text: 'Om oss', isButton: true },
+];
 ---
 
 <header>
   <div class="header-content">
     <a href="/" aria-label="Forside" class="logo-link"><Logo /></a>
-    <nav>
-      <!-- <NavLink href="/tjenester">Tjenester</NavLink> -->
-      <!-- <NavLink href="/kontakt-oss" isButton>Kontakt oss</NavLink> -->
-      <NavLink href="/prosjekter">Prosjekter</NavLink>
-      <NavLink href="/om-oss" isButton>Om oss</NavLink>
+
+    <nav class="desktop-nav">
+      {
+        navItems.map((item) => (
+          <NavLink href={item.href} isButton={!!item.isButton}>
+            {item.text}
+          </NavLink>
+        ))
+      }
+    </nav>
+
+    <nav class="mobile-nav">
+      <button
+        class="mobile-menu-toggle"
+        id="mobile-menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+      <div id="drawer-overlay"></div>
+      <div id="drawer-menu">
+        <nav class="drawer-nav">
+          {
+            navItems.map((item) => (
+              <NavLink href={item.href} isButton={!!item.isButton}>
+                {item.text}
+              </NavLink>
+            ))
+          }
+        </nav>
+      </div>
     </nav>
   </div>
 </header>
@@ -31,7 +68,6 @@ import NavLink from '@/components/NavLink.astro';
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    flex-wrap: wrap;
   }
 
   .logo-link {
@@ -40,14 +76,161 @@ import NavLink from '@/components/NavLink.astro';
     flex-shrink: 0;
   }
 
-  nav {
-    display: flex;
-    column-gap: 1rem;
+  .desktop-nav {
+    display: none;
+    column-gap: 0.5rem;
     align-items: center;
     margin-inline-start: auto;
 
     @media (--md) {
-      column-gap: 2.5rem;
+      display: flex;
+      column-gap: 1rem;
+    }
+
+    @media (--xl) {
+      column-gap: 1.5rem;
+    }
+  }
+
+  .mobile-nav {
+    display: block;
+    margin-inline-start: auto;
+
+    @media (--md) {
+      display: none;
+    }
+  }
+
+  .mobile-menu-toggle {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem;
+
+    .burger-line {
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-text);
+      transition: all 0.3s ease;
+    }
+
+    &[aria-expanded='true'] {
+      .burger-line:nth-child(1) {
+        transform: rotate(45deg) translate(0.5rem, 0.5rem);
+      }
+
+      .burger-line:nth-child(2) {
+        opacity: 0;
+      }
+
+      .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(0.5rem, -0.5rem);
+      }
+    }
+  }
+
+  #drawer-overlay {
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.open {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  #drawer-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    inline-size: 100%;
+    max-inline-size: 17.5rem;
+    background-color: var(--color-background);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .drawer-nav {
+    padding: 1rem;
+    padding-top: calc(
+      1rem + 2rem + 1rem
+    ); /* 1rem top padding + 2rem nav height + 1rem bottom padding */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    a {
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--color-text);
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const drawerMenu = document.getElementById('drawer-menu');
+
+    function openDrawer() {
+      drawerOverlay?.classList.add('open');
+      drawerMenu?.classList.add('open');
+      mobileMenuToggle?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden'; // Prevent body scroll
+    }
+
+    function closeDrawerMenu() {
+      drawerOverlay?.classList.remove('open');
+      drawerMenu?.classList.remove('open');
+      mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = ''; // Restore body scroll
+    }
+
+    if (mobileMenuToggle && drawerOverlay && drawerMenu) {
+      // Open drawer when burger menu is clicked
+      mobileMenuToggle.addEventListener('click', function () {
+        const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          closeDrawerMenu();
+        } else {
+          openDrawer();
+        }
+      });
+
+      // Close drawer when overlay is clicked
+      drawerOverlay.addEventListener('click', closeDrawerMenu);
+
+      // Close drawer when clicking on navigation links
+      const drawerNavLinks = drawerMenu.querySelectorAll('a');
+      drawerNavLinks.forEach((link) => {
+        link.addEventListener('click', closeDrawerMenu);
+      });
+
+      // Close drawer when pressing Escape key
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && drawerMenu.classList.contains('open')) {
+          closeDrawerMenu();
+        }
+      });
+    }
+  });
+</script>
