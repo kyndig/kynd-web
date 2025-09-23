@@ -23,15 +23,37 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
 
 <style>
   a {
-    &:not(.button) {
-      padding-inline: 1.5rem;
-      font-size: var(--fs-label-l);
-      line-height: var(--line-height-m);
-    }
-
     &:hover:not(.button),
     &.active {
       background-color: var(--color-accent);
+    }
+
+    &:not(.button) {
+      padding-inline: 1rem;
+      font-size: var(--fs-label-l);
+      line-height: var(--line-height-m);
+      min-width: fit-content;
+      white-space: nowrap;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    @media (--lg) {
+      &:not(.button) {
+        padding-inline: 1rem;
+      }
+    }
+
+    @media (--xl) {
+      &:not(.button) {
+        padding-inline: 1.25rem;
+      }
+    }
+
+    @media (--2xl) {
+      &:not(.button) {
+        padding-inline: 1.5rem;
+      }
     }
   }
 </style>
