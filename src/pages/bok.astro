@@ -58,7 +58,7 @@ import Prose from '@/components/Prose.astro';
       </ul>
     </nav>
 
-    <main class="handbook-content">
+    <div class="handbook-content">
       <section id="om-kynd">
         <PageSection heading="Om Kynd">
           <Prose align="left">
@@ -328,7 +328,7 @@ import Prose from '@/components/Prose.astro';
           </Prose>
         </PageSection>
       </section>
-    </main>
+    </div>
   </div>
 </Layout>
 
@@ -367,7 +367,7 @@ import Prose from '@/components/Prose.astro';
     background-color: var(--color-background);
     border-bottom: 1px solid var(--color-border);
     z-index: var(--handbook-z-index-nav);
-    padding: var(--handbook-gap-sm) var(--content-padding);
+    padding: var(--handbook-gap-sm) 0;
 
     @media (--md) {
       display: none;
@@ -438,7 +438,6 @@ import Prose from '@/components/Prose.astro';
     gap: var(--handbook-gap-md);
     max-width: var(--content-max-width);
     margin: 0 auto;
-    padding: 0 var(--content-padding);
 
     @media (--md) {
       grid-template-columns: var(--handbook-desktop-nav-width) 1fr;
