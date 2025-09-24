@@ -20,6 +20,9 @@ export default defineConfig({
   server: {
     open: true,
   },
+  image: {
+    responsiveStyles: true,
+  },
   experimental: {
     preserveScriptOrder: true,
     fonts: [
