@@ -1,0 +1,232 @@
+---
+import Link from '@/components/Link.astro';
+
+export type Props = {
+  variant?: 'default' | 'green' | 'black';
+  heading: string;
+  description?: string;
+  href?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+};
+
+const {
+  variant = 'default',
+  heading,
+  description,
+  href,
+  imageSrc,
+  imageAlt = heading,
+} = Astro.props;
+
+const variantMap = {
+  default: 'dark-primary',
+  green: 'dark-secondary',
+  black: 'light-secondary',
+} as const;
+
+const linkVariant = variantMap[variant];
+---
+
+<div class:list={['dynamic-card', variant]}>
+  <div class="card-content">
+    <div class="text-content">
+      <div class="heading-container">
+        <span class="heading">{heading}</span>
+      </div>
+      <div class="link-container">
+        <Link href={href} variant={linkVariant} linkOverlay aria-label={heading} />
+      </div>
+    </div>
+    <div class="description-container">
+      <p class="description">{description}</p>
+    </div>
+  </div>
+  
+  <div class:list={['pattern', variant]} aria-hidden="true"></div>
+</div>
+
+<style>
+  .dynamic-card {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: var(--background-color);
+    border: 2px solid var(--color-dark-blue);
+    overflow: hidden;
+    color: var(--color-text);
+    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: var(--shadow);
+      width: 150%;
+      z-index: 10;
+      position: relative;
+    }
+
+    &.default {
+      --background-color: var(--color-secondary-shade);
+      --highlight-color: var(--color-accent);
+      --pattern-color: #ececec;
+      --description-text-color: var(--color-text);
+    }
+
+    &.green {
+      --background-color: var(--color-accent);
+      --highlight-color: var(--color-secondary);
+      --pattern-color: var(--color-primary);
+      --description-text-color: var(--color-text);
+    }
+
+    &.black {
+      --background-color: var(--color-primary);
+      --highlight-color: var(--color-secondary);
+      --pattern-color: var(--color-secondary);
+      --description-text-color: var(--color-secondary);
+    }
+
+    @media (--md) {
+      padding: 3.125rem;
+    }
+
+    &:nth-child(odd):hover {
+      width: 150%;
+      margin-left: 0;
+      z-index: 10;
+    }
+
+    &:nth-child(even):hover {
+      width: 150%;
+      margin-left: -50%;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      &:hover {
+        width: 100%;
+        left: auto;
+        right: auto;
+      }
+    }
+  }
+
+
+  .card-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 80%;
+  }
+
+  .heading-container {
+    width: 80%;
+    z-index: 1;
+  }
+
+  .link-container {
+    z-index: 1;
+    margin-top: 1.5rem;
+  }
+
+  .description-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    max-width: 15rem;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    background-color: var(--background-color);
+
+    @media (--md) {
+      width: 0;
+    }
+  }
+
+  .dynamic-card:hover .description-container {
+    opacity: 1;
+    transform: translateX(0);
+    width: 15rem;
+    height: 100%;
+  }
+
+  .description {
+    font-size: var(--fs-body-m);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-m);
+    margin: 0;
+    color: var(--description-text-color);
+    padding: 1rem 1.25rem;
+    height: calc(100% - 2rem);
+    overflow-y: auto;
+    word-wrap: break-word;
+  }
+
+
+  .heading {
+    font-size: var(--fs-body-l);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.4;
+    background-color: var(--highlight-color);
+    padding: 0.5em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    display: inline-block;
+  }
+
+
+
+  .pattern {
+    position: absolute;
+    top: var(--pattern-top, 50%);
+    left: var(--pattern-left, 65%);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    width: var(--pattern-size, 40rem);
+    aspect-ratio: var(--pattern-aspect, 1 / 1);
+    background-color: var(--pattern-color);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
+  .pattern.default {
+    --pattern-top: 40%;
+    --pattern-left: 100%;
+    --pattern-aspect: 1219 / 878;
+    -webkit-mask-image: url('/patterns/pattern-2.svg');
+    mask-image: url('/patterns/pattern-2.svg');
+  }
+
+  .pattern.green,
+  .pattern.black {
+    --pattern-top: 95%;
+    --pattern-left: 100%;
+    --pattern-aspect: 1099 / 755;
+    -webkit-mask-image: url('/patterns/pattern-1.svg');
+    mask-image: url('/patterns/pattern-1.svg');
+  }
+
+</style>
