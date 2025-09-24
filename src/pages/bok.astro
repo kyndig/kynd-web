@@ -385,13 +385,8 @@ import Prose from '@/components/Prose.astro';
     border-radius: var(--handbook-border-radius);
     transition: var(--handbook-transition-fast);
 
-    &:focus {
-      outline: var(--handbook-focus-outline);
-      outline-offset: var(--handbook-outline-offset);
-    }
-
     &:hover {
-      background-color: var(--color-accent);
+      background-color: var(--color-secondary-shade);
     }
   }
 
@@ -448,11 +443,8 @@ import Prose from '@/components/Prose.astro';
   .desktop-nav {
     display: none;
     position: sticky;
-    top: calc(var(--handbook-header-height) + var(--handbook-nav-padding));
-    height: fit-content;
-    background-color: var(--color-background);
-    padding: var(--handbook-nav-padding) 0;
-    border-right: 1px solid var(--color-border);
+    top: calc(var(--size-header) + 0.25rem);
+    block-size: fit-content;
 
     @media (--md) {
       display: block;
@@ -460,14 +452,6 @@ import Prose from '@/components/Prose.astro';
   }
 
   .nav-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      margin-bottom: 0;
-    }
-
     a {
       display: block;
       padding: var(--handbook-padding-sm) var(--content-padding);
@@ -476,44 +460,23 @@ import Prose from '@/components/Prose.astro';
       font-size: var(--fs-body-s);
       transition: var(--handbook-transition-fast);
 
-      &:hover,
+      &:hover {
+        background-color: var(--color-secondary-shade);
+      }
+
       &.active {
         background-color: var(--color-accent);
       }
 
-      &:focus {
-        outline: var(--handbook-focus-outline);
-        outline-offset: var(--handbook-outline-offset);
-      }
-
       &.active {
-        font-weight: 600;
+        font-weight: var(--font-weight-semibold);
       }
     }
-  }
-
-  .handbook-content {
-    padding-top: 0; /* No extra padding needed since nav is now sticky */
-
-    @media (--md) {
-      padding-top: 0;
-    }
-  }
-
-  /* Smooth scrolling for anchor links */
-  html {
-    scroll-behavior: smooth;
   }
 
   /* Offset for sticky header */
   .handbook-content section[id] {
-    scroll-margin-top: calc(
-      var(--handbook-header-height) + var(--handbook-nav-height) + var(--handbook-nav-padding)
-    );
-
-    @media (--md) {
-      scroll-margin-top: calc(var(--handbook-header-height) + 2rem);
-    }
+    scroll-margin-top: var(--size-header);
   }
 </style>
 
