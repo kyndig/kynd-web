@@ -1,0 +1,218 @@
+---
+type Item = {
+  id: string;
+  title: string;
+};
+
+type Props = {
+  items: Item[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="navigation-container">
+  <button
+    id="mobile-nav-toggle"
+    aria-expanded="false"
+    aria-controls="nav-menu"
+    aria-label="Toggle navigation menu"
+  >
+    <span class="triangle-icon">▶</span>
+    <span id="nav-toggle-text">Introduksjon</span>
+  </button>
+
+  <nav id="nav-menu">
+    <ul>
+      {
+        items.map((item) => (
+          <li>
+            <a href={`#${item.id}`}>{item.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .navigation-container {
+    position: sticky;
+    top: var(--size-header);
+    height: fit-content;
+  }
+
+  #mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--color-background);
+
+    @media (--md) {
+      display: none;
+    }
+
+    &:hover {
+      background-color: var(--color-secondary-shade);
+    }
+
+    .triangle-icon {
+      transition: transform 0.2s ease;
+    }
+
+    &[aria-expanded='true'] {
+      .triangle-icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  nav {
+    background-color: var(--color-background);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    @media (--md) {
+      display: block;
+      position: static;
+      box-shadow: none;
+      top: unset;
+      left: unset;
+      right: unset;
+    }
+
+    &.open {
+      display: block;
+    }
+  }
+
+  a {
+    display: block;
+    padding: 0.75rem 2rem;
+    color: var(--color-text);
+    font-size: var(--fs-body-s);
+
+    &:hover {
+      background-color: var(--color-secondary-shade);
+    }
+
+    &.active {
+      background-color: var(--color-accent);
+    }
+
+    &.active {
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+</style>
+
+<script>
+  const navLinks = document.querySelectorAll('a');
+  const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const navToggleText = document.getElementById('nav-toggle-text');
+
+  function setNavToggleText(text: string) {
+    if (navToggleText) {
+      navToggleText.textContent = text;
+    }
+  }
+
+  function closeNavMenu() {
+    navMenu?.classList.remove('open');
+    mobileNavToggle?.setAttribute('aria-expanded', 'false');
+  }
+
+  function openNavMenu() {
+    navMenu?.classList.add('open');
+    mobileNavToggle?.setAttribute('aria-expanded', 'true');
+  }
+
+  function toggleNavMenu() {
+    if (navMenu?.classList.contains('open')) {
+      closeNavMenu();
+    } else {
+      openNavMenu();
+    }
+  }
+
+  mobileNavToggle?.addEventListener('click', toggleNavMenu);
+
+  mobileNavToggle?.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      toggleNavMenu();
+    } else if (event.key === 'Escape') {
+      closeNavMenu();
+    }
+  });
+
+  // Close nav menu when clicking outside
+  document.addEventListener('click', (event) => {
+    const target = event.target as Node;
+    if (
+      navMenu?.classList.contains('open') &&
+      !mobileNavToggle?.contains(target) &&
+      !navMenu.contains(target)
+    ) {
+      closeNavMenu();
+    }
+  });
+
+  // Update button text and close menu when clicking links
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      const linkText = link.textContent;
+      if (linkText) {
+        setNavToggleText(linkText);
+      }
+      closeNavMenu();
+    });
+  });
+
+  // Update active link based on scroll position
+  function updateActiveLink() {
+    const scrollPosition = window.scrollY + 200; // Offset to trigger earlier
+
+    // Remove active class from all links first
+    navLinks.forEach((link) => link.classList.remove('active'));
+
+    // Find the current section and mark its link as active
+    for (let i = navLinks.length - 1; i >= 0; i--) {
+      const link = navLinks[i];
+      const href = link?.getAttribute('href');
+      if (!href) continue;
+
+      const sectionId = href.replace('#', '');
+      const section = document.getElementById(sectionId);
+
+      if (section && section.offsetTop <= scrollPosition) {
+        link?.classList.add('active');
+        if (link?.textContent) {
+          setNavToggleText(link.textContent);
+        }
+        break;
+      }
+    }
+  }
+
+  // Update on scroll
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveLink();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Initial call
+  updateActiveLink();
+</script>

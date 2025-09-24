@@ -31,7 +31,7 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
 
-  --size-header: 6.25rem;
+  --size-header: 5rem;
 
   --shadow: -0.625rem 0.625rem 0 0 var(--color-shadow);
 
@@ -57,6 +57,8 @@
   --fs-input: 1rem; /* 16px */
 
   @media (--md) {
+    --size-header: 6.25rem;
+
     --content-inner-padding: 4rem;
 
     --fs-heading-l: 3.75rem; /* 60px */

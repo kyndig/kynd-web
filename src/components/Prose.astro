@@ -23,19 +23,19 @@ const rightMargin = align === 'right' ? '0' : 'auto';
     @media (--md) {
       max-width: min(65ch, 60%);
     }
-  }
 
-  :global(p:not(:last-child)) {
-    margin-block-end: 1em;
-  }
+    & :global(p:not(:last-child)) {
+      margin-block-end: 1em;
+    }
 
-  :global(ul),
-  :global(ol) {
-    list-style: revert;
-    padding-inline-start: 1em;
-  }
+    & :global(ul),
+    & :global(ol) {
+      list-style: revert;
+      padding-inline-start: 1em;
+    }
 
-  :global(li) {
-    margin-block: 0.5em;
+    & :global(li) {
+      margin-block: 0.5em;
+    }
   }
 </style>

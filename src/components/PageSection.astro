@@ -1,13 +1,14 @@
 ---
 export type Props = {
+  id?: string;
   heading: string;
   subheading?: string;
 };
 
-const { heading, subheading } = Astro.props;
+const { id, heading, subheading } = Astro.props;
 ---
 
-<section>
+<section id={id}>
   <div class="heading-container">
     <h2>{heading}</h2>
     <div class="subheading">{subheading}</div>
