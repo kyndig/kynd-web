@@ -63,3 +63,42 @@ p {
 button {
   cursor: pointer;
 }
+
+/* Global link styling - applies everywhere except navigation */
+a:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec']) {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gray);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 0.1em;
+  transition: all var(--animation-duration) ease;
+}
+
+a:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec']):hover {
+  color: var(--color-primary);
+  text-decoration-color: var(--color-primary);
+  text-decoration-thickness: 0.15em;
+}
+
+/* External links get the external icon */
+a[href^='http']:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec']) {
+  position: relative;
+}
+
+a[href^='http']:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec'])::after {
+  content: '↗';
+  font-size: 0.8em;
+  margin-inline-start: 0.25em;
+  opacity: 0.7;
+  transition: opacity var(--animation-duration) ease;
+}
+
+a[href^='http']:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec']):hover::after {
+  opacity: 1;
+}
+
+/* Internal anchor links */
+a[href^='#']:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec']):hover {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
