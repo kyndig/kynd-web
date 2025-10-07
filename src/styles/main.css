@@ -86,11 +86,18 @@ a[href^='http']:not(.button):not([class*='nav']):not([class*='link--']):not([cla
 }
 
 a[href^='http']:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec'])::after {
-  content: '↗';
-  font-size: 0.8em;
+  content: '';
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
   margin-inline-start: 0.25em;
   opacity: 0.7;
   transition: opacity var(--animation-duration) ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: baseline;
 }
 
 a[href^='http']:not(.button):not([class*='nav']):not([class*='link--']):not([class*='link-sec']):hover::after {
