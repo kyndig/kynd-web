@@ -183,7 +183,10 @@ const { items } = Astro.props;
     navLinks.forEach((link) => link.classList.remove('active'));
 
     // Find the current section and mark its link as active
-    for (let i = navLinks.length - 1; i >= 0; i--) {
+    let activeLink = null;
+
+    // Check each section from top to bottom
+    for (let i = 0; i < navLinks.length; i++) {
       const link = navLinks[i];
       const href = link?.getAttribute('href');
       if (!href) continue;
@@ -191,12 +194,35 @@ const { items } = Astro.props;
       const sectionId = href.replace('#', '');
       const section = document.getElementById(sectionId);
 
-      if (section && section.offsetTop <= scrollPosition) {
-        link?.classList.add('active');
-        if (link?.textContent) {
-          setNavToggleText(link.textContent);
+      if (section) {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        const nextSection =
+          i < navLinks.length - 1
+            ? document.getElementById(navLinks[i + 1].getAttribute('href')?.replace('#', '') || '')
+            : null;
+
+        // Check if we're in this section's range
+        if (
+          scrollPosition >= sectionTop &&
+          (nextSection ? scrollPosition < nextSection.offsetTop : true)
+        ) {
+          activeLink = link;
+          break;
         }
-        break;
+      }
+    }
+
+    // If no section is found (scrolled past all sections), activate the last section
+    if (!activeLink && navLinks.length > 0) {
+      activeLink = navLinks[navLinks.length - 1];
+    }
+
+    // Apply active class and update toggle text
+    if (activeLink) {
+      activeLink.classList.add('active');
+      if (activeLink.textContent) {
+        setNavToggleText(activeLink.textContent);
       }
     }
   }
