@@ -113,7 +113,7 @@ const { items } = Astro.props;
 </style>
 
 <script>
-  const navLinks = document.querySelectorAll('a');
+  const navLinks = document.querySelectorAll('#nav-menu a');
   const mobileNavToggle = document.getElementById('mobile-nav-toggle');
   const navMenu = document.getElementById('nav-menu');
   const navToggleText = document.getElementById('nav-toggle-text');
@@ -196,10 +196,9 @@ const { items } = Astro.props;
 
       if (section) {
         const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
         const nextSection =
           i < navLinks.length - 1
-            ? document.getElementById(navLinks[i + 1].getAttribute('href')?.replace('#', '') || '')
+            ? document.getElementById(navLinks[i + 1]?.getAttribute('href')?.replace('#', '') || '')
             : null;
 
         // Check if we're in this section's range
