@@ -212,9 +212,15 @@ const { items } = Astro.props;
       }
     }
 
-    // If no section is found (scrolled past all sections), activate the last section
+    // If no section is found, check if we're at the top of the page
     if (!activeLink && navLinks.length > 0) {
-      activeLink = navLinks[navLinks.length - 1];
+      // If we're at the very top (before any section), activate the first section
+      if (window.scrollY <= 500) {
+        activeLink = navLinks[0];
+      } else {
+        // Otherwise, activate the last section (scrolled past all sections)
+        activeLink = navLinks[navLinks.length - 1];
+      }
     }
 
     // Apply active class and update toggle text
