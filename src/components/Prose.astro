@@ -116,4 +116,62 @@ const rightMargin = align === 'right' ? '0' : 'auto';
       text-decoration-color: var(--color-accent);
     }
   }
+
+  /* Italic styling */
+  :global(i),
+  :global(em) {
+    font-style: italic;
+  }
+
+  /* Bold styling */
+  :global(b),
+  :global(strong) {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Link styling - only applies within Prose components */
+  :global(a) {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gray);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.1em;
+    transition: all var(--animation-duration) ease;
+  }
+
+  :global(a:hover) {
+    color: var(--color-primary);
+    text-decoration-color: var(--color-primary);
+    text-decoration-thickness: 0.15em;
+  }
+
+  /* External links get the external icon */
+  :global(a[href^='http']) {
+    position: relative;
+  }
+
+  :global(a[href^='http'])::after {
+    content: '';
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-inline-start: 0.25em;
+    opacity: 0.7;
+    transition: opacity var(--animation-duration) ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: baseline;
+  }
+
+  :global(a[href^='http']:hover)::after {
+    opacity: 1;
+  }
+
+  /* Internal anchor links */
+  :global(a[href^='#']:hover) {
+    color: var(--color-accent);
+    text-decoration-color: var(--color-accent);
+  }
 </style>
