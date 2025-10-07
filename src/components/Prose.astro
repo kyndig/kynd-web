@@ -1,15 +1,16 @@
 ---
 export type Props = {
   align?: 'left' | 'right' | 'center';
+  wide?: boolean;
 };
 
-const { align = 'left' } = Astro.props;
+const { align = 'left', wide = false } = Astro.props;
 
 const leftMargin = align === 'left' ? '0' : 'auto';
 const rightMargin = align === 'right' ? '0' : 'auto';
 ---
 
-<div>
+<div data-wide={wide}>
   <slot />
 </div>
 
@@ -22,6 +23,12 @@ const rightMargin = align === 'right' ? '0' : 'auto';
 
     @media (--md) {
       max-width: min(65ch, 60%);
+    }
+
+    &[data-wide='true'] {
+      @media (--md) {
+        max-width: none;
+      }
     }
 
     & :global(p:not(:last-child)) {
