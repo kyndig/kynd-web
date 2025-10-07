@@ -11,7 +11,9 @@ const handbook = (await getCollection('handbook')).sort((a, b) => a.data.order -
 <Layout title="Håndbok" description="Kynds håndbok for ansatte">
   <HeroSection
     title="Kynds håndbok"
-    preamble="Her kan du lese mer om oss og hvordan vi gjør ting. Det er bare å snoke i vei."
+    preamble={`Personalhåndboka til Kynd er et levende dokument, som blir til mens vi skaper Kynd. Det som funker i dag, funker ikke nødvendigvis i morgen.
+
+Boka gir et innblikk i hvordan vi gjør ting i Kynd. Det er bare å snoke i vei!`}
   />
   <div class="handbook-container">
     <HandbookNavigation
