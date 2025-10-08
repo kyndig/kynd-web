@@ -1,68 +1,50 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Base.astro';
 import HeroSection from '@/components/HeroSection.astro';
-import WideCard from '@/components/WideCard.astro';
 import DynamicCard from '@/components/DynamicCard.astro';
+import { getCollection } from 'astro:content';
 
-const labs = await getCollection('labs');
+// Get all lab experiments from the collection
+const allLabs = await getCollection('labs');
+
+// Define arbitrary variant mapping - cycle through available variants
+const variants = ['default', 'green', 'black'] as const;
+const getVariant = (index: number) => {
+  return variants[index % variants.length];
+};
+
+// Sort labs by start date (newest first) or by title if no date
+const sortedLabs = allLabs.sort((a, b) => {
+  if (a.data.startDate && b.data.startDate) {
+    return b.data.startDate.getTime() - a.data.startDate.getTime();
+  }
+  return a.data.title.localeCompare(b.data.title);
+});
 ---
 
 <Layout title="Kynd Labs" description="Stæsj vi lager i Kynd">
   <HeroSection title="Kynd Labs" preamble="Stæsj vi lager i Kynd" image="/patterns/pattern-0.svg" />
-  
-  <section class="dynamic-cards-section">
-    <h2>Dynamic Cards Experiment</h2>
-    <p>Hover over the cards to see them expand with additional information!</p>
-    <div class="dynamic-grid">
-      <DynamicCard
-        variant="default"
-        heading="Job Scraper Bot"
-        description="An intelligent web scraping bot that automatically finds and collects job postings from various platforms. Built with Python and machine learning algorithms to identify relevant opportunities and filter out spam."
-        href="/labs/job-scraper-bot"
-      />
-      <DynamicCard
-        variant="green"
-        heading="Kynd Design System"
-        description="A comprehensive design system that provides consistent UI components, design tokens, and guidelines for building cohesive digital experiences. Includes React components, Figma libraries, and documentation."
-        href="/labs/kynd-design-system"
-      />
-      <DynamicCard
-        variant="black"
-        heading="Raycast Extensions"
-        description="Custom productivity extensions for Raycast that streamline common development tasks. Features include quick project switching, code snippet management, and automated workflow shortcuts."
-        href="/labs/raycast-extensions"
-      />
-      <DynamicCard
-        variant="default"
-        heading="Future Lab Project"
-        description="An experimental project exploring the intersection of AI and user experience design. This innovative tool helps designers create more accessible and inclusive interfaces through automated testing and optimization."
-        href="/labs/future-project"
-      />
-    </div>
-  </section>
 
-  <section class="traditional-cards-section">
-    <h2>Traditional Lab Projects</h2>
-    {
-      labs.map((lab) => (
-        <WideCard
-          heading={lab.data.title}
-          description={lab.data.description}
-          href={`/labs/${lab.id}`}
-          imageSrc={lab.data.image?.src || '/raycast-icon.png'}
-          imageAlt={lab.data.title}
-          variant="default"
-        />
-      ))
-    }
+  <section class="dynamic-cards-section">
+    <div class="dynamic-grid">
+      {
+        sortedLabs.map((lab, index) => (
+          <DynamicCard
+            variant={getVariant(index)}
+            heading={lab.data.title}
+            description={lab.data.description}
+            href={`/labs/${lab.id}`}
+          />
+        ))
+      }
+    </div>
   </section>
 </Layout>
 
 <style>
   .dynamic-cards-section {
     margin-bottom: 4rem;
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
   }
 
   .dynamic-cards-section h2 {
@@ -86,20 +68,6 @@ const labs = await getCollection('labs');
     gap: 2rem;
     max-width: 80rem;
     margin: 0 auto;
-  }
-
-  .traditional-cards-section {
-    display: grid;
-    gap: 2rem;
-    justify-items: center;
-  }
-
-  .traditional-cards-section h2 {
-    font-size: var(--fs-heading-s);
-    font-weight: var(--font-weight-semibold);
-    margin: 0 0 2rem 0;
-    color: var(--color-primary);
-    text-align: center;
   }
 
   @media (max-width: 768px) {
