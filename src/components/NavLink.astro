@@ -23,9 +23,16 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
 
 <style>
   a {
-    &:hover:not(.button),
+    &:hover:not(.button) {
+      background-color: var(--color-accent);
+      color: var(--color-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+
     &.active {
       background-color: var(--color-accent);
+      color: var(--color-primary);
+      font-weight: var(--font-weight-semibold);
     }
 
     &:not(.button) {

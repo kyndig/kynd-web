@@ -25,7 +25,7 @@ const { title, preamble, link, image, duration } = Astro.props;
     {link && <ButtonLink href={link.href}>{link.label}</ButtonLink>}
   </div>
   <div class="image-container">
-    {image && <img src={image} alt="" />}
+    {image && <img src={image} alt="" loading="eager" fetchpriority="high" />}
   </div>
 </div>
 
@@ -63,7 +63,6 @@ const { title, preamble, link, image, duration } = Astro.props;
     display: none;
 
     img {
-      display: block;
       margin-inline: auto;
       height: 100%;
       object-fit: contain;

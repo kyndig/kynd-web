@@ -1,15 +1,16 @@
 ---
 export type Props = {
   align?: 'left' | 'right' | 'center';
+  wide?: boolean;
 };
 
-const { align = 'left' } = Astro.props;
+const { align = 'left', wide = false } = Astro.props;
 
 const leftMargin = align === 'left' ? '0' : 'auto';
 const rightMargin = align === 'right' ? '0' : 'auto';
 ---
 
-<div>
+<div data-wide={wide}>
   <slot />
 </div>
 
@@ -23,19 +24,109 @@ const rightMargin = align === 'right' ? '0' : 'auto';
     @media (--md) {
       max-width: min(65ch, 60%);
     }
-  }
 
-  :global(p:not(:last-child)) {
-    margin-block-end: 1em;
-  }
+    &[data-wide='true'] {
+      @media (--md) {
+        max-width: none;
+      }
+    }
 
-  :global(ul),
-  :global(ol) {
-    list-style: revert;
-    padding-inline-start: 1em;
-  }
+    & :global(p:not(:last-child)) {
+      margin-block-end: 1em;
+    }
 
-  :global(li) {
-    margin-block: 0.5em;
+    & :global(h3) {
+      font-weight: bold;
+      margin-block-end: 0.75em;
+    }
+
+    & :global(h4) {
+      font-weight: bold;
+      margin-block-end: 0.75em;
+    }
+
+    /* Inline code styling */
+    & :global(code) {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.8em;
+      background-color: var(--color-light-gray);
+      padding: 0.125em 0.25em;
+      border-radius: 0.25em;
+      color: var(--color-primary);
+    }
+
+    & :global(ul),
+    & :global(ol) {
+      list-style: revert;
+      padding-inline-start: 1em;
+    }
+
+    & :global(li) {
+      margin-block: 0.5em;
+    }
+
+    /* Link styling - SCOPED to Prose components only */
+    & :global(a) {
+      color: var(--color-text);
+      text-decoration: underline;
+      text-decoration-color: var(--color-gray);
+      text-underline-offset: 0.2em;
+      text-decoration-thickness: 0.1em;
+      transition: all var(--animation-duration) ease;
+    }
+
+    & :global(a:hover) {
+      color: var(--color-primary);
+      text-decoration-color: var(--color-primary);
+      text-decoration-thickness: 0.15em;
+    }
+
+    & :global(a:focus-visible) {
+      outline: 0.125rem solid var(--color-focus);
+      outline-offset: 0.125rem;
+      border-radius: 0.125rem;
+    }
+
+    /* External links get the external icon */
+    & :global(a[href^='http']) {
+      position: relative;
+    }
+
+    & :global(a[href^='http'])::after {
+      content: '';
+      display: inline-block;
+      width: 0.8em;
+      height: 0.8em;
+      margin-inline-start: 0.25em;
+      opacity: 0.7;
+      transition: opacity var(--animation-duration) ease;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      vertical-align: baseline;
+    }
+
+    & :global(a[href^='http']:hover)::after {
+      opacity: 1;
+    }
+
+    /* Internal anchor links */
+    & :global(a[href^='#']:hover) {
+      color: var(--color-accent);
+      text-decoration-color: var(--color-accent);
+    }
+
+    /* Italic styling - SCOPED to Prose components only */
+    & :global(i),
+    & :global(em) {
+      font-style: italic;
+    }
+
+    /* Bold styling - SCOPED to Prose components only */
+    & :global(b),
+    & :global(strong) {
+      font-weight: var(--font-weight-semibold);
+    }
   }
 </style>

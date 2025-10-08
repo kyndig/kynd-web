@@ -1,21 +1,9 @@
 ---
-import { Image as AstroImage, type LocalImageProps } from 'astro:assets';
+import { Picture, type LocalImageProps } from 'astro:assets';
 
-export type Props = LocalImageProps & {
-  objectFit?: 'contain' | 'cover' | undefined;
-};
+export type Props = LocalImageProps;
 
-const { objectFit, ...rest } = Astro.props;
+const { src, ...attrs } = Astro.props;
 ---
 
-<div>
-  <AstroImage {...rest} />
-</div>
-
-<style define:vars={{ objectFit }}>
-  :global(img) {
-    inline-size: 100%;
-    block-size: auto;
-    object-fit: var(--objectFit);
-  }
-</style>
+<Picture src={src} formats={['avif', 'webp']} {...attrs} />

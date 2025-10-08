@@ -20,7 +20,7 @@ const { Content } = await render(employee);
 
 <Layout title={name} description={`Møt ${name}`}>
   <article>
-    <Image src={image} alt={name} loading="eager" objectFit="cover" />
+    <Image src={image} alt={name} priority layout="full-width" />
     <div>
       <h1>{name}</h1>
       <Content />
