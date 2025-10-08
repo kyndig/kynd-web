@@ -6,18 +6,9 @@ export type Props = {
   heading: string;
   description?: string;
   href?: string;
-  imageSrc?: string;
-  imageAlt?: string;
 };
 
-const {
-  variant = 'default',
-  heading,
-  description,
-  href,
-  imageSrc,
-  imageAlt = heading,
-} = Astro.props;
+const { variant = 'default', heading, description, href } = Astro.props;
 
 const variantMap = {
   default: 'dark-primary',
@@ -42,7 +33,7 @@ const linkVariant = variantMap[variant];
       <p class="description">{description}</p>
     </div>
   </div>
-  
+
   <div class:list={['pattern', variant]} aria-hidden="true"></div>
 </div>
 
@@ -117,7 +108,6 @@ const linkVariant = variantMap[variant];
     }
   }
 
-
   .card-content {
     position: relative;
     display: flex;
@@ -132,11 +122,13 @@ const linkVariant = variantMap[variant];
     flex-direction: column;
     gap: 1.5rem;
     width: 80%;
+    max-width: 20ch;
   }
 
   .heading-container {
     width: 80%;
     z-index: 1;
+    max-width: 20ch;
   }
 
   .link-container {
@@ -148,7 +140,8 @@ const linkVariant = variantMap[variant];
     position: absolute;
     top: 0;
     right: 0;
-    width: 0;
+    width: 15rem;
+    height: 100%;
     max-width: 15rem;
     z-index: 1;
     opacity: 0;
@@ -181,7 +174,6 @@ const linkVariant = variantMap[variant];
     word-wrap: break-word;
   }
 
-
   .heading {
     font-size: var(--fs-body-l);
     font-weight: var(--font-weight-medium);
@@ -192,8 +184,6 @@ const linkVariant = variantMap[variant];
     box-decoration-break: clone;
     display: inline-block;
   }
-
-
 
   .pattern {
     position: absolute;
@@ -228,5 +218,4 @@ const linkVariant = variantMap[variant];
     -webkit-mask-image: url('/patterns/pattern-1.svg');
     mask-image: url('/patterns/pattern-1.svg');
   }
-
 </style>
