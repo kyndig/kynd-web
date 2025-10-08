@@ -43,6 +43,24 @@ const projects = defineCollection({
     }),
 });
 
+const labs = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/labs' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      image: image().optional(),
+      category: z.string().optional(), // e.g., "Raycast Extensions", "Web Services", "Tools"
+      githubUrl: z.string().url().optional(),
+      demoUrl: z.string().url().optional(),
+      status: z.enum(['active', 'completed', 'experimental']).optional(),
+      startDate: z
+        .string()
+        .optional()
+        .transform((val) => (val ? parseDate(val) : undefined)),
+    }),
+});
+
 const handbook = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/handbook' }),
   schema: z.object({
@@ -51,4 +69,4 @@ const handbook = defineCollection({
   }),
 });
 
-export const collections = { blog, employees, projects, handbook };
+export const collections = { blog, employees, projects, handbook, labs };
