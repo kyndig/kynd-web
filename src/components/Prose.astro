@@ -1,15 +1,16 @@
 ---
 export type Props = {
   align?: 'left' | 'right' | 'center';
+  wide?: boolean;
 };
 
-const { align = 'left' } = Astro.props;
+const { align = 'left', wide = false } = Astro.props;
 
 const leftMargin = align === 'left' ? '0' : 'auto';
 const rightMargin = align === 'right' ? '0' : 'auto';
 ---
 
-<div>
+<div data-wide={wide}>
   <slot />
 </div>
 
@@ -24,8 +25,34 @@ const rightMargin = align === 'right' ? '0' : 'auto';
       max-width: min(65ch, 60%);
     }
 
+    &[data-wide='true'] {
+      @media (--md) {
+        max-width: none;
+      }
+    }
+
     & :global(p:not(:last-child)) {
       margin-block-end: 1em;
+    }
+
+    & :global(h3) {
+      font-weight: bold;
+      margin-block-end: 0.75em;
+    }
+
+    & :global(h4) {
+      font-weight: bold;
+      margin-block-end: 0.75em;
+    }
+
+    /* Inline code styling */
+    & :global(code) {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.8em;
+      background-color: var(--color-light-gray);
+      padding: 0.125em 0.25em;
+      border-radius: 0.25em;
+      color: var(--color-primary);
     }
 
     & :global(ul),

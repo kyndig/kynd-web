@@ -1,0 +1,14 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import PageSection from '../PageSection.astro';
+
+export type Props = CollectionEntry<'handbook'>;
+
+const entry = Astro.props;
+
+const { Content } = await render(entry);
+---
+
+<PageSection heading={entry.data.title} id={entry.id}>
+  <Content />
+</PageSection>

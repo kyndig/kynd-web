@@ -27,7 +27,8 @@
     "prettier:format": "prettier --write . --plugin=prettier-plugin-astro",
     "check": "pnpm astro:check && pnpm typecheck && pnpm lint && pnpm prettier:check",
     "check:fix": "pnpm lint --fix && pnpm prettier:format",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "handbook:create": "node scripts/create-handbook.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.6",
