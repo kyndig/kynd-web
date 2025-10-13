@@ -1,0 +1,16 @@
+---
+export type Props = {
+  width?: string | number;
+  height?: string | number;
+  class?: string;
+};
+
+const { width = 16, height = 16, class: className } = Astro.props;
+---
+
+<svg width={width} height={height} viewBox="0 0 16 16" fill="currentColor" class={className}>
+  <path
+    d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 112.25 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013 6.25v-.878a2.25 2.25 0 112.25 0zM5 3.25a.75.75 0 00-.75.75v.878a.75.75 0 00.75.75h6.5a.75.75 0 00.75-.75V4a.75.75 0 00-.75-.75h-6.5zM3.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm9.5-3a.75.75 0 100-1.5.75.75 0 000 1.5z"
+  ></path>
+</svg>
+
