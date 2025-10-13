@@ -1,0 +1,228 @@
+---
+import type { DetectedTechnologies } from '@/utils/technologyDetection';
+import { getTechnologyIcon, getTechnologyColor } from '@/utils/technologyDetection';
+
+export type Props = {
+  technologies: DetectedTechnologies;
+};
+
+const { technologies } = Astro.props;
+---
+
+<div class="technology-detection">
+  <h3>Technologies</h3>
+
+  {
+    technologies.frameworks.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">Frameworks</h4>
+        <div class="tech-badges">
+          {technologies.frameworks.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    technologies.languages.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">Languages</h4>
+        <div class="tech-badges">
+          {technologies.languages.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    technologies.services.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">Services</h4>
+        <div class="tech-badges">
+          {technologies.services.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    technologies.databases.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">Databases</h4>
+        <div class="tech-badges">
+          {technologies.databases.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    technologies.deployment.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">Deployment</h4>
+        <div class="tech-badges">
+          {technologies.deployment.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    technologies.tools.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">Tools</h4>
+        <div class="tech-badges">
+          {technologies.tools.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    technologies.apis.length > 0 && (
+      <div class="tech-category">
+        <h4 class="tech-category-title">APIs</h4>
+        <div class="tech-badges">
+          {technologies.apis.map((tech) => (
+            <span
+              class="tech-badge"
+              style={`background-color: ${getTechnologyColor(tech)}20; border-color: ${getTechnologyColor(tech)}; color: ${getTechnologyColor(tech)}`}
+              title={tech.description || tech.name}
+            >
+              <span class="tech-icon">{getTechnologyIcon(tech)}</span>
+              <span class="tech-name">{tech.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .technology-detection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-dark-blue);
+  }
+
+  .technology-detection h3 {
+    font-size: var(--fs-heading-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .tech-category {
+    margin-bottom: 1.5rem;
+  }
+
+  .tech-category-title {
+    font-size: var(--fs-body-m);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid;
+    border-radius: 0.375rem;
+    font-size: var(--fs-body-s);
+    font-weight: var(--font-weight-medium);
+    transition: all 0.2s ease;
+    cursor: default;
+  }
+
+  .tech-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .tech-icon {
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .tech-name {
+    line-height: 1;
+  }
+
+  @media (max-width: 768px) {
+    .tech-badges {
+      gap: 0.375rem;
+    }
+
+    .tech-badge {
+      padding: 0.25rem 0.5rem;
+      font-size: var(--fs-body-xs);
+    }
+
+    .tech-icon {
+      font-size: 0.75rem;
+    }
+  }
+</style>
