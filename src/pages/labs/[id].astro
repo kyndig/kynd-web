@@ -1,8 +1,9 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import HeroSection from '@/components/HeroSection.astro';
 import Layout from '@/layouts/Base.astro';
-import LinkCard from '@/components/LinkCard.astro';
+import TechnologyBadges from '@/components/TechnologyBadges.astro';
+import { formatRelativeTime } from '@/utils/githubHelpers';
 
 export async function getStaticPaths() {
   const labs = await getCollection('labs');
@@ -12,105 +13,211 @@ export async function getStaticPaths() {
   }));
 }
 
-type Props = CollectionEntry<'labs'>;
 const lab = Astro.props;
-const { title, description, image, category, githubUrl, demoUrl, status } = lab.data;
-const { Content } = await render(lab);
+const {
+  title,
+  description,
+  readmeHtml,
+  githubUrl,
+  isPrivate,
+  category,
+  status,
+  technologies,
+  repoData,
+  contributors,
+  languages,
+} = lab.data;
 
-// Check if this is a multi-item lab (like Raycast Extensions) or a single item
-const isMultiItemLab = lab.id === 'raycast-extensions';
+// Get top languages for display
+const topLanguages = Object.entries(languages)
+  .sort(([, a], [, b]) => b - a)
+  .slice(0, 5)
+  .map(([name, bytes]) => ({ name, bytes }));
 ---
 
 <Layout title={title} description={description}>
-  <HeroSection title={title} preamble={description} image={image?.src} />
+  <HeroSection title={title} preamble={description} />
 
-  {
-    isMultiItemLab ? (
-      <section class="multi-item-section">
-        <div class="link-cards-grid">
-          <LinkCard
-            heading="Kynd Time Tracker"
-            href="/labs/raycast-extensions/time-tracker"
-            variant="default"
-          />
-          <LinkCard
-            heading="Kynd Project Manager"
-            href="/labs/raycast-extensions/project-manager"
-            variant="green"
-          />
-          <LinkCard
-            heading="Kynd Slack Integration"
-            href="/labs/raycast-extensions/slack-integration"
-            variant="black"
-          />
+  <section class="lab-detail-section">
+    <div class="content-wrapper">
+      <div class="main-content">
+        <!-- Brief intro section -->
+        <div class="intro-section">
+          <p class="intro-text">{description}</p>
         </div>
-      </section>
-    ) : (
-      <section class="single-item-section">
-        <div class="content-wrapper">
-          <div class="main-content">
-            <Content />
-          </div>
 
-          <div class="sidebar">
-            {category && (
-              <div class="info-card">
-                <h3>Kategori</h3>
-                <p>{category}</p>
-              </div>
-            )}
+        <!-- README Content -->
+        {
+          readmeHtml && (
+            <div class="readme-section">
+              {/* eslint-disable-next-line astro/no-set-html-directive */}
+              <div class="readme-content" set:html={readmeHtml} />
+            </div>
+          )
+        }
 
-            {status && (
-              <div class="info-card">
-                <h3>Status</h3>
-                <p class:list={['status', `status-${status}`]}>{status}</p>
-              </div>
-            )}
+        <!-- Technology Detection Section -->
+        {
+          (technologies.frameworks.length > 0 ||
+            technologies.languages.length > 0 ||
+            technologies.services.length > 0 ||
+            technologies.databases.length > 0 ||
+            technologies.deployment.length > 0 ||
+            technologies.tools.length > 0 ||
+            technologies.apis.length > 0) && <TechnologyBadges technologies={technologies} />
+        }
+      </div>
 
-            {githubUrl && (
-              <div class="info-card">
-                <h3>GitHub</h3>
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                  Se på GitHub →
-                </a>
-              </div>
-            )}
+      <div class="sidebar">
+        <!-- Category -->
+        {
+          category && (
+            <div class="info-card">
+              <h3>Kategori</h3>
+              <p>{category}</p>
+            </div>
+          )
+        }
 
-            {demoUrl && (
-              <div class="info-card">
-                <h3>Demo</h3>
-                <a href={demoUrl} target="_blank" rel="noopener noreferrer">
-                  Se demo →
-                </a>
-              </div>
-            )}
+        <!-- Status -->
+        {
+          status && (
+            <div class="info-card">
+              <h3>Status</h3>
+              <p class:list={['status', `status-${status}`]}>{status}</p>
+            </div>
+          )
+        }
+
+        <!-- GitHub Link -->
+        <div class="info-card">
+          <h3>GitHub</h3>
+          {
+            isPrivate ? (
+              <p class="private-repo">Private repository</p>
+            ) : (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${title} on GitHub`}
+              >
+                Se på GitHub →
+              </a>
+            )
+          }
+        </div>
+
+        <!-- Repository Stats -->
+        <div class="info-card">
+          <h3>Statistikk</h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value">{repoData.stargazersCount}</span>
+              <span class="stat-label">stars</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{repoData.forksCount}</span>
+              <span class="stat-label">forks</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{repoData.openIssuesCount}</span>
+              <span class="stat-label">issues</span>
+            </div>
           </div>
         </div>
-      </section>
-    )
-  }
+
+        <!-- Language Breakdown -->
+        {
+          topLanguages.length > 0 && (
+            <div class="info-card">
+              <h3>Programmeringsspråk</h3>
+              <div class="language-breakdown">
+                {topLanguages.map((lang) => (
+                  <div class="language-item">
+                    <span class="language-name">{lang.name}</span>
+                    <span class="language-bytes">{lang.bytes.toLocaleString()} bytes</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
+        <!-- Contributors -->
+        {
+          contributors && contributors.length > 0 && (
+            <div class="info-card">
+              <h3>Contributors</h3>
+              <div class="contributors">
+                {contributors.slice(0, 8).map((contributor) => (
+                  <a
+                    href={`https://github.com/${contributor.login}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contributor"
+                    title={`${contributor.login} (${contributor.contributions} contributions)`}
+                    aria-label={`View ${contributor.login}'s GitHub profile`}
+                  >
+                    <img src={contributor.avatarUrl} alt={`${contributor.login}'s avatar`} />
+                  </a>
+                ))}
+                {contributors.length > 8 && (
+                  <span class="more-contributors">+{contributors.length - 8} more</span>
+                )}
+              </div>
+            </div>
+          )
+        }
+
+        <!-- Repository Info -->
+        <div class="info-card">
+          <h3>Repository Info</h3>
+          <div class="repo-info">
+            <div class="info-item">
+              <span class="info-label">Hovedprogrammeringsspråk</span>
+              <span class="info-value">{repoData.language || 'N/A'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Standard branch</span>
+              <span class="info-value">{repoData.defaultBranch}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Opprettet</span>
+              <span class="info-value"
+                >{new Date(repoData.createdAt).toLocaleDateString('nb-NO')}</span
+              >
+            </div>
+            <div class="info-item">
+              <span class="info-label">Sist oppdatert</span>
+              <span class="info-value">{formatRelativeTime(repoData.updatedAt)}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Homepage Link -->
+        {
+          repoData.homepage && (
+            <div class="info-card">
+              <h3>Homepage</h3>
+              <a
+                href={repoData.homepage}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${title} homepage`}
+              >
+                Se homepage →
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style>
-  .multi-item-section {
-    padding: 2rem 0;
-  }
-
-  .link-cards-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-
-    @media (--md) {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
-    }
-  }
-
-  .single-item-section {
+  .lab-detail-section {
     padding: 2rem 0;
   }
 
@@ -188,6 +295,64 @@ const isMultiItemLab = lab.id === 'raycast-extensions';
       background: none;
       padding: 0;
     }
+
+    :global(blockquote) {
+      border-left: 4px solid var(--color-accent);
+      padding-left: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+      color: var(--color-gray);
+    }
+
+    :global(a) {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    :global(a:hover) {
+      text-decoration: underline;
+    }
+
+    :global(table) {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+
+    :global(th),
+    :global(td) {
+      border: 1px solid var(--color-dark-blue);
+      padding: 0.5rem;
+      text-align: left;
+    }
+
+    :global(th) {
+      background-color: var(--color-secondary-shade);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  .intro-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-dark-blue);
+  }
+
+  .intro-text {
+    font-size: var(--fs-body-l);
+    color: var(--color-gray);
+    margin: 0;
+  }
+
+  .readme-section {
+    margin-bottom: 2rem;
+  }
+
+  .readme-content {
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-dark-blue);
+    border-radius: 0.5rem;
+    padding: 2rem;
   }
 
   .sidebar {
@@ -225,6 +390,112 @@ const isMultiItemLab = lab.id === 'raycast-extensions';
     }
   }
 
+  .private-repo {
+    color: var(--color-gray);
+    font-style: italic;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: var(--fs-body-l);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .stat-label {
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+  }
+
+  .language-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .language-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .language-name {
+    font-size: var(--fs-body-s);
+    color: var(--color-text);
+  }
+
+  .language-bytes {
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+  }
+
+  .contributors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .contributor {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+
+  .contributor:hover {
+    transform: scale(1.1);
+  }
+
+  .contributor img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .more-contributors {
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+    font-style: italic;
+  }
+
+  .repo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .info-label {
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .info-value {
+    font-size: var(--fs-body-m);
+    color: var(--color-text);
+  }
+
   .status {
     text-transform: capitalize;
     font-weight: var(--font-weight-medium);
@@ -239,6 +510,21 @@ const isMultiItemLab = lab.id === 'raycast-extensions';
 
     &.status-experimental {
       color: #f59e0b;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-wrapper {
+      padding: 0 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .contributors {
+      justify-content: center;
     }
   }
 </style>
