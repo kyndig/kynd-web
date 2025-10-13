@@ -122,6 +122,15 @@ import DynamicCard from '@/components/DynamicCard.astro';
     margin: 0 auto;
   }
 
+  /* Set expansion direction for odd/even positioned cards */
+  .dynamic-grid > *:nth-child(odd) {
+    --card-expand-direction: 0; /* Expand right */
+  }
+
+  .dynamic-grid > *:nth-child(even) {
+    --card-expand-direction: -50%; /* Expand left */
+  }
+
   .demo-section:last-child {
     margin-bottom: 0;
   }
