@@ -36,41 +36,17 @@ const sortedLabs = allLabs.sort((a, b) => {
     <div class="dynamic-grid">
       {
         sortedLabs.map((lab, index) => (
-          <div class="lab-card-wrapper">
-            <DynamicCard
-              variant={getVariant(index)}
-              heading={lab.data.title}
-              description={lab.data.description}
-              href={`/labs/${lab.id}`}
-            />
-            <div class="lab-meta">
-              <div class="lab-stats">
-                <span class="stat">
-                  <svg class="stat-icon" viewBox="0 0 16 16" width="16" height="16">
-                    <path
-                      fill="currentColor"
-                      d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694z"
-                    />
-                  </svg>
-                  {lab.data.repoData.stargazersCount}
-                </span>
-                <span class="stat">
-                  <svg class="stat-icon" viewBox="0 0 16 16" width="16" height="16">
-                    <path
-                      fill="currentColor"
-                      d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 112.25 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013 6.25v-.878a2.25 2.25 0 112.25 0zM5 3.25a.75.75 0 00-.75.75v.878a.75.75 0 00.75.75h6.5a.75.75 0 00.75-.75V4a.75.75 0 00-.75-.75h-6.5zM3.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm9.5-3a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                    />
-                  </svg>
-                  {lab.data.repoData.forksCount}
-                </span>
-              </div>
-              <div class="lab-badges">
-                {lab.data.isPrivate && <span class="badge private">Private</span>}
-                <span class:list={['badge', `badge-${lab.data.status}`]}>{lab.data.status}</span>
-                {lab.data.category && <span class="badge category">{lab.data.category}</span>}
-              </div>
-            </div>
-          </div>
+          <DynamicCard
+            variant={getVariant(index)}
+            heading={lab.data.title}
+            description={lab.data.description}
+            href={`/labs/${lab.id}`}
+            stargazersCount={lab.data.repoData.stargazersCount}
+            forksCount={lab.data.repoData.forksCount}
+            isPrivate={lab.data.isPrivate}
+            status={lab.data.status}
+            category={lab.data.category}
+          />
         ))
       }
     </div>
@@ -106,74 +82,9 @@ const sortedLabs = allLabs.sort((a, b) => {
     margin: 0 auto;
   }
 
-  .lab-card-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .lab-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 0 1rem;
-  }
-
-  .lab-stats {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .stat {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: var(--fs-body-s);
-    color: var(--color-gray);
-  }
-
-  .stat-icon {
-    color: var(--color-accent);
-  }
-
-  .lab-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .badge {
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: var(--fs-body-xs);
-    font-weight: var(--font-weight-medium);
-    text-transform: capitalize;
-  }
-
-  .badge.private {
-    background-color: var(--color-gray);
-    color: var(--color-secondary);
-  }
-
-  .badge.badge-active {
-    background-color: var(--color-red);
-    color: var(--color-secondary);
-  }
-
-  .badge.badge-completed {
-    background-color: #22c55e;
-    color: var(--color-secondary);
-  }
-
-  .badge.badge-experimental {
-    background-color: #f59e0b;
-    color: var(--color-secondary);
-  }
-
-  .badge.category {
-    background-color: var(--color-accent);
-    color: var(--color-text);
+  /* Override "Les mer" link margin for labs page */
+  :global(.dynamic-card .link-container) {
+    margin-top: 0 !important;
   }
 
   @media (max-width: 768px) {
@@ -184,14 +95,6 @@ const sortedLabs = allLabs.sort((a, b) => {
 
     .dynamic-cards-section {
       padding: 0 1rem;
-    }
-
-    .lab-stats {
-      justify-content: center;
-    }
-
-    .lab-badges {
-      justify-content: center;
     }
   }
 
