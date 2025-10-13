@@ -1,0 +1,48 @@
+---
+import StarIcon from '@/icons/StarIcon.astro';
+import ForkIcon from '@/icons/ForkIcon.astro';
+
+export type Props = {
+  stargazersCount: number;
+  forksCount: number;
+};
+
+const { stargazersCount, forksCount } = Astro.props;
+---
+
+<div class="lab-stats">
+  <span class="stat">
+    <StarIcon class="stat-icon" />
+    {stargazersCount}
+  </span>
+  <span class="stat">
+    <ForkIcon class="stat-icon" />
+    {forksCount}
+  </span>
+</div>
+
+<style>
+  .lab-stats {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+  }
+
+  .stat-icon {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .lab-stats {
+      justify-content: center;
+    }
+  }
+</style>
