@@ -1,0 +1,91 @@
+---
+export type Props = {
+  isPrivate?: boolean;
+  status: string;
+  category?: string;
+  variant?: 'default' | 'green' | 'black';
+};
+
+const { isPrivate, status, category, variant = 'default' } = Astro.props;
+---
+
+<div class:list={['lab-badges', variant]}>
+  {isPrivate && <span class="badge private">Private</span>}
+  <span class:list={['badge', `badge-${status}`]}>{status}</span>
+  {category && <span class="badge category">{category}</span>}
+</div>
+
+<style>
+  .lab-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: capitalize;
+  }
+
+  .badge.private {
+    background-color: var(--color-gray);
+    color: var(--color-secondary);
+  }
+
+  .badge.badge-active {
+    background-color: var(--color-red);
+    color: var(--color-secondary);
+  }
+
+  .badge.badge-completed {
+    background-color: #22c55e;
+    color: var(--color-secondary);
+  }
+
+  .badge.badge-experimental {
+    background-color: #f59e0b;
+    color: var(--color-secondary);
+  }
+
+  /* Variant-specific styling */
+  &.default {
+    --highlight-color: var(--color-accent);
+    --description-text-color: var(--color-text);
+  }
+
+  &.green {
+    --highlight-color: var(--color-secondary);
+    --description-text-color: var(--color-text);
+  }
+
+  &.black {
+    --highlight-color: var(--color-secondary);
+    --description-text-color: var(--color-primary);
+  }
+
+  .badge.category {
+    background-color: var(--highlight-color);
+  }
+
+  /* Variant-specific text color for category badges */
+  &.default .badge.category {
+    color: var(--description-text-color);
+  }
+
+  &.green .badge.category {
+    color: var(--description-text-color);
+  }
+
+  &.black .badge.category {
+    color: var(--color-black);
+  }
+
+  @media (max-width: 768px) {
+    .lab-badges {
+      justify-content: center;
+    }
+  }
+</style>
