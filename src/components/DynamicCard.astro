@@ -1,14 +1,31 @@
 ---
 import Link from '@/components/Link.astro';
+import LabMetaVariant from '@/components/LabMetaVariant.astro';
 
 export type Props = {
   variant?: 'default' | 'green' | 'black';
   heading: string;
   description?: string;
   href?: string;
+  // Optional GitHub stats
+  stargazersCount?: number;
+  forksCount?: number;
+  isPrivate?: boolean;
+  status?: string;
+  category?: string;
 };
 
-const { variant = 'default', heading, description, href } = Astro.props;
+const {
+  variant = 'default',
+  heading,
+  description,
+  href,
+  stargazersCount,
+  forksCount,
+  isPrivate,
+  status,
+  category,
+} = Astro.props;
 
 const variantMap = {
   default: 'dark-primary',
@@ -25,6 +42,18 @@ const linkVariant = variantMap[variant];
       <div class="heading-container">
         <span class="heading">{heading}</span>
       </div>
+      {
+        (stargazersCount !== undefined || forksCount !== undefined) && (
+          <LabMetaVariant
+            stargazersCount={stargazersCount || 0}
+            forksCount={forksCount || 0}
+            isPrivate={isPrivate}
+            status={status || ''}
+            category={category}
+            variant={variant}
+          />
+        )
+      }
       <div class="link-container">
         <Link href={href} variant={linkVariant} linkOverlay aria-label={heading} />
       </div>
@@ -55,11 +84,23 @@ const linkVariant = variantMap[variant];
     transition: all 0.3s ease;
     cursor: pointer;
 
+    /* Base hover state */
     &:hover {
       box-shadow: var(--shadow);
-      width: 150%;
       z-index: 10;
       position: relative;
+    }
+
+    /* Expansion behavior for odd-positioned cards (1st, 3rd, 5th, etc.) */
+    &:nth-child(odd):hover {
+      width: 150%;
+      margin-left: 0;
+    }
+
+    /* Expansion behavior for even-positioned cards (2nd, 4th, 6th, etc.) */
+    &:nth-child(even):hover {
+      width: 150%;
+      margin-left: -50%;
     }
 
     &.default {
@@ -85,18 +126,6 @@ const linkVariant = variantMap[variant];
 
     @media (--md) {
       padding: 3.125rem;
-    }
-
-    &:nth-child(odd):hover {
-      width: 150%;
-      margin-left: 0;
-      z-index: 10;
-    }
-
-    &:nth-child(even):hover {
-      width: 150%;
-      margin-left: -50%;
-      z-index: 10;
     }
 
     @media (max-width: 768px) {
