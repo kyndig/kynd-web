@@ -1,0 +1,115 @@
+---
+import Link from '@/components/Link.astro';
+
+export type Props = {
+  contributors: {
+    login: string;
+    avatarUrl: string;
+    contributions: number;
+  }[];
+};
+
+const { contributors } = Astro.props;
+---
+
+{
+  contributors && contributors.length > 0 && (
+    <div class="contributors-grid">
+      {contributors.map((contributor) => (
+        <div class="contributor-card">
+          <div class="contributor-main">
+            <img
+              src={contributor.avatarUrl}
+              alt={`${contributor.login}'s avatar`}
+              class="contributor-avatar"
+            />
+            <div class="contributor-info">
+              <span class="contributor-name">@{contributor.login}</span>
+              <span class="contributor-contributions">
+                {contributor.contributions} contributions
+              </span>
+            </div>
+          </div>
+          <Link
+            href={`https://github.com/${contributor.login}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="dark-primary"
+            text="Github"
+            linkOverlay
+            showBackground={false}
+            iconPosition="right"
+            aria-label={`View ${contributor.login}'s GitHub profile`}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .contributor-card {
+    position: relative;
+    background-color: var(--background-color);
+    padding: 2rem;
+    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
+    border: 2px solid var(--color-dark-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+  }
+
+  .contributor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .contributor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .contributor-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    z-index: 1;
+    position: relative;
+  }
+
+  .contributor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contributor-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .contributor-contributions {
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .contributors-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
