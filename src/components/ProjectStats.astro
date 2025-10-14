@@ -1,0 +1,90 @@
+---
+import ButtonLink from './ButtonLink.astro';
+
+export type Props = {
+  stargazersCount: number;
+  forksCount: number;
+  contributorsCount: number;
+  githubUrl: string;
+  homepage?: string | null;
+  isPrivate?: boolean;
+};
+
+const { stargazersCount, forksCount, contributorsCount, githubUrl, homepage, isPrivate } =
+  Astro.props;
+---
+
+<div class="project-stats">
+  <div class="stat">
+    <span class="stat-number">{stargazersCount}</span>
+    <span class="stat-label">Stars</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">{forksCount}</span>
+    <span class="stat-label">Forks</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">{contributorsCount}</span>
+    <span class="stat-label">Contributors</span>
+  </div>
+</div>
+
+<div class="project-actions">
+  {
+    !isPrivate && (
+      <ButtonLink href={githubUrl} target="_blank" rel="noopener noreferrer" variant="primary">
+        View on GitHub
+      </ButtonLink>
+    )
+  }
+  {
+    homepage && (
+      <ButtonLink href={homepage} target="_blank" rel="noopener noreferrer" variant="secondary">
+        Live Demo
+      </ButtonLink>
+    )
+  }
+</div>
+
+<style>
+  /* Project Stats */
+  .project-stats {
+    display: flex;
+    gap: 2rem;
+    margin: 4rem 0 2rem 0;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: var(--fs-heading-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: var(--fs-body-s);
+    color: var(--color-gray);
+    margin-top: 0.25rem;
+  }
+
+  /* Action Buttons */
+  .project-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .project-stats {
+      gap: 1rem;
+    }
+  }
+</style>
