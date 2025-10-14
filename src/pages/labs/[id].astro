@@ -1,9 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
-import HeroSection from '@/components/HeroSection.astro';
 import Layout from '@/layouts/Base.astro';
-import TechnologyBadges from '@/components/TechnologyBadges.astro';
-import { formatRelativeTime } from '@/utils/githubHelpers';
+import HeroSection from '@/components/HeroSection.astro';
+import ReadmeProse from '@/components/ReadmeProse.astro';
+import PageSection from '@/components/PageSection.astro';
+import ProjectStats from '@/components/ProjectStats.astro';
+import Contributors from '@/components/Contributors.astro';
 
 export async function getStaticPaths() {
   const labs = await getCollection('labs');
@@ -14,418 +16,110 @@ export async function getStaticPaths() {
 }
 
 const lab = Astro.props;
-const {
-  title,
-  description,
-  readmeHtml,
-  githubUrl,
-  isPrivate,
-  category,
-  status,
-  technologies,
-  repoData,
-  contributors,
-  languages,
-} = lab.data;
-
-// Get top languages for display
-const topLanguages = Object.entries(languages)
-  .sort(([, a], [, b]) => b - a)
-  .slice(0, 5)
-  .map(([name, bytes]) => ({ name, bytes }));
+const { title, description, readmeHtml, githubUrl, isPrivate, repoData, contributors } = lab.data;
 ---
 
 <Layout title={title} description={description}>
-  <HeroSection title={title} preamble={description} />
-
-  <section class="lab-detail-section">
-    <div class="content-wrapper">
-      <div class="main-content">
-        <!-- Brief intro section -->
-        <div class="intro-section">
-          <p class="intro-text">{description}</p>
-        </div>
-
-        <!-- README Content -->
-        {
-          readmeHtml && (
-            <div class="readme-section">
-              {/* eslint-disable-next-line astro/no-set-html-directive */}
-              <div class="readme-content" set:html={readmeHtml} />
-            </div>
-          )
-        }
-
-        <!-- Technology Detection Section -->
-        {
-          (technologies.frameworks.length > 0 ||
-            technologies.languages.length > 0 ||
-            technologies.services.length > 0 ||
-            technologies.databases.length > 0 ||
-            technologies.deployment.length > 0 ||
-            technologies.tools.length > 0 ||
-            technologies.apis.length > 0) && <TechnologyBadges technologies={technologies} />
-        }
-      </div>
-
-      <div class="sidebar">
-        <!-- Category -->
-        {
-          category && (
-            <div class="info-card">
-              <h3>Kategori</h3>
-              <p>{category}</p>
-            </div>
-          )
-        }
-
-        <!-- Status -->
-        {
-          status && (
-            <div class="info-card">
-              <h3>Status</h3>
-              <p class:list={['status', `status-${status}`]}>{status}</p>
-            </div>
-          )
-        }
-
-        <!-- GitHub Link -->
-        <div class="info-card">
-          <h3>GitHub</h3>
-          {
-            isPrivate ? (
-              <p class="private-repo">Private repository</p>
-            ) : (
-              <a
-                href={githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View ${title} on GitHub`}
-              >
-                Se på GitHub →
-              </a>
-            )
-          }
-        </div>
-
-        <!-- Repository Stats -->
-        <div class="info-card">
-          <h3>Statistikk</h3>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <span class="stat-value">{repoData.stargazersCount}</span>
-              <span class="stat-label">stars</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">{repoData.forksCount}</span>
-              <span class="stat-label">forks</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">{repoData.openIssuesCount}</span>
-              <span class="stat-label">issues</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Language Breakdown -->
-        {
-          topLanguages.length > 0 && (
-            <div class="info-card">
-              <h3>Programmeringsspråk</h3>
-              <div class="language-breakdown">
-                {topLanguages.map((lang) => (
-                  <div class="language-item">
-                    <span class="language-name">{lang.name}</span>
-                    <span class="language-bytes">{lang.bytes.toLocaleString()} bytes</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
-        }
-
-        <!-- Contributors -->
-        {
-          contributors && contributors.length > 0 && (
-            <div class="info-card">
-              <h3>Contributors</h3>
-              <div class="contributors">
-                {contributors.slice(0, 8).map((contributor) => (
-                  <a
-                    href={`https://github.com/${contributor.login}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contributor"
-                    title={`${contributor.login} (${contributor.contributions} contributions)`}
-                    aria-label={`View ${contributor.login}'s GitHub profile`}
-                  >
-                    <img src={contributor.avatarUrl} alt={`${contributor.login}'s avatar`} />
-                  </a>
-                ))}
-                {contributors.length > 8 && (
-                  <span class="more-contributors">+{contributors.length - 8} more</span>
-                )}
-              </div>
-            </div>
-          )
-        }
-
-        <!-- Repository Info -->
-        <div class="info-card">
-          <h3>Repository Info</h3>
-          <div class="repo-info">
-            <div class="info-item">
-              <span class="info-label">Hovedprogrammeringsspråk</span>
-              <span class="info-value">{repoData.language || 'N/A'}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Standard branch</span>
-              <span class="info-value">{repoData.defaultBranch}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Opprettet</span>
-              <span class="info-value"
-                >{new Date(repoData.createdAt).toLocaleDateString('nb-NO')}</span
-              >
-            </div>
-            <div class="info-item">
-              <span class="info-label">Sist oppdatert</span>
-              <span class="info-value">{formatRelativeTime(repoData.updatedAt)}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Homepage Link -->
-        {
-          repoData.homepage && (
-            <div class="info-card">
-              <h3>Homepage</h3>
-              <a
-                href={repoData.homepage}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Visit ${title} homepage`}
-              >
-                Se homepage →
-              </a>
-            </div>
-          )
-        }
-      </div>
-    </div>
-  </section>
+  <div>
+    <HeroSection
+      title={title}
+      preamble={description}
+      image={repoData.homepage ? repoData.homepage : undefined}
+    />
+    <ProjectStats
+      stargazersCount={repoData.stargazersCount}
+      forksCount={repoData.forksCount}
+      contributorsCount={contributors.length}
+      githubUrl={githubUrl}
+      homepage={repoData.homepage}
+      isPrivate={isPrivate}
+    />
+  </div>
+  <PageSection heading="Utviklere">
+    <Contributors contributors={contributors} />
+  </PageSection>
+  {
+    readmeHtml && (
+      <PageSection heading="Dokumentasjon">
+        <ReadmeProse>
+          <Fragment set:html={readmeHtml.html} />
+        </ReadmeProse>
+      </PageSection>
+    )
+  }
 </Layout>
 
 <style>
-  .lab-detail-section {
-    padding: 2rem 0;
+  /* Code Preview */
+  .code-preview {
+    width: 100%;
+    background: var(--color-secondary-shade);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   }
 
-  .content-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-
-    @media (--md) {
-      grid-template-columns: 2fr 1fr;
-    }
-  }
-
-  .main-content {
-    :global(h1) {
-      font-size: var(--fs-heading-l);
-      margin-bottom: 2rem;
-    }
-
-    :global(h2) {
-      font-size: var(--fs-heading-m);
-      margin-top: 3rem;
-      margin-bottom: 1.5rem;
-    }
-
-    :global(h3) {
-      font-size: var(--fs-heading-s);
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    :global(p) {
-      font-size: var(--fs-body-l);
-      line-height: var(--line-height-l);
-      margin-bottom: 1.5rem;
-    }
-
-    :global(ul) {
-      font-size: var(--fs-body-l);
-      line-height: var(--line-height-l);
-      margin-bottom: 1.5rem;
-      padding-left: 2rem;
-    }
-
-    :global(ol) {
-      font-size: var(--fs-body-l);
-      line-height: var(--line-height-l);
-      margin-bottom: 1.5rem;
-      padding-left: 2rem;
-    }
-
-    :global(li) {
-      margin-bottom: 0.5rem;
-    }
-
-    :global(code) {
-      background-color: var(--color-secondary-shade);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    :global(pre) {
-      background-color: var(--color-secondary-shade);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      overflow-x: auto;
-      margin-bottom: 1.5rem;
-    }
-
-    :global(pre code) {
-      background: none;
-      padding: 0;
-    }
-
-    :global(blockquote) {
-      border-left: 4px solid var(--color-accent);
-      padding-left: 1rem;
-      margin: 1rem 0;
-      font-style: italic;
-      color: var(--color-gray);
-    }
-
-    :global(a) {
-      color: var(--color-accent);
-      text-decoration: none;
-    }
-
-    :global(a:hover) {
-      text-decoration: underline;
-    }
-
-    :global(table) {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1rem;
-    }
-
-    :global(th),
-    :global(td) {
-      border: 1px solid var(--color-dark-blue);
-      padding: 0.5rem;
-      text-align: left;
-    }
-
-    :global(th) {
-      background-color: var(--color-secondary-shade);
-      font-weight: var(--font-weight-semibold);
-    }
-  }
-
-  .intro-section {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-dark-blue);
-  }
-
-  .intro-text {
-    font-size: var(--fs-body-l);
-    color: var(--color-gray);
-    margin: 0;
-  }
-
-  .readme-section {
-    margin-bottom: 2rem;
-  }
-
-  .readme-content {
-    background-color: var(--color-primary);
-    border: 1px solid var(--color-dark-blue);
-    border-radius: 0.5rem;
-    padding: 2rem;
-  }
-
-  .sidebar {
+  .code-header {
+    background: var(--color-dark-blue);
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .info-card {
-    background-color: var(--color-secondary-shade);
-    border: 2px solid var(--color-dark-blue);
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-
-    h3 {
-      font-size: var(--fs-body-m);
-      font-weight: var(--font-weight-medium);
-      margin: 0 0 0.5rem 0;
-      color: var(--color-accent);
-    }
-
-    p {
-      margin: 0;
-      font-size: var(--fs-body-m);
-    }
-
-    a {
-      color: var(--color-red);
-      text-decoration: none;
-      font-weight: var(--font-weight-medium);
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .private-repo {
-    color: var(--color-gray);
-    font-style: italic;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
     gap: 1rem;
   }
 
-  .stat-item {
+  .code-dots {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .stat-value {
-    font-size: var(--fs-body-l);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text);
-  }
-
-  .stat-label {
-    font-size: var(--fs-body-s);
-    color: var(--color-gray);
-  }
-
-  .language-breakdown {
-    display: flex;
-    flex-direction: column;
     gap: 0.5rem;
   }
 
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .dot.red {
+    background-color: #ff5f57;
+  }
+  .dot.yellow {
+    background-color: #ffbd2e;
+  }
+  .dot.green {
+    background-color: #28ca42;
+  }
+
+  .code-title {
+    color: var(--color-light-gray);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .code-content {
+    padding: 1.5rem;
+  }
+
+  /* Language breakdown styles for code preview */
+  .language-breakdown {
+    margin-bottom: 1rem;
+  }
+
   .language-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .language-bar {
+    height: 8px;
+    background-color: var(--color-dark-blue);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+  }
+
+  .language-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .language-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -436,95 +130,24 @@ const topLanguages = Object.entries(languages)
     color: var(--color-text);
   }
 
-  .language-bytes {
+  .language-percentage {
     font-size: var(--fs-body-s);
     color: var(--color-gray);
   }
 
-  .contributors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .contributor {
-    display: block;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    overflow: hidden;
-    transition: transform 0.2s ease;
-  }
-
-  .contributor:hover {
-    transform: scale(1.1);
-  }
-
-  .contributor img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .more-contributors {
+  /* README content styling */
+  .readme-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
     font-size: var(--fs-body-s);
-    color: var(--color-gray);
-    font-style: italic;
-  }
-
-  .repo-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .info-label {
-    font-size: var(--fs-body-s);
-    color: var(--color-gray);
-    font-weight: var(--font-weight-medium);
-  }
-
-  .info-value {
-    font-size: var(--fs-body-m);
+    line-height: 1.6;
+    background: var(--color-secondary-shade);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
     color: var(--color-text);
   }
 
-  .status {
-    text-transform: capitalize;
-    font-weight: var(--font-weight-medium);
-
-    &.status-active {
-      color: var(--color-red);
-    }
-
-    &.status-completed {
-      color: #22c55e;
-    }
-
-    &.status-experimental {
-      color: #f59e0b;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .content-wrapper {
-      padding: 0 1rem;
-    }
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-
-    .contributors {
-      justify-content: center;
-    }
-  }
+  /* Responsive adjustments */
 </style>
