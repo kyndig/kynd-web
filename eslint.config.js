@@ -27,4 +27,10 @@ export default [
       ],
     },
   },
+  {
+    files: ['src/pages/labs/[[]id].astro'],
+    rules: {
+      'astro/no-set-html-directive': 'off',
+    },
+  },
 ];
