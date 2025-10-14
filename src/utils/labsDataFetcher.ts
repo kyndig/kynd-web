@@ -1,12 +1,6 @@
 import { getAuthenticatedOctokit } from './githubAuth';
-import { marked } from 'marked';
-import {
-  detectTechnologiesFromPackageJson,
-  detectTechnologiesFromFiles,
-  detectTechnologiesFromReadme,
-  organizeTechnologies,
-} from './technologyDetection';
-import type { DetectedTechnologies } from './technologyDetection';
+import { detectTechnologiesFromGitHub } from './githubTechnologyDetection';
+import type { DetectedTechnologies } from './githubTechnologyDetection';
 import type { Octokit } from '@octokit/rest';
 
 export type LabRepoData = {
@@ -14,7 +8,6 @@ export type LabRepoData = {
   title: string;
   description: string;
   readme: string;
-  readmeHtml: string;
   githubUrl: string;
   isPrivate: boolean;
   category: string;
@@ -113,13 +106,12 @@ async function fetchLabRepositoryData(
 
   try {
     // Fetch additional data in parallel
-    const [readmeResult, languagesResult, contributorsResult, packageJsonResult, repoTreeResult] =
+    const [readmeResult, languagesResult, contributorsResult, packageJsonResult] =
       await Promise.allSettled([
         fetchReadme(octokit, owner, repoName),
         octokit.request('GET /repos/{owner}/{repo}/languages', { owner, repo: repoName }),
         octokit.request('GET /repos/{owner}/{repo}/contributors', { owner, repo: repoName }),
         fetchPackageJson(octokit, owner, repoName),
-        fetchRepoTree(octokit, owner, repoName),
       ]);
 
     const readme = readmeResult.status === 'fulfilled' ? readmeResult.value : '';
@@ -128,24 +120,9 @@ async function fetchLabRepositoryData(
     const contributors =
       contributorsResult.status === 'fulfilled' ? contributorsResult.value.data || [] : [];
     const packageJson = packageJsonResult.status === 'fulfilled' ? packageJsonResult.value : null;
-    const fileList = repoTreeResult.status === 'fulfilled' ? repoTreeResult.value : [];
 
-    // Detect technologies
-    const allTechnologies = [];
-
-    if (packageJson) {
-      allTechnologies.push(...detectTechnologiesFromPackageJson(packageJson));
-    }
-
-    if (fileList.length > 0) {
-      allTechnologies.push(...detectTechnologiesFromFiles(fileList));
-    }
-
-    if (readme) {
-      allTechnologies.push(...detectTechnologiesFromReadme(readme));
-    }
-
-    const technologies = organizeTechnologies(allTechnologies);
+    // Detect technologies using GitHub's native data
+    const technologies = detectTechnologiesFromGitHub(languages, packageJson || undefined);
 
     // Determine category from topics
     const category = determineCategory(repo.topics);
@@ -153,15 +130,11 @@ async function fetchLabRepositoryData(
     // Determine status
     const status = determineStatus(repo);
 
-    // Convert README to HTML
-    const readmeHtml = readme ? await marked(readme) : '';
-
     return {
       id: repoName.toLowerCase().replace(/[^a-z0-9-]/g, '-'),
       title: repo.name,
       description: repo.description || '',
       readme,
-      readmeHtml,
       githubUrl: repo.html_url,
       isPrivate: repo.private,
       category,
@@ -246,32 +219,6 @@ async function fetchPackageJson(
     return null;
   } catch {
     return null;
-  }
-}
-
-/**
- * Fetch repository file tree
- */
-async function fetchRepoTree(octokit: Octokit, owner: string, repo: string): Promise<string[]> {
-  try {
-    // First get the default branch
-    const { data: repoData } = await octokit.request('GET /repos/{owner}/{repo}', { owner, repo });
-    const defaultBranch = repoData.default_branch;
-
-    // Then get the tree
-    const { data: treeData } = await octokit.request(
-      'GET /repos/{owner}/{repo}/git/trees/{tree_sha}',
-      {
-        owner,
-        repo,
-        tree_sha: defaultBranch,
-        recursive: '1',
-      },
-    );
-
-    return treeData.tree?.map((item) => item.path) || [];
-  } catch {
-    return [];
   }
 }
 
