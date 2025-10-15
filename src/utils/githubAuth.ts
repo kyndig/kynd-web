@@ -23,17 +23,46 @@ export async function getAuthenticatedOctokit(): Promise<Octokit> {
   let privateKey: string | undefined;
 
   if (rawPrivateKeyB64) {
+    console.log('Detected GITHUB_APP_PRIVATE_KEY_B64 environment variable.');
     try {
       privateKey = Buffer.from(rawPrivateKeyB64, 'base64').toString('utf8');
+      if (privateKey) {
+        console.log(
+          `Decoded private key from base64. First 30 chars: "${privateKey.substring(
+            0,
+            30,
+          )}", type: base64`,
+        );
+      }
     } catch (err) {
       console.error('Failed to decode base64 private key:', err);
       throw err;
     }
   } else if (rawPrivateKey) {
+    console.log('Detected GITHUB_APP_PRIVATE_KEY environment variable.');
     privateKey = rawPrivateKey.replace(/\\n/g, '\n');
+    if (privateKey) {
+      console.log(
+        `Using raw private key. First 30 chars: "${privateKey.substring(0, 30)}", type: raw`,
+      );
+    }
+  } else {
+    console.log('No private key environment variable detected.');
   }
 
   if (!appId || !installationId || !privateKey) {
+    console.log('Missing GitHub App credentials:');
+    console.log(`  appId: ${appId ? 'present' : 'missing'}`);
+    console.log(`  installationId: ${installationId ? 'present' : 'missing'}`);
+    console.log(
+      `  privateKey: ${privateKey ? 'present' : 'missing'} (source: ${
+        rawPrivateKeyB64
+          ? 'GITHUB_APP_PRIVATE_KEY_B64'
+          : rawPrivateKey
+            ? 'GITHUB_APP_PRIVATE_KEY'
+            : 'none'
+      })`,
+    );
     throw new Error(
       'Missing GitHub App credentials. Please set GITHUB_APP_ID, GITHUB_APP_INSTALLATION_ID, and GITHUB_APP_PRIVATE_KEY.',
     );
