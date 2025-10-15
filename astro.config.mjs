@@ -23,7 +23,7 @@ export default defineConfig({
       SLACK_CHANNEL_ID: envField.string({ context: 'server', access: 'secret' }),
       GITHUB_APP_ID: envField.string({ context: 'server', access: 'secret' }),
       GITHUB_APP_INSTALLATION_ID: envField.string({ context: 'server', access: 'secret' }),
-      GITHUB_APP_PRIVATE_KEY: envField.string({ context: 'server', access: 'secret' }),
+      GITHUB_APP_PRIVATE_KEY_B64: envField.string({ context: 'server', access: 'secret' }),
     },
   },
   prefetch: {
