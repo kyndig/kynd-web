@@ -15,7 +15,23 @@ export async function getAuthenticatedOctokit(): Promise<Octokit> {
   const installationId =
     import.meta.env?.GITHUB_APP_INSTALLATION_ID || process.env.GITHUB_APP_INSTALLATION_ID;
 
-  const privateKey = import.meta.env?.GITHUB_APP_PRIVATE_KEY || process.env.GITHUB_APP_PRIVATE_KEY;
+  const rawPrivateKeyB64 =
+    import.meta.env?.GITHUB_APP_PRIVATE_KEY_B64 || process.env.GITHUB_APP_PRIVATE_KEY_B64;
+  const rawPrivateKey =
+    import.meta.env?.GITHUB_APP_PRIVATE_KEY || process.env.GITHUB_APP_PRIVATE_KEY;
+
+  let privateKey: string | undefined;
+
+  if (rawPrivateKeyB64) {
+    try {
+      privateKey = Buffer.from(rawPrivateKeyB64, 'base64').toString('utf8');
+    } catch (err) {
+      console.error('Failed to decode base64 private key:', err);
+      throw err;
+    }
+  } else if (rawPrivateKey) {
+    privateKey = rawPrivateKey.replace(/\\n/g, '\n');
+  }
 
   if (!appId || !installationId || !privateKey) {
     throw new Error(
