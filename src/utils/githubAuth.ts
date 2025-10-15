@@ -16,7 +16,16 @@ export async function getAuthenticatedOctokit(): Promise<Octokit> {
   const appId = import.meta.env?.GITHUB_APP_ID || process.env.GITHUB_APP_ID;
   const installationId =
     import.meta.env?.GITHUB_APP_INSTALLATION_ID || process.env.GITHUB_APP_INSTALLATION_ID;
-  const privateKey = import.meta.env?.GITHUB_APP_PRIVATE_KEY || process.env.GITHUB_APP_PRIVATE_KEY;
+
+  const privateKeyEnv =
+    import.meta.env?.GITHUB_APP_PRIVATE_KEY_B64 ||
+    process.env.GITHUB_APP_PRIVATE_KEY_B64 ||
+    import.meta.env?.GITHUB_APP_PRIVATE_KEY ||
+    process.env.GITHUB_APP_PRIVATE_KEY;
+
+  const privateKey = privateKeyEnv?.includes('BEGIN RSA PRIVATE KEY')
+    ? privateKeyEnv
+    : Buffer.from(privateKeyEnv || '', 'base64').toString('utf-8');
 
   if (!appId || !installationId || !privateKey) {
     throw new Error(
