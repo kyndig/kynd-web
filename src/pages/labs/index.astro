@@ -1,0 +1,106 @@
+---
+import Layout from '@/layouts/Base.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import DynamicCard from '@/components/DynamicCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get all lab experiments from the collection
+const allLabs = await getCollection('labs');
+
+// Define arbitrary variant mapping - cycle through available variants
+const variants = ['default', 'green', 'black'] as const;
+const getVariant = (index: number) => {
+  return variants[index % variants.length];
+};
+
+// Sort labs by stars (most popular first), then by last updated
+const sortedLabs = allLabs.sort((a, b) => {
+  // First sort by stars (descending)
+  const starsDiff = b.data.repoData.stargazersCount - a.data.repoData.stargazersCount;
+  if (starsDiff !== 0) return starsDiff;
+
+  // Then by last updated (descending)
+  return (
+    new Date(b.data.repoData.updatedAt).getTime() - new Date(a.data.repoData.updatedAt).getTime()
+  );
+});
+---
+
+<Layout
+  title="Kynd Labs"
+  description="Kynd Labs er en samling av greier vi lager i Kynd. Noen Labs er interne verktøy vi lager for å gjøre livet vårt enklere. Andre Labs er eksperimentering med teknologier eller løsninger på problemer som kanskje noen andre også har."
+>
+  <HeroSection title="Kynd Labs" preamble="Stæsj vi lager i Kynd" image="/patterns/pattern-0.svg" />
+
+  <section class="dynamic-cards-section">
+    <div class="dynamic-grid">
+      {
+        sortedLabs.map((lab, index) => (
+          <DynamicCard
+            variant={getVariant(index)}
+            heading={lab.data.title}
+            description={lab.data.description}
+            href={`/labs/${lab.id}`}
+            stargazersCount={lab.data.repoData.stargazersCount}
+            forksCount={lab.data.repoData.forksCount}
+            isPrivate={lab.data.isPrivate}
+            status={lab.data.status}
+            category={lab.data.category}
+          />
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .dynamic-cards-section {
+    margin-bottom: 4rem;
+    /* padding: 0 2rem; */
+  }
+
+  .dynamic-cards-section h2 {
+    font-size: var(--fs-heading-s);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 1rem 0;
+    color: var(--color-primary);
+    text-align: center;
+  }
+
+  .dynamic-cards-section p {
+    font-size: var(--fs-body-m);
+    color: var(--color-gray);
+    margin: 0 0 3rem 0;
+    text-align: center;
+  }
+
+  .dynamic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  /* Override "Les mer" link margin for labs page */
+  :global(.dynamic-card .link-container) {
+    margin-top: 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    .dynamic-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .dynamic-cards-section {
+      padding: 0 1rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .dynamic-grid {
+      gap: 3rem;
+    }
+  }
+</style>

@@ -6,13 +6,14 @@ type Props = HTMLAttributes<'a'> & {
   href: string;
   class?: string;
   variant?: 'green' | 'white' | 'dark';
+  text?: string;
 };
 
-const { href, class: className, variant = 'green', ...rest } = Astro.props;
+const { href, class: className, variant = 'green', text = 'Les mer', ...rest } = Astro.props;
 ---
 
 <a href={href} class:list={['link-sec', `link-sec--${variant}`, className]} {...rest}>
-  <span class="label">Les mer</span>
+  <span class="label">{text}</span>
   <div class="icon-container">
     <ArrowRightUp />
   </div>
