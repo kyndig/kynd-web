@@ -3,8 +3,6 @@
 Kynd Web is built with [Astro](https://astro.build/) and hosted on [Netlify](https://www.netlify.com/).  
 The project uses GitHub App authentication to automatically fetch content from GitHub Labs repositories.
 
----
-
 ## Getting Started
 
 ### 1. Install Dependencies
@@ -24,8 +22,6 @@ pnpm dev
 ```
 
 Open [localhost:4321](http://localhost:4321) in your browser.
-
----
 
 ## Build and Deploy
 
@@ -65,8 +61,6 @@ This variable must be set in:
 - **GitHub App + Octokit** – data fetching for Labs overview
 - **Slack Web API** – contact form integration
 
----
-
 ## Linting and Testing
 
 Run type and lint checks:
@@ -86,7 +80,5 @@ Run ESLint only:
 ```bash
 pnpm lint
 ```
-
----
 
 Made with 🫶 by [kynd](https://kynd.no)
