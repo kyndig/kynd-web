@@ -8,58 +8,47 @@ let octokitInstance: Octokit | null = null;
  * Uses caching to avoid recreating the instance on every call
  */
 export async function getAuthenticatedOctokit(): Promise<Octokit> {
-  if (octokitInstance) {
-    return octokitInstance;
-  }
+  if (octokitInstance) return octokitInstance;
 
-  // Support both Astro's import.meta.env and Node.js process.env
+  // Read from Astro's env (if SSR) or process.env (if Node)
   const appId = import.meta.env?.GITHUB_APP_ID || process.env.GITHUB_APP_ID;
   const installationId =
     import.meta.env?.GITHUB_APP_INSTALLATION_ID || process.env.GITHUB_APP_INSTALLATION_ID;
 
-  const privateKeyEnv =
-    import.meta.env?.GITHUB_APP_PRIVATE_KEY_B64 ||
-    process.env.GITHUB_APP_PRIVATE_KEY_B64 ||
-    import.meta.env?.GITHUB_APP_PRIVATE_KEY ||
-    process.env.GITHUB_APP_PRIVATE_KEY;
-
-  const privateKey = privateKeyEnv?.includes('BEGIN RSA PRIVATE KEY')
-    ? privateKeyEnv
-    : Buffer.from(privateKeyEnv || '', 'base64').toString('utf-8');
+  const privateKey = import.meta.env?.GITHUB_APP_PRIVATE_KEY || process.env.GITHUB_APP_PRIVATE_KEY;
 
   if (!appId || !installationId || !privateKey) {
     throw new Error(
-      'Missing GitHub App credentials. Please set GITHUB_APP_ID, GITHUB_APP_INSTALLATION_ID, and GITHUB_APP_PRIVATE_KEY environment variables.',
+      'Missing GitHub App credentials. Please set GITHUB_APP_ID, GITHUB_APP_INSTALLATION_ID, and GITHUB_APP_PRIVATE_KEY.',
     );
   }
 
   console.log('Creating GitHub App auth with:', {
-    appId: appId,
-    installationId: installationId,
+    appId,
+    installationId,
     privateKeyLength: privateKey.length,
     privateKeyStart: privateKey.substring(0, 30),
   });
 
   const app = new App({
     appId: parseInt(appId),
-    privateKey,
+    privateKey, // PKCS#8 key
   });
 
   try {
     octokitInstance = (await app.getInstallationOctokit(parseInt(installationId))) as Octokit;
-    console.log('Successfully created Octokit instance');
+    console.log('✅ Successfully created Octokit instance');
   } catch (error) {
-    console.error('Failed to create Octokit instance:', error);
+    console.error('❌ Failed to create Octokit instance:', error);
     throw error;
   }
 
-  // Test the authentication immediately
+  // Optional: verify authentication
   try {
-    // Use the request method directly
     await octokitInstance.request('GET /app');
-    console.log('✅ GitHub App authentication successful!');
+    console.log('✅ GitHub App authentication verified.');
   } catch (error) {
-    console.error('GitHub App authentication test failed:', error);
+    console.error('❌ GitHub App authentication test failed:', error);
     throw error;
   }
 
@@ -67,13 +56,13 @@ export async function getAuthenticatedOctokit(): Promise<Octokit> {
 }
 
 /**
- * Test GitHub App authentication
+ * Simple test helper for local debugging
  */
 export async function testGitHubAuth(): Promise<boolean> {
   try {
     const octokit = await getAuthenticatedOctokit();
     const { data } = await octokit.request('GET /app');
-    console.log(`GitHub App authenticated: ${data?.name || 'Unknown'}`);
+    console.log(`GitHub App authenticated as: ${data?.name || 'Unknown App'}`);
     return true;
   } catch (error) {
     console.error('GitHub App authentication failed:', error);
