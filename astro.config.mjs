@@ -3,12 +3,13 @@ import mdx from '@astrojs/mdx';
 import netlify from '@astrojs/netlify';
 import sitemap from '@astrojs/sitemap';
 import remarkGfm from 'remark-gfm';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kynd.no',
   adapter: netlify(),
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), icon()],
   markdown: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [],

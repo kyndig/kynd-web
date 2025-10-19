@@ -36,6 +36,7 @@
     "@astrojs/netlify": "^6.3.4",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.6.0",
+    "@iconify-json/logos": "^1.2.9",
     "@octokit/app": "^16.1.1",
     "@octokit/auth-app": "^8.1.1",
     "@octokit/rest": "^22.0.0",
