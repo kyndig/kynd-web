@@ -1,6 +1,6 @@
 ---
 import Link from '@/components/Link.astro';
-import LabMetaVariant from '@/components/LabMetaVariant.astro';
+import LabMetadata from '@/components/LabMetadata.astro';
 
 export type Props = {
   variant?: 'default' | 'green' | 'black';
@@ -13,6 +13,12 @@ export type Props = {
   isPrivate?: boolean;
   status?: string;
   category?: string;
+  contributors?: {
+    login: string;
+    avatarUrl: string;
+    contributions: number;
+  }[];
+  technologies?: any;
 };
 
 const {
@@ -25,6 +31,8 @@ const {
   isPrivate,
   status,
   category,
+  contributors = [],
+  technologies = { frameworks: [], languages: [], tools: [] },
 } = Astro.props;
 
 const variantMap = {
@@ -44,13 +52,16 @@ const linkVariant = variantMap[variant];
       </div>
       {
         (stargazersCount !== undefined || forksCount !== undefined) && (
-          <LabMetaVariant
+          <LabMetadata
+            contributors={contributors}
             stargazersCount={stargazersCount || 0}
             forksCount={forksCount || 0}
+            technologies={technologies}
             isPrivate={isPrivate}
             status={status || ''}
             category={category}
             variant={variant}
+            showBadges={true}
           />
         )
       }
