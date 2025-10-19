@@ -64,7 +64,7 @@ export function labsLoader(): Loader {
             githubUrl: repo.githubUrl,
             isPrivate: repo.isPrivate,
             category: repo.category,
-            status: repo.status,
+            repoStatus: repo.repoStatus,
             technologies: repo.technologies,
             repoData: repo.repoData,
             contributors: repo.contributors,

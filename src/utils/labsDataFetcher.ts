@@ -11,7 +11,7 @@ export type LabRepoData = {
   githubUrl: string;
   isPrivate: boolean;
   category: string;
-  status: 'active' | 'completed' | 'experimental';
+  repoStatus: 'active' | 'completed' | 'experimental';
   technologies: DetectedTechnologies;
   repoData: {
     name: string;
@@ -121,6 +121,14 @@ async function fetchLabRepositoryData(
       contributorsResult.status === 'fulfilled' ? contributorsResult.value.data || [] : [];
     const packageJson = packageJsonResult.status === 'fulfilled' ? packageJsonResult.value : null;
 
+    // Log package.json data for debugging (remove in production)
+    if (packageJson) {
+      console.log(`Package.json for ${repo.full_name}:`, {
+        dependencies: Object.keys(packageJson.dependencies || {}),
+        devDependencies: Object.keys(packageJson.devDependencies || {}),
+      });
+    }
+
     // Detect technologies using GitHub's native data
     const technologies = detectTechnologiesFromGitHub(languages, packageJson || undefined);
 
@@ -138,7 +146,7 @@ async function fetchLabRepositoryData(
       githubUrl: repo.html_url,
       isPrivate: repo.private,
       category,
-      status,
+      repoStatus: status,
       technologies,
       repoData: {
         name: repo.name,
