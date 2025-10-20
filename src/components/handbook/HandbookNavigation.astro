@@ -1,4 +1,6 @@
 ---
+import ChevronRight from '../../icons/ChevronRight.astro';
+
 type Item = {
   id: string;
   title: string;
@@ -18,7 +20,7 @@ const { items } = Astro.props;
     aria-controls="nav-menu"
     aria-label="Toggle navigation menu"
   >
-    <span class="triangle-icon">▶</span>
+    <ChevronRight />
     <span id="nav-toggle-text">Introduksjon</span>
   </button>
 
@@ -59,12 +61,12 @@ const { items } = Astro.props;
       background-color: var(--color-secondary-shade);
     }
 
-    .triangle-icon {
+    svg {
       transition: transform 0.2s ease;
     }
 
     &[aria-expanded='true'] {
-      .triangle-icon {
+      svg {
         transform: rotate(90deg);
       }
     }
