@@ -32,7 +32,7 @@ const SIMPLE_TECHNOLOGIES: Record<string, Technology> = {
   Python: { name: 'Python', category: 'language', icon: 'logos:python', color: '#3776ab' },
   CSS: { name: 'CSS', category: 'language', icon: 'logos:css-3', color: '#1572b6' },
   HTML: { name: 'HTML', category: 'language', icon: 'logos:html-5', color: '#e34c26' },
-  Shell: { name: 'Shell', category: 'language', icon: 'simple-icons:gnubash', color: '#89e051' },
+  Shell: { name: 'Shell', category: 'language', icon: 'logos:bash', color: '#89e051' },
 
   // Frameworks
   Astro: { name: 'Astro', category: 'framework', icon: 'logos:astro-icon', color: '#ff5d01' },
