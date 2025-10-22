@@ -13,26 +13,39 @@ type Variant =
 
 export type Props = HTMLAttributes<'a'> & {
   label?: string;
+  text?: string;
   variant?: Variant;
   linkOverlay?: boolean;
+  showBackground?: boolean;
+  iconPosition?: 'left' | 'right';
 };
 
 const {
   href,
   label = 'Les mer',
+  text,
   variant = 'light-primary',
   linkOverlay = false,
+  showBackground = true,
+  iconPosition = 'left',
   ...rest
 } = Astro.props;
 ---
 
 <a
   href={href}
-  class:list={['link', `link--${variant}`, linkOverlay && 'link--overlay', Astro.props.class]}
+  class:list={[
+    'link',
+    `link--${variant}`,
+    linkOverlay && 'link--overlay',
+    !showBackground && 'link--no-background',
+    Astro.props.class,
+  ]}
   {...rest}
 >
-  <LinkIcon variant={variant} />
-  <span class="label">{label}</span>
+  {iconPosition === 'left' && <LinkIcon variant={variant} />}
+  <span class="label">{text || label}</span>
+  {iconPosition === 'right' && <LinkIcon variant={variant} />}
 </a>
 
 <style>
@@ -79,5 +92,26 @@ const {
   .link--dark-secondary .label,
   .link--green-primary .label {
     color: var(--color-primary);
+  }
+
+  .link--dark-primary .label {
+    background-color: var(--color-secondary-shade);
+    padding: 0.5rem 1rem;
+  }
+
+  .link--dark-secondary .label {
+    background-color: var(--color-accent);
+    padding: 0.5rem 1rem;
+  }
+
+  .link--light-secondary .label {
+    background-color: var(--color-primary);
+    padding: 0.5rem 1rem;
+  }
+
+  /* No background variant */
+  .link--no-background .label {
+    background-color: transparent !important;
+    padding: 0 !important;
   }
 </style>

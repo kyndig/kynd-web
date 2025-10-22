@@ -1,4 +1,4 @@
-// Helper function to parse YYYY-MM date format
+// Helper function to parse YYYY-MM date format or ISO date strings
 export const parseDate = (val: string): Date => {
   // Handle YYYY-MM format (e.g., "2023-12")
   if (/^\d{4}-\d{1,2}$/.test(val)) {
@@ -10,7 +10,15 @@ export const parseDate = (val: string): Date => {
     }
   }
 
-  throw new Error(`Invalid date format. Expected YYYY-MM format (e.g., "2023-12"). Got: ${val}`);
+  // Handle ISO date strings (e.g., "2024-03-21T15:44:06Z")
+  const isoDate = new Date(val);
+  if (!isNaN(isoDate.getTime())) {
+    return isoDate;
+  }
+
+  throw new Error(
+    `Invalid date format. Expected YYYY-MM format (e.g., "2023-12") or ISO date string. Got: ${val}`,
+  );
 };
 
 // Duration calculation function

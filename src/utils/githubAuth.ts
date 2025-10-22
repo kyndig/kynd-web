@@ -1,0 +1,116 @@
+import { App } from '@octokit/app';
+import { Octokit } from '@octokit/rest';
+
+let octokitInstance: Octokit | null = null;
+
+/**
+ * Get authenticated Octokit instance for GitHub App
+ * Uses caching to avoid recreating the instance on every call
+ */
+export async function getAuthenticatedOctokit(): Promise<Octokit> {
+  if (octokitInstance) return octokitInstance;
+
+  // Read from Astro's env (if SSR) or process.env (if Node)
+  const appId = import.meta.env?.GITHUB_APP_ID || process.env.GITHUB_APP_ID;
+  const installationId =
+    import.meta.env?.GITHUB_APP_INSTALLATION_ID || process.env.GITHUB_APP_INSTALLATION_ID;
+
+  const rawPrivateKeyB64 =
+    import.meta.env?.GITHUB_APP_PRIVATE_KEY_B64 || process.env.GITHUB_APP_PRIVATE_KEY_B64;
+  const rawPrivateKey =
+    import.meta.env?.GITHUB_APP_PRIVATE_KEY || process.env.GITHUB_APP_PRIVATE_KEY;
+
+  let privateKey: string | undefined;
+
+  if (rawPrivateKeyB64) {
+    console.log('Detected GITHUB_APP_PRIVATE_KEY_B64 environment variable.');
+    try {
+      privateKey = Buffer.from(rawPrivateKeyB64, 'base64').toString('utf8');
+      if (privateKey) {
+        console.log(
+          `Decoded private key from base64. First 30 chars: "${privateKey.substring(
+            0,
+            30,
+          )}", type: base64`,
+        );
+      }
+    } catch (err) {
+      console.error('Failed to decode base64 private key:', err);
+      throw err;
+    }
+  } else if (rawPrivateKey) {
+    console.log('Detected GITHUB_APP_PRIVATE_KEY environment variable.');
+    privateKey = rawPrivateKey.replace(/\\n/g, '\n');
+    if (privateKey) {
+      console.log(
+        `Using raw private key. First 30 chars: "${privateKey.substring(0, 30)}", type: raw`,
+      );
+    }
+  } else {
+    console.log('No private key environment variable detected.');
+  }
+
+  if (!appId || !installationId || !privateKey) {
+    console.log('Missing GitHub App credentials:');
+    console.log(`  appId: ${appId ? 'present' : 'missing'}`);
+    console.log(`  installationId: ${installationId ? 'present' : 'missing'}`);
+    console.log(
+      `  privateKey: ${privateKey ? 'present' : 'missing'} (source: ${
+        rawPrivateKeyB64
+          ? 'GITHUB_APP_PRIVATE_KEY_B64'
+          : rawPrivateKey
+            ? 'GITHUB_APP_PRIVATE_KEY'
+            : 'none'
+      })`,
+    );
+    throw new Error(
+      'Missing GitHub App credentials. Please set GITHUB_APP_ID, GITHUB_APP_INSTALLATION_ID, and GITHUB_APP_PRIVATE_KEY.',
+    );
+  }
+
+  console.log('Creating GitHub App auth with:', {
+    appId,
+    installationId,
+    privateKeyLength: privateKey.length,
+    privateKeyStart: privateKey.substring(0, 30),
+  });
+
+  const app = new App({
+    appId: parseInt(appId),
+    privateKey, // PKCS#8 key
+  });
+
+  try {
+    octokitInstance = (await app.getInstallationOctokit(parseInt(installationId))) as Octokit;
+    console.log('✅ Successfully created Octokit instance');
+  } catch (error) {
+    console.error('❌ Failed to create Octokit instance:', error);
+    throw error;
+  }
+
+  // Optional: verify authentication
+  try {
+    await octokitInstance.request('GET /app');
+    console.log('✅ GitHub App authentication verified.');
+  } catch (error) {
+    console.error('❌ GitHub App authentication test failed:', error);
+    throw error;
+  }
+
+  return octokitInstance;
+}
+
+/**
+ * Simple test helper for local debugging
+ */
+export async function testGitHubAuth(): Promise<boolean> {
+  try {
+    const octokit = await getAuthenticatedOctokit();
+    const { data } = await octokit.request('GET /app');
+    console.log(`GitHub App authenticated as: ${data?.name || 'Unknown App'}`);
+    return true;
+  } catch (error) {
+    console.error('GitHub App authentication failed:', error);
+    return false;
+  }
+}
