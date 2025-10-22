@@ -28,7 +28,7 @@ base64 github-app-key-pkcs8.pem | pbcopy
 
 3. Add to `.env`
 
-```bash
+```text
 GITHUB_APP_PRIVATE_KEY_B64=<paste the base64 string here>
 ```
 
@@ -38,7 +38,7 @@ Upon `pnpm build` the terminal should output `privateKeyStart: '-----BEGIN PRIVA
 
 In the repo, set `Settings ➡︎ Secrets and Variables ➡︎ Actions` create or update
 
-```
+```text
 GH_APP_PRIVATE_KEY_B64=<same base64 value>
 ```
 
@@ -46,7 +46,7 @@ GH_APP_PRIVATE_KEY_B64=<same base64 value>
 
 In `Netlify → Site configuration → Environment Variables`, create or update
 
-```
+```text
 GITHUB_APP_PRIVATE_KEY_B64=<same base64 value>
 ```
 
@@ -54,6 +54,6 @@ Remember to check the "Contains secret value" checkbox.
 Afterwards, run a Redeploy site.
 Check in the Netlify logs that it shows:
 
-```
+```text
 privateKeyStart: '-----BEGIN PRIVATE KEY-----'
 ```
