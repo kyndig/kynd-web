@@ -1,6 +1,7 @@
 ---
 import Link from '@/components/Link.astro';
 import LabMetadata from '@/components/LabMetadata.astro';
+import type { DetectedTechnologies } from '@/utils/githubTechnologyDetection';
 
 export type Props = {
   variant?: 'default' | 'green' | 'black';
@@ -18,7 +19,7 @@ export type Props = {
     avatarUrl: string;
     contributions: number;
   }[];
-  technologies?: any;
+  technologies?: DetectedTechnologies;
 };
 
 const {
@@ -32,7 +33,7 @@ const {
   status,
   category,
   contributors = [],
-  technologies = { frameworks: [], languages: [], tools: [] },
+  technologies = { frameworks: [], languages: [], tools: [] } as DetectedTechnologies,
 } = Astro.props;
 
 const variantMap = {
