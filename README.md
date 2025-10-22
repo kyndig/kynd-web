@@ -42,7 +42,7 @@ Environment variables for GitHub App and Slack are set in Netlify under
 Kynd-web fetches information about Labs repositories directly from GitHub via a GitHub App.  
 This requires a private key handled via the environment variable:
 
-```text
+```bash
 GITHUB_APP_PRIVATE_KEY_B64=<base64-encoded PKCS#8 key>
 ```
 
