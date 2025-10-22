@@ -6,7 +6,7 @@
 
 - Install [Node.js](https://nodejs.org/en/download/) and [pnpm](https://pnpm.io/installation)
 
-- Install dependencies
+- Install all dependencies
 
 ```bash
 pnpm install
