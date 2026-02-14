@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection.astro';
 import { getCollection } from 'astro:content';
 import HandbookSection from '@/components/handbook/HandbookSection.astro';
 import HandbookNavigation from '@/components/handbook/HandbookNavigation.astro';
+import Split from '@/components/layout/Split.astro';
 
 const handbook = (await getCollection('handbook')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -15,14 +16,16 @@ const handbook = (await getCollection('handbook')).sort((a, b) => a.data.order -
 
 Boka gir et innblikk i hvordan vi gjør ting i Kynd. Det er bare å snoke i vei!`}
   />
-  <div class="handbook-container">
-    <HandbookNavigation
-      items={handbook.map((entry) => ({ id: entry.id, title: entry.data.title }))}
-    />
-    <div class="handbook-entries">
+  <Split minBreakpoint="md" gap="4rem" columns="15rem 1fr">
+    <div slot="left">
+      <HandbookNavigation
+        items={handbook.map((entry) => ({ id: entry.id, title: entry.data.title }))}
+      />
+    </div>
+    <div slot="right" class="handbook-entries">
       {handbook.map((entry) => <HandbookSection {...entry} />)}
     </div>
-  </div>
+  </Split>
 </Layout>
 
 <style>
@@ -31,17 +34,6 @@ Boka gir et innblikk i hvordan vi gjør ting i Kynd. Det er bare å snoke i vei!
 
     @media (--md) {
       scroll-padding-block-start: var(--size-header);
-    }
-  }
-
-  .handbook-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-
-    @media (--md) {
-      grid-template-columns: 15rem 1fr;
-      gap: 4rem;
     }
   }
 

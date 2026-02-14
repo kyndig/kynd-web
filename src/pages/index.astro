@@ -5,6 +5,7 @@ import HeroSection from '@/components/HeroSection.astro';
 import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 // import LinkCard from '@/components/LinkCard.astro';
 // import Link from '@/components/Link.astro';
@@ -17,19 +18,25 @@ import Layout from '@/layouts/Base.astro';
     image="/patterns/pattern-0.svg"
   />
   <PageSection heading="Team" subheading="Vi skaper kynd sammen">
-    <Prose align="right">
-      <p>
-        Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel - som har gått sammen om å
-        lage en transparent, spennende og nytenkende arbeidsplass. Vi er et konsulentbyrå innen
-        fullstack softwareutvikling, organisasjonsdesign og smidig teknologiledelse.
-      </p>
-      <!-- <Link href="/folka" variant="dark-primary">Les mer</Link> -->
-    </Prose>
-    <Image
-      src={teamImage}
-      alt="Tre amigos - Axel, Daniel og Frederik - står foran en gul vegg med armene i kryss og ser ganske så fornøyde ut"
-      layout="full-width"
-    />
+    <Split minBreakpoint="md" gap="3rem">
+      <div slot="left">
+        <Prose>
+          <p>
+            Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel - som har gått sammen
+            om å lage en transparent, spennende og nytenkende arbeidsplass. Vi er et konsulentbyrå
+            innen fullstack softwareutvikling, organisasjonsdesign og smidig teknologiledelse.
+          </p>
+          <!-- <Link href="/folka" variant="dark-primary">Les mer</Link> -->
+        </Prose>
+      </div>
+      <div slot="right">
+        <Image
+          src={teamImage}
+          alt="Tre amigos - Axel, Daniel og Frederik - står foran en gul vegg med armene i kryss og ser ganske så fornøyde ut"
+          layout="full-width"
+        />
+      </div>
+    </Split>
   </PageSection>
 
   <!-- <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
@@ -44,6 +51,7 @@ import Layout from '@/layouts/Base.astro';
     </div>
   </PageSection> -->
   <PageSection
+    id="kontakt"
     heading="Kontakt oss"
     subheading="Nysgjerrig på samarbeid, enten som medeier eller kunde? Hit us up!"
   >
