@@ -19,6 +19,7 @@
   --color-accent: var(--color-light-green);
 
   --color-text: var(--color-primary);
+  --color-text-muted: var(--color-gray);
   --color-focus: var(--color-red);
   --color-background: var(--color-secondary);
   --color-shadow: var(--color-black);
