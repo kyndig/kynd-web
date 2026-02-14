@@ -1,0 +1,42 @@
+---
+export type Props = {
+  as?: 'section' | 'div';
+  variant?: 'default' | 'primary' | 'accent';
+};
+
+const { as = 'section', variant = 'default' } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={['fullBleed', variant]}>
+  <div class="inner">
+    <slot />
+  </div>
+</Tag>
+
+<style>
+  .fullBleed {
+    width: 100%;
+    background: var(--fullBleed-background, transparent);
+  }
+
+  .inner {
+    width: min(var(--content-max-width), 100% - 2 * var(--content-padding));
+    margin-inline: auto;
+    padding-block: var(--fullBleed-padding-block, 0);
+  }
+
+  .fullBleed.default {
+    --fullBleed-background: transparent;
+  }
+
+  .fullBleed.primary {
+    --fullBleed-background: var(--color-primary);
+    color: var(--color-secondary);
+  }
+
+  .fullBleed.accent {
+    --fullBleed-background: var(--color-accent);
+    color: var(--color-primary);
+  }
+</style>

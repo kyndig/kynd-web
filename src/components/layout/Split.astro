@@ -1,0 +1,86 @@
+---
+export type Props = {
+  reverse?: boolean;
+  gap?: string;
+  minBreakpoint?: 'sm' | 'md' | 'lg';
+  columns?: string;
+};
+
+const { reverse = false, gap = '2rem', minBreakpoint = 'sm', columns = '1fr 1fr' } = Astro.props;
+---
+
+<div class="split" data-reverse={reverse} data-breakpoint={minBreakpoint}>
+  <div class="pane">
+    <slot name="left" />
+  </div>
+  <div class="pane">
+    <slot name="right" />
+  </div>
+</div>
+
+<style define:vars={{ gap, columns }}>
+  .split {
+    display: grid;
+    gap: var(--gap);
+  }
+
+  @media (--sm) {
+    .split[data-breakpoint='sm'] {
+      grid-template-columns: var(--columns);
+      grid-template-areas: 'left right';
+      align-items: start;
+    }
+
+    .split[data-breakpoint='sm'] > .pane:first-child {
+      grid-area: left;
+    }
+
+    .split[data-breakpoint='sm'] > .pane:last-child {
+      grid-area: right;
+    }
+
+    .split[data-breakpoint='sm'][data-reverse='true'] {
+      grid-template-areas: 'right left';
+    }
+  }
+
+  @media (--md) {
+    .split[data-breakpoint='md'] {
+      grid-template-columns: var(--columns);
+      grid-template-areas: 'left right';
+      align-items: start;
+    }
+
+    .split[data-breakpoint='md'] > .pane:first-child {
+      grid-area: left;
+    }
+
+    .split[data-breakpoint='md'] > .pane:last-child {
+      grid-area: right;
+    }
+
+    .split[data-breakpoint='md'][data-reverse='true'] {
+      grid-template-areas: 'right left';
+    }
+  }
+
+  @media (--lg) {
+    .split[data-breakpoint='lg'] {
+      grid-template-columns: var(--columns);
+      grid-template-areas: 'left right';
+      align-items: start;
+    }
+
+    .split[data-breakpoint='lg'] > .pane:first-child {
+      grid-area: left;
+    }
+
+    .split[data-breakpoint='lg'] > .pane:last-child {
+      grid-area: right;
+    }
+
+    .split[data-breakpoint='lg'][data-reverse='true'] {
+      grid-template-areas: 'right left';
+    }
+  }
+</style>
