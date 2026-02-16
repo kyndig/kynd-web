@@ -2,12 +2,20 @@ import { defineConfig, envField, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import netlify from '@astrojs/netlify';
 import sitemap from '@astrojs/sitemap';
+import astrobook from 'astrobook';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kynd.no',
   adapter: netlify(),
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    astrobook({
+      subpath: '/playground',
+      css: ['./src/styles/main.css', './src/styles/astrobook.css'],
+    }),
+  ],
   env: {
     schema: {
       SLACK_TOKEN: envField.string({ context: 'server', access: 'secret' }),

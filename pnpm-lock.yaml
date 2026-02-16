@@ -26,6 +26,9 @@ importers:
       astro:
         specifier: ^5.16.3
         version: 5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1)
+      astrobook:
+        specifier: ^0.11.2
+        version: 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3)
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -68,6 +71,25 @@ importers:
         version: 8.48.1(eslint@9.39.1(jiti@2.6.0))(typescript@5.9.3)
 
 packages:
+
+  '@astrobook/core@0.11.2':
+    resolution: {integrity: sha512-FFCWg6RBDfBrjFd+WQEdVbfFJTHR//vNslUq8pX2AFlf4R/bYcO/oLtWMmnFzKSU1siF4HAseMunMoMzMwTUrA==}
+
+  '@astrobook/types@0.11.2':
+    resolution: {integrity: sha512-jcTyiVmVVqzbkTfwxBd7Re8DOwbYjzfwN0wq4UtZXNBB+RLFiaMTa6/E0VOAPHsL14fD6/HGPa0R1Te+eKNGbg==}
+    peerDependencies:
+      astro: '>=4.0.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+
+  '@astrobook/ui@0.11.2':
+    resolution: {integrity: sha512-9VCMoanz9qg7vRfcSAb1nPXbf8CYQ2zoUC6tB/urDZxS1NF0n52tsfY2h2qG5mgKtF+FmBFePSeVnR/PV16HlA==}
+    peerDependencies:
+      astro: '>=5.0.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
 
   '@astrojs/check@0.9.6':
     resolution: {integrity: sha512-jlaEu5SxvSgmfGIFfNgcn5/f+29H61NJzEMfAZ82Xopr4XBchXB1GVlcJsE+elUlsYSbXlptZLX+JMG3b/wZEA==}
@@ -1226,6 +1248,11 @@ packages:
     resolution: {integrity: sha512-ERcExbWrnkDN8ovoWWe6Wgt/usanj1dWUd18dJLpctUI4mlPS0nKt81Joh8VI+OPbNnY1lIilVt9gdMBD9U2ig==}
     engines: {node: '>= 18', npm: '>= 8.6.0'}
 
+  '@sveltejs/acorn-typescript@1.0.8':
+    resolution: {integrity: sha512-esgN+54+q0NjB0Y/4BomT9samII7jGwNy/2a3wNZbT2A2RpmXsXwUt24LvLhx6jUq2gVk4cWEvcRO6MFQbOfNA==}
+    peerDependencies:
+      acorn: ^8.9.0
+
   '@swc/helpers@0.5.17':
     resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
 
@@ -1581,10 +1608,21 @@ packages:
     resolution: {integrity: sha512-JepyLROIad6f44uyqMF6HKE2QbunNzp3mYKRcPoDGt0QkxXmH222FAFC64WTyQu2Kg8NNEXHTN/sWuUId9sSxw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  astro-theme-toggle@0.8.0:
+    resolution: {integrity: sha512-7ngEKDfCLKoVbxX4yxrggtBr8i6W8eT0un0TpNKHUeOG/Pq2g7BrjH+etP/l/XQYYSWQmeOIAI02LvLXDMvOWw==}
+
   astro@5.16.3:
     resolution: {integrity: sha512-KzDk41F9Dspf5fM/Ls4XZhV4/csjJcWBrlenbnp5V3NGwU1zEaJz/HIyrdKdf5yw+FgwCeD2+Yos1Xkx9gnI0A==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
+
+  astrobook@0.11.2:
+    resolution: {integrity: sha512-vJmgCbnXQRA7R5Ei+f0gh1uxVzGteQbEHbBqA/CYvzzKkADsnhvUIrh1ImBfx+o48Z40uQMzc3KFzUazDf9BJg==}
+    peerDependencies:
+      astro: '>=4.0.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
 
   astrojs-compiler-sync@1.1.1:
     resolution: {integrity: sha512-0mKvB9sDQRIZPsEJadw6OaFbGJ92cJPPR++ICca9XEyiUAZqgVuk25jNmzHPT0KF80rI94trSZrUR5iHFXGGOQ==}
@@ -2930,6 +2968,9 @@ packages:
     resolution: {integrity: sha512-Qush0uP+G8ZScpGMZvHUiRfI0YBWuB3gVBYlI0v0vvOJt5FLicco+IkP0a50LqTTQhmts/m6tP5SWE+USyIvcQ==}
     engines: {node: '>=12.20'}
 
+  just-group-by@2.2.0:
+    resolution: {integrity: sha512-brZocDSmkvDYc+FOr07GiTar4cp7K6OB9huVOrj5LX+iXfCe3hTvn2KGM811LE/SBQkCzuYDDEcG8HA/dKDrnw==}
+
   jwa@1.4.2:
     resolution: {integrity: sha512-eeH5JO+21J78qMvTIDdBXidBd6nG2kZjg5Ohz/1fpa28Z4CcsWUzJ1ZZyFq/3z3N17aZy+ZuBoHljASbL1WfOw==}
 
@@ -3939,6 +3980,10 @@ packages:
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     hasBin: true
 
+  slash@5.1.0:
+    resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
+    engines: {node: '>=14.16'}
+
   slashes@3.0.12:
     resolution: {integrity: sha512-Q9VME8WyGkc7pJf6QEkj3wE+2CnvZMI+XJhwdTPR8Z/kWQRXi7boAWLDibRPyHRTUTPx5FaU7MsyrjI3yLB4HA==}
 
@@ -4421,6 +4466,14 @@ packages:
     resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
     hasBin: true
 
+  valibot@1.2.0:
+    resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -4729,6 +4782,35 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
+
+  '@astrobook/core@0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3)':
+    dependencies:
+      '@astrobook/types': 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))
+      '@sveltejs/acorn-typescript': 1.0.8(acorn@8.15.0)
+      acorn: 8.15.0
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      slash: 5.1.0
+      valibot: 1.2.0(typescript@5.9.3)
+      yoctocolors: 2.1.2
+    transitivePeerDependencies:
+      - astro
+      - typescript
+
+  '@astrobook/types@0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))':
+    optionalDependencies:
+      astro: 5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1)
+
+  '@astrobook/ui@0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3)':
+    dependencies:
+      '@astrobook/core': 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3)
+      '@astrobook/types': 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))
+      astro-theme-toggle: 0.8.0
+      just-group-by: 2.2.0
+    optionalDependencies:
+      astro: 5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1)
+    transitivePeerDependencies:
+      - typescript
 
   '@astrojs/check@0.9.6(prettier-plugin-astro@0.14.1)(prettier@3.7.4)(typescript@5.9.3)':
     dependencies:
@@ -6001,6 +6083,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@sveltejs/acorn-typescript@1.0.8(acorn@8.15.0)':
+    dependencies:
+      acorn: 8.15.0
+
   '@swc/helpers@0.5.17':
     dependencies:
       tslib: 2.8.1
@@ -6502,6 +6588,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  astro-theme-toggle@0.8.0: {}
+
   astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1):
     dependencies:
       '@astrojs/compiler': 2.13.0
@@ -6603,6 +6691,16 @@ snapshots:
       - typescript
       - uploadthing
       - yaml
+
+  astrobook@0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3):
+    dependencies:
+      '@astrobook/core': 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3)
+      '@astrobook/types': 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))
+      '@astrobook/ui': 0.11.2(astro@5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1))(typescript@5.9.3)
+    optionalDependencies:
+      astro: 5.16.3(@netlify/blobs@10.4.1)(@types/node@24.5.2)(jiti@2.6.0)(rollup@4.52.2)(typescript@5.9.3)(yaml@2.8.1)
+    transitivePeerDependencies:
+      - typescript
 
   astrojs-compiler-sync@1.1.1(@astrojs/compiler@2.13.0):
     dependencies:
@@ -8169,6 +8267,8 @@ snapshots:
 
   junk@4.0.1: {}
 
+  just-group-by@2.2.0: {}
+
   jwa@1.4.2:
     dependencies:
       buffer-equal-constant-time: 1.0.1
@@ -9629,6 +9729,8 @@ snapshots:
       arg: 5.0.2
       sax: 1.4.1
 
+  slash@5.1.0: {}
+
   slashes@3.0.12: {}
 
   smol-toml@1.4.2: {}
@@ -10059,6 +10161,10 @@ snapshots:
   uuid@11.1.0: {}
 
   uuid@13.0.0: {}
+
+  valibot@1.2.0(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
 
   validate-npm-package-license@3.0.4:
     dependencies:

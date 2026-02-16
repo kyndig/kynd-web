@@ -1,0 +1,6 @@
+main {
+  all: unset;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+}
