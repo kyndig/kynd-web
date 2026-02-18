@@ -1,0 +1,104 @@
+---
+import ContactCTA from '@/components/ContactCTA.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
+import Layout from '@/layouts/Base.astro';
+
+const principles = [
+  'Bruk selskapets ressurser som om de var dine egne.',
+  'Tenk høyt, kommuniser tidlig, del kunnskap.',
+  'Vær raus med andre, og tydelig på ansvar.',
+];
+
+const weLookFor = [
+  'Sterk faglighet og evne til å ta tekniske valg med konsekvensforståelse.',
+  'Produktblikk: du bryr deg om effekt, ikke bare leveranse.',
+  'Entreprenørielt driv kombinert med disiplin og etterrettelighet.',
+  'Høy integritet og transparent håndtering av sideprosjekter.',
+];
+---
+
+<Layout
+  title="Bli en av oss"
+  description="Bli kjent med hvordan Kynd jobber med eierskap, faglig utvikling og selektiv rekruttering."
+  image="/patterns/pattern-2.svg"
+>
+  <HeroSection
+    title="Bli en av oss"
+    preamble="Vi bygger Kynd sammen med folk som kombinerer ferdighet, integritet og produktblikk."
+  />
+
+  <PageSection
+    heading="Hva vi bygger sammen"
+    subheading="Kynd er et selskap av og for de ansatte. Medeierskap betyr ansvar, ikke bare rettigheter."
+  >
+    <Prose wide>
+      <p>
+        Vi har en modell der ansatte inviteres inn i medeierskap, med tydelig forventning om aktivt
+        bidrag til retning, kvalitet og kultur. Målet er et robust selskap med langsiktig
+        handlingsrom, ikke kortsiktig gevinstoptimalisering.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <PageSection heading="Prinsipper" subheading="Disse prinsippene styrer hverdagen i Kynd.">
+    <ul class="list">
+      {principles.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <PageSection
+    heading="Fag og produkttid"
+    subheading="Vi investerer i kompetanse, eksperimentering og produkttid fordi faglig utvikling er en del av leveransekvalitet."
+  >
+    <Prose wide>
+      <p>
+        Kynd prioriterer tid til læring, konferanser og intern produktutforsking. Vi mener dette gir
+        bedre beslutninger i kundearbeid, sterkere teknisk handverk og mer ansvarlige prioriteringer
+        over tid.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <PageSection
+    heading="Hvem vi ser etter"
+    subheading="Vi er bevisst selektive. Riktig match er viktigere enn rask vekst."
+  >
+    <ul class="list">
+      {weLookFor.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <PageSection
+    heading="Dating og invitasjon"
+    subheading="Rekrutteringsprosessen handler om gjensidig vurdering av verdi, tillit og samarbeid."
+  >
+    <Prose wide>
+      <p>
+        Vi bruker en trinnvis prosess for å bli kjent, diskutere forventninger og avklare praktiske
+        rammer. Hvis begge parter opplever god match, blir neste steg en invitasjon med tydelige
+        avtaler for arbeid og eierskap.
+      </p>
+      <p>
+        Vil du lese detaljene? Hele håndboka finnes fortsatt offentlig på
+        <a href="/bok">/bok</a>.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <ContactCTA
+    title="Nysgjerrig på Kynd?"
+    body="Send en kort melding om deg selv og hva du vil bygge. Vi svarer med et konkret forslag til neste steg."
+  />
+</Layout>
+
+<style>
+  .list {
+    list-style: disc;
+    padding-inline-start: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--fs-body-m);
+  }
+</style>
