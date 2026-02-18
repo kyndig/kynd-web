@@ -3,9 +3,10 @@ export type Props = {
   reverse?: boolean;
   gap?: string;
   minBreakpoint?: 'sm' | 'md' | 'lg';
+  columns?: string;
 };
 
-const { reverse = false, gap = '2rem', minBreakpoint = 'sm' } = Astro.props;
+const { reverse = false, gap = '2rem', minBreakpoint = 'sm', columns = '1fr 1fr' } = Astro.props;
 ---
 
 <div class="split" data-reverse={reverse} data-breakpoint={minBreakpoint}>
@@ -17,7 +18,7 @@ const { reverse = false, gap = '2rem', minBreakpoint = 'sm' } = Astro.props;
   </div>
 </div>
 
-<style define:vars={{ gap }}>
+<style define:vars={{ gap, columns }}>
   .split {
     display: grid;
     gap: var(--gap);
@@ -25,7 +26,7 @@ const { reverse = false, gap = '2rem', minBreakpoint = 'sm' } = Astro.props;
 
   @media (--sm) {
     .split[data-breakpoint='sm'] {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: var(--columns);
       grid-template-areas: 'left right';
       align-items: start;
     }
@@ -45,7 +46,7 @@ const { reverse = false, gap = '2rem', minBreakpoint = 'sm' } = Astro.props;
 
   @media (--md) {
     .split[data-breakpoint='md'] {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: var(--columns);
       grid-template-areas: 'left right';
       align-items: start;
     }
@@ -65,7 +66,7 @@ const { reverse = false, gap = '2rem', minBreakpoint = 'sm' } = Astro.props;
 
   @media (--lg) {
     .split[data-breakpoint='lg'] {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: var(--columns);
       grid-template-areas: 'left right';
       align-items: start;
     }
