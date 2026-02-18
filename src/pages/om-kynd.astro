@@ -1,0 +1,72 @@
+---
+import ContactCTA from '@/components/ContactCTA.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
+import Layout from '@/layouts/Base.astro';
+---
+
+<Layout
+  title="Om Kynd"
+  description="Kynd ble startet for å bygge et konsulentselskap der senior teknologer tar produktansvar og utfordrer med integritet."
+  image="/patterns/pattern-1.svg"
+>
+  <HeroSection
+    title="Om Kynd"
+    preamble="Kynd ble startet for å bygge et fagmiljø der senior teknologer tar ansvar for effekt, ikke bare leveranse."
+  />
+
+  <PageSection
+    heading="Hvorfor vi startet"
+    subheading="Vi så et behov for en tydeligere kombinasjon av teknisk ferdighet, integritet og produktforståelse."
+  >
+    <Prose wide>
+      <p>
+        Vi reagerte på en bransje der for mye handler om timeforbruk, og for lite om hva som faktisk
+        skaper verdi. Derfor bygger vi et miljø der vi utfordrer valg som ikke holder over tid, og
+        tar ansvar for konsekvensene.
+      </p>
+      <p>
+        Kynd skal være en samarbeidspartner som er trygg nok til å si nei, tydelig nok til å gi
+        retning, og pragmatisk nok til å skape fremdrift sammen med teamet ditt.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <PageSection
+    heading="Hva vi gjør annerledes"
+    subheading="Vi foretrekker tydelighet fremfor konsulentspråk."
+  >
+    <ul class="difference-list">
+      <li>Vi prioriterer resultat og læring foran ren output.</li>
+      <li>Vi setter senior kompetanse tett på beslutningene.</li>
+      <li>Vi er selektive på hvem vi jobber med og hvordan vi jobber.</li>
+      <li>Vi bygger langsiktige løsninger som team kan eie videre.</li>
+    </ul>
+  </PageSection>
+
+  <PageSection heading="Folka i Kynd" subheading="Les mer om menneskene bak leveransene.">
+    <a class="people-link" href="/folka">Møt folka</a>
+  </PageSection>
+
+  <ContactCTA />
+</Layout>
+
+<style>
+  .difference-list {
+    list-style: disc;
+    padding-inline-start: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--fs-body-m);
+  }
+
+  .people-link {
+    display: inline-block;
+    font-size: var(--fs-heading-xs);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--color-primary);
+  }
+</style>
