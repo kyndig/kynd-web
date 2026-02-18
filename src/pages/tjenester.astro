@@ -1,0 +1,102 @@
+---
+import ContactCTA from '@/components/ContactCTA.astro';
+import FitSection from '@/components/FitSection.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import Layout from '@/layouts/Base.astro';
+
+const services = [
+  {
+    title: 'Produktutvikling',
+    description:
+      'Vi bygger og videreutvikler produkter sammen med teamet ditt, fra prioritering til produksjon.',
+    outcome: 'Raskere læring og tydeligere sammenheng mellom roadmap og effekt.',
+  },
+  {
+    title: 'Teknisk ledelse',
+    description:
+      'Vi tar ansvar for retning, arkitekturvalg og kvalitetsnivå når teamet trenger senior teknisk styring.',
+    outcome: 'Bedre beslutninger tidligere i prosessen, med færre kostbare omveier.',
+  },
+  {
+    title: 'Arkitektur og systemdesign',
+    description:
+      'Vi designer løsninger som tåler vekst, endring og reelle driftskrav, ikke bare dagens behov.',
+    outcome: 'Mindre teknisk gjeld og mer forutsigbar leveranse.',
+  },
+  {
+    title: 'Modernisering',
+    description:
+      'Vi hjelper dere med trygg modernisering av plattform, kodebase og teampraksis uten unødvendig risiko.',
+    outcome: 'Høyere utviklingstakt og lavere operasjonell friksjon.',
+  },
+  {
+    title: 'Skalering',
+    description:
+      'Vi styrker systemer og team for høyere belastning, flere brukere og mer kompleksitet.',
+    outcome: 'Stabil drift og kapasitet til å vokse uten å miste kontroll.',
+  },
+  {
+    title: 'Teknologistrategi',
+    description:
+      'Vi bidrar med rådgivning når dere må ta vanskelige tekniske og produktmessige prioriteringer.',
+    outcome: 'Klarere prioriteringer og mindre tid brukt på tiltak uten effekt.',
+  },
+];
+
+const fit = [
+  'Selskaper som vil bygge noe langsiktig, ikke bare fylle kapasitet.',
+  'Produktteam som vil bli utfordret på prioriteringer og tekniske valg.',
+  'Organisasjoner som trenger senior kompetanse tett på beslutninger.',
+  'Miljøer som vil rydde i teknisk gjeld for å øke faktisk fart.',
+];
+
+const noFit = [
+  'Selskaper som kun optimaliserer timepris.',
+  'Team som ikke ønsker motstand eller utfordring på krav.',
+  'Organisasjoner som vil ha ren ressursutleie uten ansvar for resultat.',
+  'Prosjekter der kvalitet og langsiktighet er underordnet kortsiktig output.',
+];
+---
+
+<Layout
+  title="Tjenester"
+  description="Kynd leverer senior produktutvikling, teknisk ledelse og arkitektur med tydelig eierskap til resultat."
+  image="/patterns/pattern-1.svg"
+>
+  <HeroSection
+    title="Tjenester"
+    preamble="Konkrete leveranser for team som vil ha effekt, retning og ansvarlighet."
+  />
+
+  <PageSection
+    heading="Hva vi faktisk gjør"
+    subheading="Vi selger ikke generiske konsulentpakker. Vi går inn der senior dømmekraft gir størst forskjell."
+  >
+    <div class="services-grid">
+      {services.map((service) => <ServiceCard {...service} />)}
+    </div>
+  </PageSection>
+
+  <PageSection
+    heading="Hvem vi passer for"
+    subheading="Dette er bevisst selekterende. Riktig match gir bedre resultater for begge parter."
+  >
+    <FitSection fit={fit} noFit={noFit} />
+  </PageSection>
+
+  <ContactCTA />
+</Layout>
+
+<style>
+  .services-grid {
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+</style>

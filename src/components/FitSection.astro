@@ -1,0 +1,60 @@
+---
+type Props = {
+  fit: string[];
+  noFit: string[];
+};
+
+const { fit, noFit } = Astro.props;
+---
+
+<div class="fit-grid">
+  <section>
+    <h3>Vi passer for</h3>
+    <ul>
+      {fit.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+  <section>
+    <h3>Vi passer ikke for</h3>
+    <ul>
+      {noFit.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+</div>
+
+<style>
+  .fit-grid {
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .fit-grid section {
+    border: 2px solid var(--color-primary);
+    padding: 1.5rem;
+    background: var(--color-secondary);
+  }
+
+  .fit-grid section:last-child {
+    background: var(--color-secondary-shade);
+  }
+
+  .fit-grid h3 {
+    font-size: var(--fs-heading-xs);
+    margin-block-end: 1rem;
+    background-color: var(--color-accent);
+    width: fit-content;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .fit-grid ul {
+    padding-inline-start: 1rem;
+    list-style: disc;
+    display: grid;
+    gap: 0.5rem;
+  }
+</style>
