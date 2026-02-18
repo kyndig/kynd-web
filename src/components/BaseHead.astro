@@ -14,6 +14,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description = SITE_DESCRIPTION, image = '/og-image.png' } = Astro.props;
 
 const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const ogImage = new URL(image, Astro.url);
 ---
 
 <meta charset="utf-8" />
@@ -38,6 +39,37 @@ const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={ogImage} />
 <meta property="og:site_name" content={SITE_TITLE} />
 <meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content={formattedTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />
+
+<script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Kynd",
+    "url": "https://kynd.no",
+    "email": "hei@kynd.no",
+    "telephone": "+47 400 59 915",
+    "sameAs": ["https://www.linkedin.com/company/kyndig/", "https://www.instagram.com/kynd.ig/"]
+  }
+</script>
+<script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Kynd",
+    "url": "https://kynd.no",
+    "description": "Senior teknologer som tar produktansvar.",
+    "email": "hei@kynd.no",
+    "telephone": "+47 400 59 915"
+  }
+</script>
+<script
+  is:inline
+  defer
+  data-domain="kynd.no"
+  src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>

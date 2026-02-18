@@ -23,6 +23,22 @@ body {
   background-color: var(--color-background);
 }
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 1000;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-primary);
+  background: var(--color-accent);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+}
+
 main {
   width: min(var(--content-max-width), 100% - 2 * var(--content-padding));
   margin-inline: auto;
