@@ -3,6 +3,7 @@ export type ProjectListItem = {
   id: string;
   data: {
     title: string;
+    description: string;
     image: { src: string };
     fullLogo?: { src: string };
     kyndLogo?: { src: string };
@@ -21,6 +22,7 @@ const { projects } = Astro.props;
     projects.map((project) => (
       <div class="project-card">
         <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
+        <p>{project.data.description}</p>
         <div class="logo-container">
           <img
             class="client-logo"
@@ -135,5 +137,10 @@ const { projects } = Astro.props;
     inset: 0;
     z-index: 1;
     cursor: pointer;
+  }
+
+  .project-card p {
+    font-size: var(--fs-body-s);
+    max-width: 60ch;
   }
 </style>

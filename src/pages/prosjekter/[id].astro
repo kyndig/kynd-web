@@ -1,7 +1,10 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import Layout from '@/layouts/Base.astro';
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
 import { calculateDuration } from '@/utils/dateHelpers';
 
 export async function getStaticPaths() {
@@ -21,5 +24,18 @@ const { Content } = await render(project);
 
 <Layout title={title} description={`Vi har jobba med ${title} hos ${customer}`}>
   <HeroSection title={title} preamble={description} image={image.src} duration={duration} />
+  <PageSection
+    heading="Hva vi bidro med"
+    subheading="Casebeskrivelsen under viser hvordan vi jobbet i praksis."
+  >
+    <Prose wide>
+      <ul>
+        <li>Vi tok ansvar for tekniske valg med konsekvens for produkt og forretning.</li>
+        <li>Vi utfordret antakelser der det reduserte risiko eller ga bedre effekt.</li>
+        <li>Vi jobbet tett med teamet for varig kvalitet og gjennomføringsevne.</li>
+      </ul>
+    </Prose>
+  </PageSection>
   <Content />
+  <ContactCTA />
 </Layout>

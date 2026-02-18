@@ -3,14 +3,23 @@ import Layout from '@/layouts/Base.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 import ProjectGrid from '@/components/projects/ProjectGrid.astro';
+import ContactCTA from '@/components/ContactCTA.astro';
 
 const projects = await getProjectsWithDuration();
 ---
 
-<Layout title="Prosjekter" description="Ting vi har jobbet på">
+<Layout
+  title="Prosjekter"
+  description="Utvalgte samarbeid som viser hvordan Kynd jobber med produktansvar, teknisk kvalitet og effekt."
+  image="/patterns/pattern-1.svg"
+>
   <HeroSection
     title="Prosjekter"
-    preamble="Her er en samling av prosjekter og erfaringer vi har med oss inn i Kynd, eller som vi jobbet med for våre kunder."
+    preamble="Eksempler på samarbeid der vi har bidratt med retning, gjennomføring og produktnær teknologikompetanse."
   />
   <ProjectGrid projects={projects} />
+  <ContactCTA
+    title="Trenger dere lignende støtte?"
+    body="Fortell oss kort hva dere står i, så avklarer vi raskt om vi er riktig match."
+  />
 </Layout>
