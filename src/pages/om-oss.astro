@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection.astro';
 import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 ---
 
@@ -24,43 +25,55 @@ import Layout from '@/layouts/Base.astro';
     layout="full-width"
   />
   <PageSection heading="Fundamentet">
-    <Prose align="left">
-      <p>
-        Grunnverdiene Kynd er tuftet på er åpenhet, samhold og enkelhet. Vi skal være dristige og
-        relasjonsorientert når vi designer og utvikler selskapet, fordi vi tror på og bryr oss om
-        hverandre.
-      </p>
-      <p>Vi mener engasjement skapes av innsikt, ansvar og tillit. For oss betyr det</p>
-    </Prose>
-    <Prose align="right">
-      <ul>
-        <li>Likeverdig eierskap</li>
-        <li>Åpen økonomi og lønnsmodell</li>
-        <li>Delingskultur både for selskapsinformasjon, økonomi og kompetanse</li>
-      </ul>
-    </Prose>
+    <Split minBreakpoint="md" gap="3rem">
+      <div slot="left">
+        <Prose>
+          <p>
+            Grunnverdiene Kynd er tuftet på er åpenhet, samhold og enkelhet. Vi skal være dristige
+            og relasjonsorientert når vi designer og utvikler selskapet, fordi vi tror på og bryr
+            oss om hverandre.
+          </p>
+          <p>Vi mener engasjement skapes av innsikt, ansvar og tillit. For oss betyr det</p>
+        </Prose>
+      </div>
+      <div slot="right">
+        <Prose>
+          <ul>
+            <li>Likeverdig eierskap</li>
+            <li>Åpen økonomi og lønnsmodell</li>
+            <li>Delingskultur både for selskapsinformasjon, økonomi og kompetanse</li>
+          </ul>
+        </Prose>
+      </div>
+    </Split>
   </PageSection>
   <PageSection heading="Why Be Kynd?">
-    <Prose align="left">
-      <p>
-        Vi etablerte Kynd fordi vi vil bruke tiden, kreftene og kompetansen vår på å skape en
-        knallbra arbeidshverdag, hvor vi bygger noe som gir mening for oss – sammen.
-      </p>
-      <p>
-        På veien er det viktig for oss å ha god lønn og trygghet. Vi sikter på bærekraftig vekst
-        både kulturelt og økonomisk.
-      </p>
-    </Prose>
-    <Prose align="right">
-      <p>
-        Sekundært vil vi bygge et sterkt og levende kompetansemiljø. Målet er høy grad av
-        kunnskapsdeling og et sterkt kunnskapssamhold.
-      </p>
-      <p>
-        Vi drar det faglige lasset sammen, og utfordrer og utvikler hverandre på harde og myke
-        kompetanser.
-      </p>
-    </Prose>
+    <Split minBreakpoint="md" gap="3rem">
+      <div slot="left">
+        <Prose>
+          <p>
+            Vi etablerte Kynd fordi vi vil bruke tiden, kreftene og kompetansen vår på å skape en
+            knallbra arbeidshverdag, hvor vi bygger noe som gir mening for oss – sammen.
+          </p>
+          <p>
+            På veien er det viktig for oss å ha god lønn og trygghet. Vi sikter på bærekraftig vekst
+            både kulturelt og økonomisk.
+          </p>
+        </Prose>
+      </div>
+      <div slot="right">
+        <Prose>
+          <p>
+            Sekundært vil vi bygge et sterkt og levende kompetansemiljø. Målet er høy grad av
+            kunnskapsdeling og et sterkt kunnskapssamhold.
+          </p>
+          <p>
+            Vi drar det faglige lasset sammen, og utfordrer og utvikler hverandre på harde og myke
+            kompetanser.
+          </p>
+        </Prose>
+      </div>
+    </Split>
     <Prose align="center">
       <p>
         Til sist er det spennende om vi klarer å bygge produkter som en konsekvens av erfaringer vi
