@@ -1,0 +1,70 @@
+---
+import ApproachSection from '@/components/ApproachSection.astro';
+import ContactCTA from '@/components/ContactCTA.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Layout from '@/layouts/Base.astro';
+
+const principles = [
+  'Små team med tydelig ansvar og korte beslutningsveier.',
+  'Senior kompetanse i leveranseleddet, uten pyramidestruktur.',
+  'Direkte kommunikasjon med de som eier produkt og forretning.',
+  'Kontinuerlig prioritering basert på effekt, ikke bare kapasitet.',
+];
+
+const consequences = [
+  'Kortere beslutningssløyfer fordi de riktige personene er tett på.',
+  'Mindre misforståelser mellom teknologi, produkt og business.',
+  'Mer eierskap til kvalitet, ikke bare leveranse.',
+  'Færre tiltak som ser bra ut på papiret, men gir liten effekt.',
+];
+---
+
+<Layout
+  title="Hvordan vi jobber"
+  description="Kynd jobber i små senior team med tydelig ansvar, direkte kommunikasjon og fokus på produktresultat."
+  image="/patterns/pattern-2.svg"
+>
+  <HeroSection
+    title="Hvordan vi jobber"
+    preamble="Ferdighet, integritet og produktfokus må merkes i arbeidsformen, ikke bare i presentasjoner."
+  />
+
+  <PageSection
+    heading="Arbeidsmodell"
+    subheading="Vi organiserer oss for tempo med retning, ikke for flest mulig parallelle aktiviteter."
+  >
+    <ul class="principles">
+      {principles.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <PageSection
+    heading="Hva det betyr i praksis"
+    subheading="Måten vi jobber på skal gi konkrete konsekvenser for kunden."
+  >
+    <ApproachSection />
+  </PageSection>
+
+  <PageSection
+    heading="Konsekvenser for samarbeidspartner"
+    subheading="Dette er effekten vi forventer at dere kjenner i hverdagen."
+  >
+    <ul class="consequences">
+      {consequences.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <ContactCTA />
+</Layout>
+
+<style>
+  .principles,
+  .consequences {
+    list-style: disc;
+    padding-inline-start: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--fs-body-m);
+  }
+</style>
