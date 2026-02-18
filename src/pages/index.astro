@@ -1,76 +1,41 @@
 ---
-import teamImage from '@/assets/felles-1.jpg';
-import ContactUs from '@/components/ContactUs.astro';
+import ApproachSection from '@/components/ApproachSection.astro';
+import ClientLogoStrip from '@/components/ClientLogoStrip.astro';
+import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
-import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
-import Prose from '@/components/Prose.astro';
-import Split from '@/components/layout/Split.astro';
+import ProblemSection from '@/components/ProblemSection.astro';
 import Layout from '@/layouts/Base.astro';
-// import LinkCard from '@/components/LinkCard.astro';
-// import Link from '@/components/Link.astro';
+import { getProjectsWithDuration } from '@/utils/projectHelpers';
+
+const projects = await getProjectsWithDuration();
 ---
 
-<Layout>
+<Layout
+  title="Senior teknologer som tar produktansvar"
+  description="Kynd hjelper produktselskaper med senior teknologikompetanse, tydelige prioriteringer og eierskap til resultat."
+  image="/patterns/pattern-0.svg"
+>
   <HeroSection
-    title="Something forfriskende, kynd"
-    preamble="En gjeng kompetente folk som bygger et annerledes konsulentbyrå sammen."
+    title="Senior teknologer som tar produktansvar."
+    preamble="Vi bygger produkter sammen med team som vil skape effekt, ikke bare levere backlog."
+    link={{ label: 'Ta en uforpliktende prat', href: '/kontakt' }}
     image="/patterns/pattern-0.svg"
   />
-  <PageSection heading="Team" subheading="Vi skaper kynd sammen">
-    <Split minBreakpoint="md" gap="3rem">
-      <div slot="left">
-        <Prose>
-          <p>
-            Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel - som har gått sammen
-            om å lage en transparent, spennende og nytenkende arbeidsplass. Vi er et konsulentbyrå
-            innen fullstack softwareutvikling, organisasjonsdesign og smidig teknologiledelse.
-          </p>
-          <!-- <Link href="/folka" variant="dark-primary">Les mer</Link> -->
-        </Prose>
-      </div>
-      <div slot="right">
-        <Image
-          src={teamImage}
-          alt="Tre amigos - Axel, Daniel og Frederik - står foran en gul vegg med armene i kryss og ser ganske så fornøyde ut"
-          layout="full-width"
-        />
-      </div>
-    </Split>
-  </PageSection>
-
-  <!-- <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
-    <div class="services-grid">
-      <LinkCard
-        variant="default"
-        heading="Fullstack Softwareutvikling"
-        href="/tjenester/fullstack"
-      />
-      <LinkCard variant="green" heading="Design UX/UI" href="/tjenester/design" />
-      <LinkCard variant="black" heading="Digital Strategi" href="/tjenester/strategi" />
-    </div>
-  </PageSection> -->
   <PageSection
-    id="kontakt"
-    heading="Kontakt oss"
-    subheading="Nysgjerrig på samarbeid, enten som medeier eller kunde? Hit us up!"
+    heading="Typiske utfordringer"
+    subheading="Vi går ofte inn når et produktteam trenger tydeligere retning, hardere prioritering og bedre beslutninger."
   >
-    <ContactUs />
+    <ProblemSection />
   </PageSection>
+  <PageSection
+    heading="Hvordan vi jobber"
+    subheading="Vi utfordrer før vi implementerer, og tar ansvar for konsekvensene av valgene vi gjør."
+  >
+    <ApproachSection />
+  </PageSection>
+  <PageSection heading="Utvalgte samarbeid" subheading="Et utvalg prosjekter vi har jobbet med.">
+    <ClientLogoStrip projects={projects} />
+  </PageSection>
+  <ContactCTA />
 </Layout>
-
-<style>
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-    gap: 2rem;
-    justify-items: center;
-  }
-
-  @media (max-width: 48em) {
-    .services-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-  }
-</style>

@@ -1,0 +1,41 @@
+---
+const problems = [
+  'Prosjekter leverer funksjonalitet, men ikke tydelig forretningseffekt.',
+  'Team mangler teknisk retning og tar tunge beslutninger for sent.',
+  'Roadmaps fylles opp, men det blir uklart hva som faktisk gir verdi.',
+  'Teknisk gjeld skyves videre og begynner å styre tempoet i utviklingen.',
+];
+---
+
+<div class="problem-grid">
+  {
+    problems.map((problem) => (
+      <article class="problem-card">
+        <p>{problem}</p>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .problem-grid {
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .problem-card {
+    border: 2px solid var(--color-primary);
+    background: var(--color-secondary-shade);
+    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
+    padding: 1.5rem;
+  }
+
+  .problem-card p {
+    font-size: var(--fs-body-m);
+  }
+</style>

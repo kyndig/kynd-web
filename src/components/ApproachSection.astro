@@ -1,0 +1,68 @@
+---
+const approachItems = [
+  {
+    weDo: 'Vi utfordrer krav før implementering.',
+    youGet: 'Dere reduserer risiko for feilinvesteringer.',
+  },
+  {
+    weDo: 'Vi jobber tett med produkt og business, ikke bare backlog.',
+    youGet: 'Dere får kortere vei fra innsikt til beslutning.',
+  },
+  {
+    weDo: 'Vi tar ansvar for kvalitet over tid.',
+    youGet: 'Dere får mer robust utviklingstakt og færre overraskelser.',
+  },
+];
+---
+
+<div class="approach-grid">
+  {
+    approachItems.map((item) => (
+      <article class="approach-card">
+        <h3>Vi gjør</h3>
+        <p class="we-do">{item.weDo}</p>
+        <h3>Dere får</h3>
+        <p>{item.youGet}</p>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .approach-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .approach-card {
+    padding: 1.5rem;
+    border: 2px solid var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-secondary);
+    box-shadow: var(--shadow);
+  }
+
+  .approach-card h3 {
+    display: inline-block;
+    font-size: var(--fs-heading-xs);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    padding: 0.25rem 0.5rem;
+    margin-block-end: 0.5rem;
+  }
+
+  .approach-card p {
+    font-size: var(--fs-body-m);
+  }
+
+  .approach-card .we-do {
+    margin-block-end: 1.25rem;
+  }
+
+  @media (--md) {
+    .approach-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+</style>

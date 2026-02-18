@@ -1,0 +1,71 @@
+---
+type ProjectListItem = {
+  id: string;
+  data: {
+    title: string;
+    image: { src: string };
+    fullLogo?: { src: string };
+  };
+};
+
+type Props = {
+  projects: ProjectListItem[];
+};
+
+const { projects } = Astro.props;
+const logos = projects.slice(0, 8);
+---
+
+<div class="logo-strip" aria-label="Utvalgte kunder">
+  {
+    logos.map((project) => (
+      <a
+        class="logo-item"
+        href={`/prosjekter/${project.id}`}
+        aria-label={`Se case for ${project.data.title}`}
+      >
+        <img
+          src={project.data.fullLogo?.src || project.data.image.src}
+          alt={project.data.title}
+          loading="lazy"
+        />
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .logo-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .logo-item {
+    border: 2px solid var(--color-primary);
+    background: var(--color-secondary);
+    padding: 1rem;
+    min-height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-item:hover {
+    box-shadow: var(--shadow);
+  }
+
+  .logo-item img {
+    width: 100%;
+    height: 100%;
+    max-height: 3rem;
+    object-fit: contain;
+  }
+
+  @media (--md) {
+    .logo-strip {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import ButtonLink from './ButtonLink.astro';
+
+type Props = {
+  title?: string;
+  body?: string;
+};
+
+const {
+  title = 'Klar for en prat?',
+  body = 'Vi tar en uforpliktende samtale om hva dere trenger, og hva som faktisk gir effekt.',
+} = Astro.props;
+---
+
+<section class="contact-cta">
+  <h2>{title}</h2>
+  <p>{body}</p>
+  <ButtonLink href="/kontakt">Ta kontakt</ButtonLink>
+</section>
+
+<style>
+  .contact-cta {
+    border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow);
+    background: var(--color-secondary-shade);
+    padding: 2rem;
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+
+  .contact-cta h2 {
+    font-size: var(--fs-heading-s);
+    background-color: var(--color-accent);
+    padding: 0.25rem 0.5rem;
+  }
+
+  .contact-cta p {
+    font-size: var(--fs-body-m);
+    max-inline-size: 70ch;
+  }
+</style>
