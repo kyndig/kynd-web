@@ -1,4 +1,5 @@
 ---
+import ApproachSection from '@/components/ApproachSection.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
 import FitSection from '@/components/FitSection.astro';
 import HeroSection from '@/components/HeroSection.astro';
@@ -58,6 +59,12 @@ const noFit = [
   'Organisasjoner som vil ha ren ressursutleie uten ansvar for resultat.',
   'Prosjekter der kvalitet og langsiktighet er underordnet kortsiktig output.',
 ];
+
+const collaborationConsequences = [
+  'Kortere vei fra problem til beslutning fordi vi prioriterer sammen med dere.',
+  'Mindre misforståelser mellom teknologi, produkt og forretning.',
+  'Mer eierskap til kvalitet over tid, ikke bare leveranse på kort sikt.',
+];
 ---
 
 <Layout
@@ -80,6 +87,16 @@ const noFit = [
   </PageSection>
 
   <PageSection
+    heading="Slik leverer vi"
+    subheading="Arbeidsformen er en del av tjenesten. Vi utfordrer før vi implementerer, og prioriterer effekt foran output."
+  >
+    <ApproachSection />
+    <ul class="consequences">
+      {collaborationConsequences.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <PageSection
     heading="Hvem vi passer for"
     subheading="Dette er bevisst selekterende. Riktig match gir bedre resultater for begge parter."
   >
@@ -98,5 +115,14 @@ const noFit = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.5rem;
     }
+  }
+
+  .consequences {
+    list-style: disc;
+    padding-inline-start: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--fs-body-m);
+    margin-block-start: 1.5rem;
   }
 </style>

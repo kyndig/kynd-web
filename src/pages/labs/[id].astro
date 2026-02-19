@@ -1,0 +1,167 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Base.astro';
+import LabHeroSection from '@/components/LabHeroSection.astro';
+import ReadmeProse from '@/components/ReadmeProse.astro';
+import PageSection from '@/components/PageSection.astro';
+import LabMetadata from '@/components/LabMetadata.astro';
+
+export async function getStaticPaths() {
+  const labs = await getCollection('labs');
+  return labs.map((lab) => ({
+    params: { id: lab.id },
+    props: lab,
+  }));
+}
+
+const lab = Astro.props;
+const {
+  title,
+  description,
+  readmeHtml,
+  githubUrl,
+  isPrivate,
+  repoData,
+  contributors,
+  technologies,
+  status,
+  category,
+} = lab.data;
+---
+
+<Layout title={title} description={description}>
+  <div>
+    <LabHeroSection
+      title={title}
+      preamble={description}
+      image={repoData.homepage ? repoData.homepage : undefined}
+      githubUrl={githubUrl}
+      homepage={repoData.homepage}
+      isPrivate={isPrivate}
+    />
+  </div>
+  <PageSection heading="Metadata">
+    <LabMetadata
+      contributors={contributors}
+      stargazersCount={repoData.stargazersCount}
+      forksCount={repoData.forksCount}
+      technologies={technologies}
+      isPrivate={isPrivate}
+      status={status}
+      category={category}
+      variant="default"
+    />
+  </PageSection>
+  {
+    readmeHtml && (
+      <PageSection heading="Dokumentasjon">
+        <ReadmeProse>
+          <Fragment set:html={readmeHtml.html} />
+        </ReadmeProse>
+      </PageSection>
+    )
+  }
+
+  <style>
+    /* Code Preview */
+    .code-preview {
+      width: 100%;
+      background: var(--color-secondary-shade);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .code-header {
+      background: var(--color-dark-blue);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot.red {
+      background-color: #ff5f57;
+    }
+    .dot.yellow {
+      background-color: #ffbd2e;
+    }
+    .dot.green {
+      background-color: #28ca42;
+    }
+
+    .code-title {
+      color: var(--color-light-gray);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .code-content {
+      padding: 1.5rem;
+    }
+
+    /* Language breakdown styles for code preview */
+    .language-breakdown {
+      margin-bottom: 1rem;
+    }
+
+    .language-item {
+      margin-bottom: 0.5rem;
+    }
+
+    .language-bar {
+      height: 8px;
+      background-color: var(--color-dark-blue);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.25rem;
+    }
+
+    .language-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .language-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .language-name {
+      font-size: var(--fs-body-s);
+      color: var(--color-text);
+    }
+
+    .language-percentage {
+      font-size: var(--fs-body-s);
+      color: var(--color-gray);
+    }
+
+    /* README content styling */
+    .readme-content {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: monospace;
+      font-size: var(--fs-body-s);
+      line-height: 1.6;
+      background: var(--color-secondary-shade);
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      color: var(--color-text);
+    }
+
+    /* Responsive adjustments */
+  </style>
+</Layout>

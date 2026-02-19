@@ -1,0 +1,103 @@
+---
+import ButtonLink from './ButtonLink.astro';
+
+export type Props = {
+  title: string;
+  preamble?: string | undefined;
+  link?:
+    | {
+        label: string;
+        href: string;
+      }
+    | undefined;
+  image?: string | undefined;
+  duration?: string | undefined;
+  githubUrl: string;
+  homepage?: string | null;
+  isPrivate?: boolean;
+};
+
+const { title, preamble, link, image, duration, githubUrl, homepage, isPrivate } = Astro.props;
+---
+
+<div class="hero-section">
+  <div>
+    <h1>{title}</h1>
+    {preamble && <p class="preamble">{preamble}</p>}
+    {duration && <p class="duration">Varighet: {duration}</p>}
+    {link && <ButtonLink href={link.href}>{link.label}</ButtonLink>}
+
+    <div class="project-actions">
+      {
+        !isPrivate && (
+          <ButtonLink href={githubUrl} target="_blank" rel="noopener noreferrer" variant="primary">
+            View on GitHub
+          </ButtonLink>
+        )
+      }
+      {
+        homepage && (
+          <ButtonLink href={homepage} target="_blank" rel="noopener noreferrer" variant="secondary">
+            Homepage
+          </ButtonLink>
+        )
+      }
+    </div>
+  </div>
+  <div class="image-container">
+    {image && <img src={image} alt="" loading="eager" fetchpriority="high" />}
+  </div>
+</div>
+
+<style>
+  .hero-section {
+    display: grid;
+
+    @media (--sm) {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (--lg) {
+      gap: 5rem;
+    }
+  }
+
+  h1 {
+    font-size: var(--fs-heading-l);
+    margin-block-end: 2rem;
+  }
+
+  p {
+    font-size: var(--fs-body-l);
+  }
+
+  .duration {
+    font-size: var(--fs-body-m);
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-block-end: 1rem;
+  }
+
+  .image-container {
+    display: none;
+
+    img {
+      margin-inline: auto;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @media (--sm) {
+      display: block;
+    }
+  }
+
+  /* Action Buttons */
+  .project-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+</style>

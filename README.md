@@ -1,19 +1,84 @@
-# Kynd web
+# Kynd Web
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/06a1aa80-0b5e-4a62-b993-71c1bbcaf65e/deploy-status)](https://app.netlify.com/sites/kynd/deploys)
+Kynd Web is built with [Astro](https://astro.build/) and hosted on [Netlify](https://www.netlify.com/).  
+The project uses GitHub App authentication to automatically fetch content from GitHub Labs repositories.
 
-## Getting started
+## Getting Started
 
-- Install [Node.js](https://nodejs.org/en/download/) and [pnpm](https://pnpm.io/installation)
+### 1. Install Dependencies
 
-- Install all dependencies
+Make sure you have Node.js and `pnpm` installed:
 
 ```bash
 pnpm install
 ```
 
-- Run locally
+### 2. Run Locally
+
+Start the development server:
 
 ```bash
 pnpm dev
 ```
+
+Open [localhost:4321](http://localhost:4321) in your browser.
+
+## Build and Deploy
+
+### Build Locally
+
+```bash
+pnpm build
+```
+
+### Netlify
+
+Netlify automatically builds new deploys on merge to `main`.  
+Environment variables for GitHub App and Slack are set in Netlify under  
+`Site configuration → Environment variables`.
+
+## GitHub App Authentication
+
+Kynd-web fetches information about Labs repositories directly from GitHub via a GitHub App.  
+This requires a private key handled via the environment variable:
+
+```bash
+GITHUB_APP_PRIVATE_KEY_B64=<base64-encoded PKCS#8 key>
+```
+
+This variable must be set in:
+
+- `.env` (locally)
+- GitHub Actions Secrets (`GITHUB_APP_PRIVATE_KEY_B64`)
+- Netlify Environment Variables (`GITHUB_APP_PRIVATE_KEY_B64`)
+
+## Technologies
+
+- **Astro** – static generation and islands architecture
+- **astro-icon** – icon system
+- **TypeScript** – type support and stable code
+- **Netlify** – hosting and CDN
+- **GitHub App + Octokit** – data fetching for Labs overview
+- **Slack Web API** – contact form integration
+
+## Linting and Testing
+
+Run type and lint checks:
+
+```bash
+pnpm check
+```
+
+Automatic fix for linting and formatting:
+
+```bash
+pnpm check:fix
+```
+
+Run ESLint only:
+
+```bash
+pnpm lint
+```
+
+Made with 🫶 by [kynd](https://kynd.no)

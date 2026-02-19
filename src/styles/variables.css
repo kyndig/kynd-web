@@ -51,6 +51,7 @@
 
   --fs-body-l: 1rem; /* 16px */
   --fs-body-m: 0.875rem; /* 14px */
+  --fs-body-s: 0.75rem; /* 12px */
 
   --fs-label-l: 0.875rem; /* 14px */
   --fs-label-m: 0.75rem; /* 12px */
@@ -69,6 +70,7 @@
 
     --fs-body-l: 1.75rem; /* 28px */
     --fs-body-m: 1.125rem; /* 18px */
+    --fs-body-s: 0.875rem; /* 14px */
 
     --fs-label-l: 1.25rem; /* 20px */
     --fs-label-m: 1rem; /* 16px */

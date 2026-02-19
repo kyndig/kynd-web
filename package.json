@@ -31,12 +31,19 @@
     "handbook:create": "node scripts/create-handbook.js"
   },
   "dependencies": {
+    "@iconify-json/logos": "^1.2.9",
     "@astrojs/mdx": "^4.3.12",
     "@astrojs/netlify": "^6.6.3",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
+    "@octokit/app": "^16.1.1",
+    "@octokit/auth-app": "^8.1.1",
+    "@octokit/rest": "^22.0.0",
     "@slack/web-api": "^7.13.0",
     "astro": "^5.16.3",
+    "astro-icon": "^1.1.5",
+    "dotenv": "^17.2.3",
+    "remark-gfm": "^4.0.1",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
