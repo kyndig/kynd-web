@@ -1,0 +1,64 @@
+---
+import ApproachSection from '@/components/ApproachSection.astro';
+import ContactCTA from '@/components/ContactCTA.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Layout from '@/layouts/Base.astro';
+
+const operatingPrinciples = [
+  'Små team med senior kompetanse tett på beslutningene.',
+  'Direkte kommunikasjon mellom teknologi, produkt og forretning.',
+  'Ansvar for effekt over tid, ikke bare leveranse i sprinten.',
+];
+
+const collaborationConsequences = [
+  'Kortere beslutningssløyfer og mindre ventetid mellom avklaringer.',
+  'Færre misforståelser fordi premisser blir utfordret tidlig.',
+  'Mer forutsigbar fremdrift med tydelig eierskap til kvalitet.',
+];
+---
+
+<Layout
+  title="Hvordan vi jobber"
+  description="Slik jobber Kynd med små senior-team, tydelig ansvar og tett samarbeid for å skape varig produktverdi."
+  image="/patterns/pattern-1.svg"
+>
+  <HeroSection
+    title="Hvordan vi jobber"
+    preamble="Vi går inn som senior samarbeidspartner, utfordrer tidlig og tar ansvar for resultatet sammen med dere."
+  />
+
+  <PageSection
+    heading="Operativ modell"
+    subheading="Arbeidsformen er en bevisst del av leveransen, ikke et sidevalg."
+  >
+    <ul class="list">
+      {operatingPrinciples.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <PageSection
+    heading="Slik ser samarbeidet ut i praksis"
+    subheading="Vi utfordrer før implementering og prioriterer effekt foran aktivitet."
+  >
+    <ApproachSection />
+  </PageSection>
+
+  <PageSection heading="Hva det betyr for dere" subheading="Konsekvenser av hvordan vi jobber.">
+    <ul class="list">
+      {collaborationConsequences.map((item) => <li>{item}</li>)}
+    </ul>
+  </PageSection>
+
+  <ContactCTA />
+</Layout>
+
+<style>
+  .list {
+    list-style: disc;
+    padding-inline-start: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--fs-body-m);
+  }
+</style>
