@@ -23,6 +23,7 @@ export default defineConfig({
   image: {
     responsiveStyles: true,
   },
+
   fonts: [
     {
       provider: fontProviders.fontsource(),
