@@ -4,17 +4,6 @@ import { parseDate } from './utils/dateHelpers';
 import { fetchLabsRepositories } from './utils/labsDataFetcher';
 import type { Loader } from 'astro/loaders';
 
-const blog = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    heroImage: z.string().optional(),
-  }),
-});
-
 const employees = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/employees' }),
   schema: ({ image }) =>
@@ -108,4 +97,4 @@ const handbook = defineCollection({
   }),
 });
 
-export const collections = { blog, employees, projects, handbook, labs };
+export const collections = { employees, projects, handbook, labs };
