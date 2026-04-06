@@ -1,7 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { parseDate } from './utils/dateHelpers';
-import { fetchLabsRepositories } from './utils/labsDataFetcher';
 import type { Loader } from 'astro/loaders';
 
 const employees = defineCollection({
@@ -34,34 +33,12 @@ const projects = defineCollection({
     }),
 });
 
+/** Empty loader: GitHub-backed labs fetch is disabled until secrets and product are ready. */
 export function labsLoader(): Loader {
   return {
     name: 'labs-loader',
-    async load({ renderMarkdown, store }) {
-      const repos = await fetchLabsRepositories();
-
+    async load({ store }) {
       store.clear();
-
-      for (const repo of repos) {
-        store.set({
-          id: repo.id,
-          data: {
-            title: repo.title,
-            description: repo.description,
-            readme: repo.readme,
-            readmeHtml: repo.readme ? await renderMarkdown(repo.readme) : null,
-            githubUrl: repo.githubUrl,
-            isPrivate: repo.isPrivate,
-            category: repo.category,
-            status: repo.repoStatus,
-            technologies: repo.technologies,
-            repoData: repo.repoData,
-            contributors: repo.contributors,
-            languages: repo.languages,
-            startDate: parseDate(repo.repoData.createdAt),
-          },
-        });
-      }
     },
   };
 }
