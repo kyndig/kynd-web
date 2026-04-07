@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # IntelliJ
 .idea/
+
+# Cursor MCP secrets
+.cursor/mcp.json
