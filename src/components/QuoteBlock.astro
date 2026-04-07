@@ -15,12 +15,16 @@ const { quote, author, authorRole, tone = 'default' } = Astro.props;
   <blockquote>
     <p>{quote}</p>
   </blockquote>
-  {(author || authorRole) && (
-    <figcaption>
-      {author && <strong>{author}</strong>}
-      {authorRole && <Badge label={authorRole} tone={tone === 'dark' ? 'neutral' : 'outline'} size="sm" />}
-    </figcaption>
-  )}
+  {
+    (author || authorRole) && (
+      <figcaption>
+        {author && <strong>{author}</strong>}
+        {authorRole && (
+          <Badge label={authorRole} tone={tone === 'dark' ? 'neutral' : 'outline'} size="sm" />
+        )}
+      </figcaption>
+    )
+  }
 </figure>
 
 <style>

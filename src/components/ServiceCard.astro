@@ -10,7 +10,13 @@ const { title, description, outcome, variant = 'default' } = Astro.props;
 ---
 
 <article class:list={['service-card', variant]}>
-  {Astro.slots.has('icon') && <div class="service-icon"><slot name="icon" /></div>}
+  {
+    Astro.slots.has('icon') && (
+      <div class="service-icon">
+        <slot name="icon" />
+      </div>
+    )
+  }
   <h3><span>{title}</span></h3>
   <p>{description}</p>
   <p class="outcome"><strong>Typisk resultat:</strong> {outcome}</p>

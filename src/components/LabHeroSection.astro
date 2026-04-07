@@ -20,11 +20,28 @@ export type Props = {
   size?: 'default' | 'large';
 };
 
-const { title, preamble, link, image, duration, githubUrl, homepage, isPrivate, tagline, size = 'default' } =
-  Astro.props;
+const {
+  title,
+  preamble,
+  link,
+  image,
+  duration,
+  githubUrl,
+  homepage,
+  isPrivate,
+  tagline,
+  size = 'default',
+} = Astro.props;
 ---
 
-<HeroLayout title={title} preamble={preamble} image={image} duration={duration} tagline={tagline} size={size}>
+<HeroLayout
+  title={title}
+  preamble={preamble}
+  image={image}
+  duration={duration}
+  tagline={tagline}
+  size={size}
+>
   {
     link && (
       <ButtonLink slot="actions" href={link.href}>
@@ -34,14 +51,26 @@ const { title, preamble, link, image, duration, githubUrl, homepage, isPrivate, 
   }
   {
     !isPrivate && (
-      <ButtonLink slot="actions" href={githubUrl} target="_blank" rel="noopener noreferrer" variant="primary">
+      <ButtonLink
+        slot="actions"
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+      >
         View on GitHub
       </ButtonLink>
     )
   }
   {
     homepage && (
-      <ButtonLink slot="actions" href={homepage} target="_blank" rel="noopener noreferrer" variant="secondary">
+      <ButtonLink
+        slot="actions"
+        href={homepage}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="secondary"
+      >
         Homepage
       </ButtonLink>
     )

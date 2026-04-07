@@ -9,28 +9,29 @@ export type Props = {
   size?: 'default' | 'large';
 };
 
-const {
-  title,
-  preamble,
-  duration,
-  image,
-  imageAlt = '',
-  tagline,
-  size = 'default',
-} = Astro.props;
+const { title, preamble, duration, image, imageAlt = '', tagline, size = 'default' } = Astro.props;
 ---
 
-<div class:list={['hero-section', 'u-pattern', 'u-pattern--waves', size === 'large' && 'hero-section--large']}>
+<div
+  class:list={[
+    'hero-section',
+    'u-pattern',
+    'u-pattern--waves',
+    size === 'large' && 'hero-section--large',
+  ]}
+>
   <div class="hero-content">
     {tagline && <p class="tagline">{tagline}</p>}
     <h1>{title}</h1>
     {preamble && <p class="preamble">{preamble}</p>}
     {duration && <p class="duration">Varighet: {duration}</p>}
-    {Astro.slots.has('actions') && (
-      <div class="hero-actions">
-        <slot name="actions" />
-      </div>
-    )}
+    {
+      Astro.slots.has('actions') && (
+        <div class="hero-actions">
+          <slot name="actions" />
+        </div>
+      )
+    }
   </div>
   <div class="image-container">
     {image && <img src={image} alt={imageAlt} loading="eager" fetchpriority="high" />}

@@ -25,11 +25,17 @@ const { title, summary, href, location, employmentType, tags = [] } = Astro.prop
 
   <p>{summary}</p>
 
-  {tags.length > 0 && (
-    <ul class="tag-list" aria-label="Stikkord">
-      {tags.map((tag) => <li><Badge label={tag} tone="outline" size="sm" /></li>)}
-    </ul>
-  )}
+  {
+    tags.length > 0 && (
+      <ul class="tag-list" aria-label="Stikkord">
+        {tags.map((tag) => (
+          <li>
+            <Badge label={tag} tone="outline" size="sm" />
+          </li>
+        ))}
+      </ul>
+    )
+  }
 
   <ButtonLink href={href} size="large">Les mer og søk</ButtonLink>
 </article>
