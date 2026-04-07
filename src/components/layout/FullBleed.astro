@@ -1,7 +1,7 @@
 ---
 export type Props = {
   as?: 'section' | 'div';
-  variant?: 'default' | 'primary' | 'accent';
+  variant?: 'default' | 'primary' | 'accent' | 'surface-low' | 'dark';
 };
 
 const { as = 'section', variant = 'default' } = Astro.props;
@@ -38,5 +38,14 @@ const Tag = as;
   .fullBleed.accent {
     --fullBleed-background: var(--color-accent);
     color: var(--color-primary);
+  }
+
+  .fullBleed.surface-low {
+    --fullBleed-background: var(--color-surface-low);
+  }
+
+  .fullBleed.dark {
+    --fullBleed-background: var(--color-primary);
+    color: var(--color-on-primary);
   }
 </style>

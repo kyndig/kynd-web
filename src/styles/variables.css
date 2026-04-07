@@ -26,7 +26,11 @@
   --color-surface: var(--color-background);
   --color-surface-low: var(--color-secondary-shade);
   --color-surface-high: #e6e6e6;
+  --color-surface-inverse: var(--color-primary);
+  --color-on-surface-inverse: var(--color-on-primary);
   --color-border: var(--color-primary);
+  --color-frosted-surface: color-mix(in srgb, var(--color-background) 85%, transparent);
+  --color-frosted-border: color-mix(in srgb, var(--color-border) 45%, transparent);
   --color-shadow: var(--color-black);
   --color-error: var(--color-red);
 
@@ -106,7 +110,11 @@
   --color-surface: var(--color-background);
   --color-surface-low: var(--color-secondary-shade);
   --color-surface-high: #243033;
+  --color-surface-inverse: #1f2a2d;
+  --color-on-surface-inverse: #f5f9fa;
   --color-border: #526366;
+  --color-frosted-surface: color-mix(in srgb, var(--color-background) 78%, transparent);
+  --color-frosted-border: color-mix(in srgb, var(--color-border) 55%, transparent);
   --color-shadow: #000000;
   --color-error: #ff8fa5;
 }

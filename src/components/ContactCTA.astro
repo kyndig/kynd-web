@@ -4,35 +4,53 @@ import ButtonLink from './ButtonLink.astro';
 type Props = {
   title?: string;
   body?: string;
+  href?: string;
+  ctaLabel?: string;
+  variant?: 'default' | 'surface-low' | 'dark';
 };
 
 const {
   title = 'Klar for en prat?',
   body = 'Ikke helt sikker på hva du trenger ennå? Det går fint. Vi tar en uforpliktende samtale.',
+  href = '/kontakt',
+  ctaLabel = 'Ta en prat med oss',
+  variant = 'default',
 } = Astro.props;
 ---
 
-<section class="contact-cta">
+<section class:list={['contact-cta', variant]}>
   <h2>{title}</h2>
   <p>{body}</p>
-  <ButtonLink href="/kontakt">Ta en prat med oss</ButtonLink>
+  <ButtonLink href={href}>{ctaLabel}</ButtonLink>
 </section>
 
 <style>
   .contact-cta {
-    border: 2px solid var(--color-primary);
+    border: 2px solid var(--color-border);
     box-shadow: var(--shadow);
-    background: var(--color-secondary-shade);
+    background: var(--color-surface-low);
+    color: var(--color-text);
     padding: 2rem;
     display: grid;
     gap: 1rem;
     justify-items: start;
   }
 
+  .contact-cta.surface-low {
+    background: var(--color-surface-low);
+  }
+
+  .contact-cta.dark {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
   .contact-cta h2 {
     font-size: var(--fs-heading-s);
     background-color: var(--color-accent);
     padding: 0.25rem 0.5rem;
+    color: var(--color-primary);
   }
 
   .contact-cta p {

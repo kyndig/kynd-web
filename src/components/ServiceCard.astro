@@ -3,32 +3,55 @@ type Props = {
   title: string;
   description: string;
   outcome: string;
+  variant?: 'default' | 'surface-low';
 };
 
-const { title, description, outcome } = Astro.props;
+const { title, description, outcome, variant = 'default' } = Astro.props;
 ---
 
-<article class="service-card">
-  <h3>{title}</h3>
+<article class:list={['service-card', variant]}>
+  {Astro.slots.has('icon') && <div class="service-icon"><slot name="icon" /></div>}
+  <h3><span>{title}</span></h3>
   <p>{description}</p>
   <p class="outcome"><strong>Typisk resultat:</strong> {outcome}</p>
 </article>
 
 <style>
   .service-card {
-    border: 2px solid var(--color-primary);
-    background: var(--color-secondary-shade);
+    border: 2px solid var(--color-border);
+    background: var(--color-surface);
     padding: 1.5rem;
-    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
+    box-shadow: var(--shadow);
     display: grid;
     gap: 0.75rem;
   }
 
+  .service-card.surface-low {
+    background: var(--color-surface-low);
+  }
+
+  .service-icon {
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border: 2px solid var(--color-border);
+    background: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-heading-xs);
+    font-weight: var(--font-weight-bold);
+  }
+
   .service-card h3 {
     font-size: var(--fs-heading-xs);
+    line-height: var(--line-height-m);
+  }
+
+  .service-card h3 span {
     background-color: var(--color-accent);
-    width: fit-content;
     padding: 0.25rem 0.5rem;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
   .service-card p {
