@@ -29,8 +29,8 @@ export default defineConfig({
   },
   env: {
     schema: {
-      SLACK_TOKEN: envField.string({ context: 'server', access: 'secret' }),
-      SLACK_CHANNEL_ID: envField.string({ context: 'server', access: 'secret' }),
+      SLACK_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
+      SLACK_CHANNEL_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
       GITHUB_APP_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
       GITHUB_APP_INSTALLATION_ID: envField.string({
         context: 'server',
