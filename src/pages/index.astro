@@ -61,7 +61,7 @@ const collaborationStyle = [
     heading="Hva vi hjelper med"
     subheading="Du trenger ikke ha alt ferdig definert. Vi hjelper deg å finne riktig neste steg."
   >
-    <ul class="card-grid">
+    <ul class="card-grid card-grid--text">
       {helpAreas.map((area) => <li>{area}</li>)}
     </ul>
   </PageSection>
@@ -85,7 +85,7 @@ const collaborationStyle = [
     heading="Slik er det å jobbe med oss"
     subheading="Målet er lav friksjon, tydelighet og fremdrift fra første uke."
   >
-    <ul class="card-grid">
+    <ul class="card-grid card-grid--text">
       {collaborationStyle.map((style) => <li>{style}</li>)}
     </ul>
   </PageSection>
@@ -110,6 +110,14 @@ const collaborationStyle = [
 
   .card-grid li {
     list-style: none;
+  }
+
+  .card-grid--text li {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    font-size: var(--fs-body-s);
   }
 
   .featured-projects {
