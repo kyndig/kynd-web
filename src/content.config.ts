@@ -1,7 +1,8 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { parseDate } from './utils/dateHelpers';
 import type { Loader } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const employees = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/employees' }),
@@ -52,7 +53,7 @@ const labs = defineCollection({
     description: z.string(),
     readme: z.string(),
     readmeHtml: z.any().nullable(),
-    githubUrl: z.string().url(),
+    githubUrl: z.url(),
     isPrivate: z.boolean(),
     category: z.string(),
     status: z.enum(['active', 'completed', 'experimental']),
@@ -63,7 +64,7 @@ const labs = defineCollection({
     }),
     repoData: z.any(),
     contributors: z.array(z.any()),
-    languages: z.record(z.number()),
+    languages: z.record(z.string(), z.number()),
     startDate: z.date().optional(),
   }),
 });
