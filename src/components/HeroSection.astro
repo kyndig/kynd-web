@@ -1,5 +1,6 @@
 ---
 import ButtonLink from './ButtonLink.astro';
+import HeroLayout from './HeroLayout.astro';
 
 export type Props = {
   title: string;
@@ -12,64 +13,17 @@ export type Props = {
     | undefined;
   image?: string | undefined;
   duration?: string | undefined;
+  tagline?: string;
+  size?: 'default' | 'large';
 };
 
-const { title, preamble, link, image, duration } = Astro.props;
+const { title, preamble, link, image, duration, tagline, size = 'default' } = Astro.props;
 ---
 
-<div class="hero-section">
-  <div>
-    <h1>{title}</h1>
-    {preamble && <p class="preamble">{preamble}</p>}
-    {duration && <p class="duration">Varighet: {duration}</p>}
-    {link && <ButtonLink href={link.href}>{link.label}</ButtonLink>}
-  </div>
-  <div class="image-container">
-    {image && <img src={image} alt="" loading="eager" fetchpriority="high" />}
-  </div>
-</div>
-
-<style>
-  .hero-section {
-    display: grid;
-
-    @media (--sm) {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-
-    @media (--lg) {
-      gap: 5rem;
-    }
-  }
-
-  h1 {
-    font-size: var(--fs-heading-l);
-    margin-block-end: 2rem;
-  }
-
-  p {
-    font-size: var(--fs-body-l);
-  }
-
-  .duration {
-    font-size: var(--fs-body-m);
-    color: var(--color-text-muted);
-    font-weight: 500;
-    margin-block-end: 1rem;
-  }
-
-  .image-container {
-    display: none;
-
-    img {
-      margin-inline: auto;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    @media (--sm) {
-      display: block;
-    }
-  }
-</style>
+<HeroLayout title={title} preamble={preamble} image={image} duration={duration} tagline={tagline} size={size}>
+  {link && (
+    <ButtonLink slot="actions" href={link.href}>
+      {link.label}
+    </ButtonLink>
+  )}
+</HeroLayout>

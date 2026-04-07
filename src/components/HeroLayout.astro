@@ -1,0 +1,113 @@
+---
+export type Props = {
+  title: string;
+  preamble?: string | undefined;
+  duration?: string | undefined;
+  image?: string | undefined;
+  imageAlt?: string;
+  tagline?: string;
+  size?: 'default' | 'large';
+};
+
+const {
+  title,
+  preamble,
+  duration,
+  image,
+  imageAlt = '',
+  tagline,
+  size = 'default',
+} = Astro.props;
+---
+
+<div class:list={['hero-section', 'u-pattern', 'u-pattern--waves', size === 'large' && 'hero-section--large']}>
+  <div class="hero-content">
+    {tagline && <p class="tagline">{tagline}</p>}
+    <h1>{title}</h1>
+    {preamble && <p class="preamble">{preamble}</p>}
+    {duration && <p class="duration">Varighet: {duration}</p>}
+    {Astro.slots.has('actions') && (
+      <div class="hero-actions">
+        <slot name="actions" />
+      </div>
+    )}
+  </div>
+  <div class="image-container">
+    {image && <img src={image} alt={imageAlt} loading="eager" fetchpriority="high" />}
+  </div>
+</div>
+
+<style>
+  .hero-section {
+    display: grid;
+
+    @media (--sm) {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (--lg) {
+      gap: 5rem;
+    }
+  }
+
+  .hero-content {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+  }
+
+  .tagline {
+    width: fit-content;
+    font-size: var(--fs-label-l);
+    color: var(--color-primary);
+    background: var(--color-accent);
+    border: 2px solid var(--color-border);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    padding: 0.35rem 0.65rem;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: var(--fs-heading-l);
+    margin-block-end: 0.5rem;
+  }
+
+  .hero-section--large h1 {
+    font-size: var(--fs-heading-xl);
+  }
+
+  p {
+    font-size: var(--fs-body-l);
+  }
+
+  .duration {
+    font-size: var(--fs-body-m);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .image-container {
+    display: none;
+
+    img {
+      margin-inline: auto;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @media (--sm) {
+      display: block;
+    }
+  }
+</style>
