@@ -256,15 +256,15 @@ const navItems = [
       return prefersDarkMedia.matches ? 'dark' : 'light';
     }
 
-    function persistTheme(theme) {
+    const persistTheme = (theme = 'light') => {
       try {
         window.localStorage.setItem(storageKey, theme);
       } catch {
         // Ignore storage access issues to keep toggle functional.
       }
-    }
+    };
 
-    function syncThemeControls(theme) {
+    const syncThemeControls = (theme = 'light') => {
       const isDark = theme === 'dark';
       root.dataset.theme = theme;
       root.style.colorScheme = theme;
@@ -278,7 +278,7 @@ const navItems = [
           label.textContent = isDark ? 'Lys modus' : 'Mørk modus';
         }
       });
-    }
+    };
 
     syncThemeControls(getInitialTheme());
 

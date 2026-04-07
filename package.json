@@ -26,6 +26,7 @@
     "prettier:check": "prettier --check . --plugin=prettier-plugin-astro  --experimental-cli",
     "prettier:format": "prettier --write . --plugin=prettier-plugin-astro",
     "check": "pnpm astro:check && pnpm typecheck && pnpm lint && pnpm prettier:check",
+    "ci:local": "pnpm install --frozen-lockfile && pnpm check && pnpm build",
     "check:fix": "pnpm lint --fix && pnpm prettier:format",
     "preinstall": "npx only-allow pnpm",
     "handbook:create": "node scripts/create-handbook.js"

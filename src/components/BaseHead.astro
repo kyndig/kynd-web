@@ -35,7 +35,12 @@ const ogUrl = Astro.url.toString();
       const root = document.documentElement;
       const storedTheme = window.localStorage.getItem(storageKey);
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : prefersDark ? 'dark' : 'light';
+      const theme =
+        storedTheme === 'light' || storedTheme === 'dark'
+          ? storedTheme
+          : prefersDark
+            ? 'dark'
+            : 'light';
       root.dataset.theme = theme;
       root.style.colorScheme = theme;
     } catch {
