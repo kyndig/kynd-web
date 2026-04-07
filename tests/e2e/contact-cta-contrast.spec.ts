@@ -14,9 +14,7 @@ function parseRgb(value: string): Rgb {
 
 function channelToLinear(channel: number): number {
   const normalized = channel / 255;
-  return normalized <= 0.03928
-    ? normalized / 12.92
-    : ((normalized + 0.055) / 1.055) ** 2.4;
+  return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
 }
 
 function luminance([r, g, b]: Rgb): number {
@@ -31,7 +29,9 @@ function contrastRatio(foreground: Rgb, background: Rgb): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-test('dark ContactCTA heading keeps AA contrast against accent badge background', async ({ page }) => {
+test('dark ContactCTA heading keeps AA contrast against accent badge background', async ({
+  page,
+}) => {
   const baseUrls = [process.env.BASE_URL, 'http://localhost:4321', 'http://localhost:5173'].filter(
     (url): url is string => Boolean(url),
   );

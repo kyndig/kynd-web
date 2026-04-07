@@ -22,10 +22,7 @@ const { projects } = Astro.props;
   {
     projects.map((project, index) => (
       <div
-        class:list={[
-          'project-card',
-          { 'project-card--wide': index % 4 === 0 || index % 4 === 3 },
-        ]}
+        class:list={['project-card', { 'project-card--wide': index % 4 === 0 || index % 4 === 3 }]}
         data-project-tags={JSON.stringify(project.data.tags ?? [])}
       >
         <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
