@@ -31,9 +31,17 @@ export default defineConfig({
     schema: {
       SLACK_TOKEN: envField.string({ context: 'server', access: 'secret' }),
       SLACK_CHANNEL_ID: envField.string({ context: 'server', access: 'secret' }),
-      GITHUB_APP_ID: envField.string({ context: 'server', access: 'secret' }),
-      GITHUB_APP_INSTALLATION_ID: envField.string({ context: 'server', access: 'secret' }),
-      GITHUB_APP_PRIVATE_KEY_B64: envField.string({ context: 'server', access: 'secret' }),
+      GITHUB_APP_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GITHUB_APP_INSTALLATION_ID: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+      GITHUB_APP_PRIVATE_KEY_B64: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
     },
   },
   prefetch: {
@@ -45,18 +53,15 @@ export default defineConfig({
   image: {
     responsiveStyles: true,
   },
-  experimental: {
-    preserveScriptOrder: true,
-    fonts: [
-      {
-        provider: fontProviders.fontsource(),
-        name: 'Montserrat',
-        cssVariable: '--font',
-        fallbacks: ['sans-serif'],
-        styles: ['normal'],
-        subsets: ['latin'],
-        weights: ['400', '500', '600'],
-      },
-    ],
-  },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Montserrat',
+      cssVariable: '--font',
+      fallbacks: ['sans-serif'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      weights: ['400', '500', '600'],
+    },
+  ],
 });
