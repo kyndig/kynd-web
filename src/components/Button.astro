@@ -3,9 +3,12 @@ import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'button'> & {
   variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'default' | 'large';
 };
 
-const { variant = 'primary', class: className, ...rest } = Astro.props;
+const { variant = 'primary', size = 'default', class: className, ...rest } = Astro.props;
 ---
 
-<button class:list={['button', className, variant]} {...rest}><slot /></button>
+<button class:list={['button', className, variant, size === 'large' && 'button--large']} {...rest}>
+  <slot />
+</button>
