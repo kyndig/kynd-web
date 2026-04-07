@@ -62,7 +62,7 @@ const collaborationStyle = [
     subheading="Du trenger ikke ha alt ferdig definert. Vi hjelper deg å finne riktig neste steg."
   >
     <ul class="card-grid card-grid--text">
-      {helpAreas.map((area) => <li>{area}</li>)}
+      {helpAreas.map((area) => <li class="card-grid__item card-grid__item--text">{area}</li>)}
     </ul>
   </PageSection>
   <PageSection
@@ -86,7 +86,7 @@ const collaborationStyle = [
     subheading="Målet er lav friksjon, tydelighet og fremdrift fra første uke."
   >
     <ul class="card-grid card-grid--text">
-      {collaborationStyle.map((style) => <li>{style}</li>)}
+      {collaborationStyle.map((style) => <li class="card-grid__item card-grid__item--text">{style}</li>)}
     </ul>
   </PageSection>
   <FullBleed variant="surface-low">
@@ -108,11 +108,11 @@ const collaborationStyle = [
     }
   }
 
-  .card-grid li {
+  .card-grid__item {
     list-style: none;
   }
 
-  .card-grid--text li {
+  .card-grid__item--text {
     border: 1px solid var(--color-border);
     background: var(--color-surface);
     box-shadow: var(--shadow);
