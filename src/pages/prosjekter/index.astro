@@ -21,6 +21,16 @@ const categories = [
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([value, count]) => ({ label: value, value, count })),
 ];
+
+const selectedCategoryParam = Astro.url.searchParams.get('kategori');
+const activeCategory = categories.some((category) => category.value === selectedCategoryParam)
+  ? selectedCategoryParam ?? 'all'
+  : 'all';
+
+const filteredProjects =
+  activeCategory === 'all'
+    ? projects
+    : projects.filter((project) => (project.data.tags ?? []).includes(activeCategory));
 ---
 
 <Layout
@@ -33,8 +43,8 @@ const categories = [
     preamble="Et utvalg arbeid innen produktutvikling, teknologi, ledelse og forbedring i både nye og etablerte kontekster."
     tagline="Prosjekter"
   />
-  <CategoryFilter categories={categories} active="all" queryParam="kategori" />
-  <ProjectGrid projects={projects} />
+  <CategoryFilter categories={categories} active={activeCategory} queryParam="kategori" />
+  <ProjectGrid projects={filteredProjects} />
   <ContactCTA
     title="Trenger dere lignende støtte?"
     body="Fortell oss kort hva dere står i, så avklarer vi raskt om vi er riktig match."
