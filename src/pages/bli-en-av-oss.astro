@@ -12,21 +12,44 @@ const principles = [
 ];
 
 const weLookFor = [
-  'Sterk faglighet og evne til å ta tekniske valg med konsekvensforståelse.',
+  'Sterk faglighet og evne til å ta vanskelige valg med konsekvensforståelse.',
   'Produktblikk: du bryr deg om effekt, ikke bare leveranse.',
-  'Entreprenørielt driv kombinert med disiplin og etterrettelighet.',
+  'Entreprenørielt driv kombinert med disiplin og gjennomføringsevne.',
   'Høy integritet og transparent håndtering av sideprosjekter.',
+];
+
+const handbookHighlights = [
+  {
+    title: 'Prinsipper',
+    href: '/bok#01-prinsipper',
+    description: 'Kulturgrunnlaget og forventningene som styrer hverdagen i Kynd.',
+  },
+  {
+    title: 'Lønn og eierskap',
+    href: '/bok#03-lonn-og-eierskap',
+    description: 'Hvordan vi tenker eierskap, ansvar og langsiktig verdiskaping.',
+  },
+  {
+    title: 'Produkttid og kompetanse',
+    href: '/bok#05-produkttid-og-kompetanse',
+    description: 'Hvordan vi investerer i læring, utforsking og faglig utvikling.',
+  },
+  {
+    title: 'Become One of a Kynd',
+    href: '/bok#11-become-one-of-a-kynd',
+    description: 'Hvordan seleksjon, avklaring og invitasjon fungerer i praksis.',
+  },
 ];
 ---
 
 <Layout
   title="Bli en av oss"
-  description="Bli kjent med hvordan Kynd jobber med eierskap, faglig utvikling og selektiv rekruttering."
+  description="Kynd er for folk som vil bygge, ikke bare føre timer. Les om eierskap, faglig tyngde og hva vi ser etter i nye kolleger."
   image="/patterns/pattern-2.svg"
 >
   <HeroSection
-    title="Bli en av oss"
-    preamble="Vi bygger Kynd sammen med folk som kombinerer ferdighet, integritet og produktblikk."
+    title="Ikke et vanlig konsulentselskap. Heldigvis."
+    preamble="Vi hjelper andre med å bygge gode produkter, og bygger våre egne på si."
   />
 
   <PageSection
@@ -80,9 +103,27 @@ const weLookFor = [
         rammer. Hvis begge parter opplever god match, blir neste steg en invitasjon med tydelige
         avtaler for arbeid og eierskap.
       </p>
+    </Prose>
+  </PageSection>
+
+  <PageSection
+    heading="Fordyp deg i håndboka"
+    subheading="Vil du vite mer om hvordan vi jobber i praksis? Start med disse kapitlene."
+  >
+    <div class="handbook-grid">
+      {
+        handbookHighlights.map((chapter) => (
+          <article class="handbook-card">
+            <a href={chapter.href}>{chapter.title}</a>
+            <p>{chapter.description}</p>
+          </article>
+        ))
+      }
+    </div>
+    <Prose wide>
       <p>
-        Vil du lese detaljene? Hele håndboka finnes fortsatt offentlig på
-        <a href="/bok">/bok</a>.
+        Hele håndboka er fortsatt offentlig tilgjengelig på <a href="/bok">/bok</a> for deg som vil gå
+        i detalj.
       </p>
     </Prose>
   </PageSection>
@@ -100,5 +141,35 @@ const weLookFor = [
     display: grid;
     gap: 0.75rem;
     font-size: var(--fs-body-m);
+  }
+
+  .handbook-grid {
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .handbook-card {
+    border: 2px solid var(--color-primary);
+    background: var(--color-secondary-shade);
+    padding: 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .handbook-card a {
+    font-size: var(--fs-heading-xs);
+    width: fit-content;
+    background-color: var(--color-accent);
+    padding: 0.2rem 0.4rem;
+  }
+
+  .handbook-card p {
+    font-size: var(--fs-body-s);
+    margin: 0;
   }
 </style>

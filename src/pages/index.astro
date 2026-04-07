@@ -1,41 +1,133 @@
 ---
-import ApproachSection from '@/components/ApproachSection.astro';
 import ClientLogoStrip from '@/components/ClientLogoStrip.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import PageSection from '@/components/PageSection.astro';
-import ProblemSection from '@/components/ProblemSection.astro';
 import Layout from '@/layouts/Base.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 
 const projects = await getProjectsWithDuration();
+const featuredProjects = projects.slice(0, 3);
+const keyConcepts = [
+  'Produkt, teknologi og organisasjon henger sammen.',
+  'Vi fungerer både i nye initiativer og etablerte produktmiljøer.',
+  'Du får erfarne folk med skapertrang og gjennomføringsevne.',
+];
+const helpAreas = [
+  'Utforske nye idéer og komme raskt til en MVP.',
+  'Forbedre eksisterende produkter uten å skape mer kompleksitet.',
+  'Ta teknologivalg som holder over tid i drift, team og forretning.',
+  'Styrke produkt- og teamledelse når retning og prioritering glipper.',
+  'Koble strategi, produkt og gjennomføring i samme arbeidsløp.',
+  'Skalere systemer og samarbeid uten å miste fart eller kvalitet.',
+];
+const collaborationStyle = [
+  'Vi sier tydelig fra når antakelser ikke holder, tidlig i prosessen.',
+  'Vi jobber tett med beslutningstakerne, ikke i et side-spor.',
+  'Vi tar ansvar for resultatet sammen med teamet, ikke bare leveransen.',
+];
 ---
 
 <Layout
-  title="Senior teknologer som tar produktansvar"
-  description="Kynd hjelper produktselskaper med senior teknologikompetanse, tydelige prioriteringer og eierskap til resultat."
+  title="Nysgjerrige hoder. Erfarne hender."
+  description="Kynd er et fellesskap for produktutvikling. Vi hjelper med teknologi, produkt, organisasjon og gjennomføring i både nye initiativer og etablerte produktmiljøer."
   image="/patterns/pattern-0.svg"
 >
   <HeroSection
-    title="Senior teknologer som tar produktansvar."
-    preamble="Vi bygger produkter sammen med team som vil skape effekt, ikke bare levere backlog."
-    link={{ label: 'Ta en uforpliktende prat', href: '/kontakt' }}
+    title="Nysgjerrige hoder. Erfarne hender."
+    preamble="For nye idéer, gamle systemer og alt som må fungere mellom dem."
+    link={{ label: 'Ta en prat med oss', href: '/kontakt' }}
     image="/patterns/pattern-0.svg"
   />
   <PageSection
-    heading="Typiske utfordringer"
-    subheading="Vi går ofte inn når et produktteam trenger tydeligere retning, hardere prioritering og bedre beslutninger."
+    heading="Hva Kynd er"
+    subheading="Et fellesskap av erfarne folk som kombinerer produktblikk, teknologiforståelse og gjennomføring."
   >
-    <ProblemSection />
+    <ul class="card-grid">
+      {keyConcepts.map((concept) => <li>{concept}</li>)}
+    </ul>
   </PageSection>
   <PageSection
-    heading="Hvordan vi jobber"
-    subheading="Vi utfordrer før vi implementerer, og tar ansvar for konsekvensene av valgene vi gjør."
+    heading="Hva vi hjelper med"
+    subheading="Du trenger ikke ha alt ferdig definert. Vi hjelper deg å finne riktig neste steg."
   >
-    <ApproachSection />
+    <ul class="card-grid">
+      {helpAreas.map((area) => <li>{area}</li>)}
+    </ul>
   </PageSection>
-  <PageSection heading="Utvalgte samarbeid" subheading="Et utvalg prosjekter vi har jobbet med.">
+  <PageSection
+    heading="Utvalgte samarbeid"
+    subheading="Noen av prosjektene som viser hvordan vi kobler problem, innsats og effekt."
+  >
     <ClientLogoStrip projects={projects} />
+    <ul class="featured-projects">
+      {
+        featuredProjects.map((project) => (
+          <li>
+            <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
+            <p>{project.data.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </PageSection>
+  <PageSection
+    heading="Slik er det å jobbe med oss"
+    subheading="Målet er lav friksjon, tydelighet og fremdrift fra første uke."
+  >
+    <ul class="card-grid">
+      {collaborationStyle.map((style) => <li>{style}</li>)}
+    </ul>
   </PageSection>
   <ContactCTA />
 </Layout>
+
+<style>
+  .card-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .card-grid li {
+    border: 2px solid var(--color-primary);
+    background: var(--color-secondary-shade);
+    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
+    padding: 1.5rem;
+    font-size: var(--fs-body-m);
+  }
+
+  .featured-projects {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .featured-projects li {
+    border: 2px solid var(--color-primary);
+    background: var(--color-secondary);
+    padding: 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .featured-projects a {
+    font-size: var(--fs-heading-xs);
+    width: fit-content;
+    background-color: var(--color-accent);
+    padding: 0.2rem 0.4rem;
+  }
+
+  .featured-projects p {
+    font-size: var(--fs-body-s);
+  }
+</style>

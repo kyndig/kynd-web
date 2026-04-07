@@ -9,12 +9,16 @@ import Split from '@/components/layout/Split.astro';
 const handbook = (await getCollection('handbook')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title="Håndbok" description="Kynds håndbok for ansatte">
+<Layout
+  title="Håndbok"
+  description="Kynds håndbok for ansatte og kandidater som vil forstå kultur, prinsipper og eierskap i detalj."
+  noindex={false}
+>
   <HeroSection
     title="Kynds håndbok"
-    preamble={`Personalhåndboka til Kynd er et levende dokument, som blir til mens vi skaper Kynd. Dette er detaljversjonen for deg som vil dykke dypere.
+    preamble={`Håndboka er detaljversjonen for deg som vil forstå hvordan vi bygger Kynd i praksis.
 
-Boka gir et innblikk i hvordan vi gjør ting i Kynd. For en kortversjon av kultur og forventninger, se /bli-en-av-oss.`}
+Hvis du først vil ha en kortversjon av kultur og forventninger, start på /bli-en-av-oss.`}
   />
   <Split minBreakpoint="md" gap="4rem" columns="15rem 1fr">
     <div slot="left">

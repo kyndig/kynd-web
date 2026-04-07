@@ -1,5 +1,4 @@
 ---
-import ApproachSection from '@/components/ApproachSection.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
 import FitSection from '@/components/FitSection.astro';
 import HeroSection from '@/components/HeroSection.astro';
@@ -9,77 +8,83 @@ import Layout from '@/layouts/Base.astro';
 
 const services = [
   {
-    title: 'Produktutvikling',
+    title: 'Fullstack-utvikling',
     description:
-      'Vi bygger og videreutvikler produkter sammen med teamet ditt, fra prioritering til produksjon.',
-    outcome: 'Raskere læring og tydeligere sammenheng mellom roadmap og effekt.',
+      'Vi bygger nye løsninger og videreutvikler eksisterende produkter tett sammen med teamet ditt.',
+    outcome: 'Kortere vei fra idé til produksjon, med tekniske valg som holder over tid.',
   },
   {
-    title: 'Teknisk ledelse',
+    title: 'Produkt- og tjenestedesign',
     description:
-      'Vi tar ansvar for retning, arkitekturvalg og kvalitetsnivå når teamet trenger senior teknisk styring.',
-    outcome: 'Bedre beslutninger tidligere i prosessen, med færre kostbare omveier.',
+      'Vi gjør innsikt, brukerbehov og tjenesteflyt om til tydelige prioriteringer og konkret leveranse.',
+    outcome: 'Bedre sammenheng mellom brukerbehov, forretning og faktisk produktretning.',
   },
   {
-    title: 'Arkitektur og systemdesign',
+    title: 'Teknologiledelse',
     description:
-      'Vi designer løsninger som tåler vekst, endring og reelle driftskrav, ikke bare dagens behov.',
-    outcome: 'Mindre teknisk gjeld og mer forutsigbar leveranse.',
+      'Vi tar tekniske beslutninger der konsekvensene er store: arkitektur, kvalitet og leveransekapasitet.',
+    outcome: 'Klarere retning, færre omveier og bedre gjennomføring i produktteamet.',
   },
   {
-    title: 'Modernisering',
+    title: 'Organisasjonsdesign',
     description:
-      'Vi hjelper dere med trygg modernisering av plattform, kodebase og teampraksis uten unødvendig risiko.',
-    outcome: 'Høyere utviklingstakt og lavere operasjonell friksjon.',
+      'Vi hjelper med roller, ansvar og samarbeidsformer når organisasjonen hindrer produktfart.',
+    outcome: 'Tydeligere eierskap og bedre flyt mellom teknologi, produkt og forretning.',
   },
   {
-    title: 'Skalering',
+    title: 'Prosjekt- og teamledelse',
     description:
-      'Vi styrker systemer og team for høyere belastning, flere brukere og mer kompleksitet.',
-    outcome: 'Stabil drift og kapasitet til å vokse uten å miste kontroll.',
+      'Vi leder initiativer gjennom usikkerhet og kompleksitet, med tydelig fremdrift og beslutningskraft.',
+    outcome: 'Mer forutsigbar levering og raskere avklaringer i krevende prosjektløp.',
   },
   {
-    title: 'Teknologistrategi',
+    title: 'Strategisk rådgivning',
     description:
-      'Vi bidrar med rådgivning når dere må ta vanskelige tekniske og produktmessige prioriteringer.',
-    outcome: 'Klarere prioriteringer og mindre tid brukt på tiltak uten effekt.',
+      'Vi bistår i prioritering av produkt- og teknologivalg når innsatsen må gi tydelig verdi.',
+    outcome: 'Skjerpet prioritering og mindre ressursbruk på tiltak uten effekt.',
   },
 ];
 
 const fit = [
-  'Selskaper som vil bygge noe langsiktig, ikke bare fylle kapasitet.',
-  'Produktteam som vil bli utfordret på prioriteringer og tekniske valg.',
-  'Organisasjoner som trenger senior kompetanse tett på beslutninger.',
-  'Miljøer som vil rydde i teknisk gjeld for å øke faktisk fart.',
+  'Virksomheter som vil få produkt, teknologi og organisasjon til å trekke i samme retning.',
+  'Produktteam som ønsker tydelige prioriteringer og senior dømmekraft i vanskelige valg.',
+  'Miljøer som trenger hjelp både operativt og strategisk, tidlig eller sent i løpet.',
+  'Organisasjoner som ønsker samarbeidspartner, ikke ren kapasitetsfylling.',
 ];
 
 const noFit = [
-  'Selskaper som kun optimaliserer timepris.',
-  'Team som ikke ønsker motstand eller utfordring på krav.',
-  'Organisasjoner som vil ha ren ressursutleie uten ansvar for resultat.',
-  'Prosjekter der kvalitet og langsiktighet er underordnet kortsiktig output.',
+  'Selskaper som kun vil kjøpe timer uten eierskap til retning og resultat.',
+  'Team som ikke vil utfordres på krav, prioriteringer eller beslutningsgrunnlag.',
+  'Prosjekter der kortsiktig output alltid trumfer kvalitet og langsiktighet.',
+  'Organisasjoner som ønsker generisk konsulentspråk fremfor konkrete anbefalinger.',
+];
+
+const operatingPrinciples = [
+  'Små team med senior kompetanse tett på beslutningene.',
+  'Direkte kommunikasjon mellom teknologi, produkt og forretning.',
+  'Ansvar for effekt over tid, ikke bare leveranse i sprinten.',
 ];
 
 const collaborationConsequences = [
-  'Kortere vei fra problem til beslutning fordi vi prioriterer sammen med dere.',
-  'Mindre misforståelser mellom teknologi, produkt og forretning.',
-  'Mer eierskap til kvalitet over tid, ikke bare leveranse på kort sikt.',
+  'Kortere beslutningssløyfer og mindre ventetid mellom avklaringer.',
+  'Færre misforståelser fordi premisser blir utfordret tidlig.',
+  'Mer forutsigbar fremdrift med tydelig eierskap til kvalitet.',
 ];
 ---
 
 <Layout
   title="Tjenester"
-  description="Kynd leverer senior produktutvikling, teknisk ledelse og arkitektur med tydelig eierskap til resultat."
+  description="Kynd leverer fullstack-utvikling, produkt- og tjenestedesign, teknologiledelse, organisasjonsdesign, prosjekt- og teamledelse og strategisk rådgivning."
   image="/patterns/pattern-1.svg"
 >
   <HeroSection
-    title="Tjenester"
-    preamble="Konkrete leveranser for team som vil ha effekt, retning og ansvarlighet."
+    title="Hvordan vi hjelper deg å få ting til å virke."
+    preamble="Fra utforsking og MVP-er til forbedring av eksisterende produkter, team og teknologivalg."
   />
 
   <PageSection
     heading="Hva vi faktisk gjør"
-    subheading="Vi selger ikke generiske konsulentpakker. Vi går inn der senior dømmekraft gir størst forskjell."
+    subheading="Vi går inn der erfarne folk gir størst forskjell, både i leveranse og retning."
   >
     <div class="services-grid">
       {services.map((service) => <ServiceCard {...service} />)}
@@ -88,9 +93,11 @@ const collaborationConsequences = [
 
   <PageSection
     heading="Slik leverer vi"
-    subheading="Arbeidsformen er en del av tjenesten. Vi utfordrer før vi implementerer, og prioriterer effekt foran output."
+    subheading="Arbeidsformen er en del av tjenesten. Vi utfordrer tidlig, prioriterer hardt og tar ansvar for konsekvensene."
   >
-    <ApproachSection />
+    <ul class="principles">
+      {operatingPrinciples.map((item) => <li>{item}</li>)}
+    </ul>
     <ul class="consequences">
       {collaborationConsequences.map((item) => <li>{item}</li>)}
     </ul>
@@ -123,6 +130,14 @@ const collaborationConsequences = [
     display: grid;
     gap: 0.75rem;
     font-size: var(--fs-body-m);
-    margin-block-start: 1.5rem;
+    margin-block-start: 1rem;
+  }
+
+  .principles {
+    list-style: disc;
+    padding-inline-start: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--fs-body-m);
   }
 </style>
