@@ -16,12 +16,16 @@ const {
   ctaLabel = 'Ta en prat med oss',
   variant = 'default',
 } = Astro.props;
+
+const ctaVariant = variant === 'dark' ? 'secondary' : 'primary';
 ---
 
 <section class:list={['contact-cta', variant]}>
   <h2>{title}</h2>
   <p>{body}</p>
-  <ButtonLink href={href}>{ctaLabel}</ButtonLink>
+  <ButtonLink href={href} variant={ctaVariant}>
+    {ctaLabel}
+  </ButtonLink>
 </section>
 
 <style>
