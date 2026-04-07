@@ -7,14 +7,23 @@ type Props = {
   title?: string | undefined;
   description?: string | undefined;
   image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description = SITE_DESCRIPTION, image = '/og-image.png' } = Astro.props;
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  image = '/og-image.png',
+  type = 'website',
+  noindex = false,
+} = Astro.props;
 
 const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const ogImage = new URL(image, Astro.url);
+const ogUrl = Astro.url.toString();
 ---
 
 <meta charset="utf-8" />
@@ -34,9 +43,11 @@ const ogImage = new URL(image, Astro.url);
 <title>{formattedTitle}</title>
 <meta name="title" content={formattedTitle} />
 <meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={type} />
+<meta property="og:locale" content="nb_NO" />
+<meta property="og:url" content={ogUrl} />
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
@@ -45,7 +56,7 @@ const ogImage = new URL(image, Astro.url);
 <meta property="twitter:title" content={formattedTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
-
+{type === 'article' && <meta property="article:author" content="Kynd" />}
 <script type="application/ld+json" is:inline>
   {
     "@context": "https://schema.org",
@@ -63,9 +74,36 @@ const ogImage = new URL(image, Astro.url);
     "@type": "ProfessionalService",
     "name": "Kynd",
     "url": "https://kynd.no",
-    "description": "Senior teknologer som tar produktansvar.",
+    "description": "Et fellesskap for produktutvikling. Nysgjerrige hoder og erfarne hender for nye idéer, gamle systemer og alt som må fungere mellom dem.",
     "email": "hei@kynd.no",
-    "telephone": "+47 400 59 915"
+    "telephone": "+47 400 59 915",
+    "areaServed": { "@type": "Country", "name": "Norway" },
+    "knowsAbout": [
+      "Product Development",
+      "Technology Leadership",
+      "Fullstack Development",
+      "Organization Design",
+      "Project and Team Leadership",
+      "Strategic Advisory"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Kynd tjenester",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fullstack-utvikling" } },
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Produkt- og tjenestedesign" }
+        },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Teknologiledelse" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Organisasjonsdesign" } },
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Prosjekt- og teamledelse" }
+        },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategisk rådgivning" } }
+      ]
+    }
   }
 </script>
 <script

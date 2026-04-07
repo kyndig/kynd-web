@@ -9,7 +9,16 @@ import icon from 'astro-icon';
 export default defineConfig({
   site: 'https://kynd.no',
   adapter: netlify(),
-  integrations: [mdx(), sitemap(), icon()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/om-oss') &&
+        !page.includes('/hvordan-vi-jobber') &&
+        !page.includes('/labs'),
+    }),
+    icon(),
+  ],
   markdown: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [],

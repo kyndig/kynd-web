@@ -7,14 +7,16 @@ type Props = {
   title?: string;
   description?: string;
   image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
 };
 
-const { title, description, image } = Astro.props;
+const { title, description, image, type, noindex } = Astro.props;
 ---
 
 <html lang="no">
   <head>
-    <BaseHead title={title} description={description} image={image} />
+    <BaseHead title={title} description={description} image={image} type={type} noindex={noindex} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Hopp til hovedinnhold</a>

@@ -22,6 +22,8 @@ const projects = defineCollection({
       image: image(),
       fullLogo: image().optional(), // Optional alternate image for list/grid views
       kyndLogo: image().optional(), // Kynd-branded version for hover effects
+      contributions: z.array(z.string()).optional(),
+      tags: z.array(z.string()).optional(),
       startDate: z
         .string()
         .optional()
