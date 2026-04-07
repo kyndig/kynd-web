@@ -21,16 +21,7 @@ const categories = [
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([value, count]) => ({ label: value, value, count })),
 ];
-
-const selectedCategoryParam = Astro.url.searchParams.get('kategori');
-const activeCategory = categories.some((category) => category.value === selectedCategoryParam)
-  ? selectedCategoryParam ?? 'all'
-  : 'all';
-
-const filteredProjects =
-  activeCategory === 'all'
-    ? projects
-    : projects.filter((project) => (project.data.tags ?? []).includes(activeCategory));
+const categoryValues = categories.map((category) => category.value);
 ---
 
 <Layout
@@ -43,8 +34,63 @@ const filteredProjects =
     preamble="Et utvalg arbeid innen produktutvikling, teknologi, ledelse og forbedring i både nye og etablerte kontekster."
     tagline="Prosjekter"
   />
-  <CategoryFilter categories={categories} active={activeCategory} queryParam="kategori" />
-  <ProjectGrid projects={filteredProjects} />
+  <CategoryFilter categories={categories} queryParam="kategori" />
+  <ProjectGrid projects={projects} />
+  <script is:inline define:vars={{ categoryValues }}>
+    (() => {
+      const queryParam = 'kategori';
+      const validCategories = new Set(categoryValues);
+      const chips = Array.from(document.querySelectorAll('[data-category-value]'));
+      const projectCards = Array.from(document.querySelectorAll('[data-project-tags]'));
+
+      const normalizeCategory = (value) => {
+        if (!value) return 'all';
+        return validCategories.has(value) ? value : 'all';
+      };
+
+      const getActiveCategory = () => {
+        const params = new URLSearchParams(window.location.search);
+        return normalizeCategory(params.get(queryParam));
+      };
+
+      const getCardTags = (card) => {
+        const raw = card.getAttribute('data-project-tags');
+        if (!raw) return [];
+        try {
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const applyCategory = () => {
+        const activeCategory = getActiveCategory();
+        for (const chip of chips) {
+          const value = chip.getAttribute('data-category-value') ?? 'all';
+          const isActive = value === activeCategory;
+          chip.classList.toggle('is-active', isActive);
+          if (isActive) {
+            chip.setAttribute('aria-current', 'true');
+          } else {
+            chip.removeAttribute('aria-current');
+          }
+        }
+
+        for (const card of projectCards) {
+          if (activeCategory === 'all') {
+            card.hidden = false;
+            continue;
+          }
+          const tags = getCardTags(card);
+          card.hidden = !tags.includes(activeCategory);
+        }
+      };
+
+      applyCategory();
+      window.addEventListener('popstate', applyCategory);
+    })();
+  </script>
   <ContactCTA
     title="Trenger dere lignende støtte?"
     body="Fortell oss kort hva dere står i, så avklarer vi raskt om vi er riktig match."
