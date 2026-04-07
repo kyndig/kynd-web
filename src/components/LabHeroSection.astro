@@ -1,5 +1,6 @@
 ---
 import ButtonLink from './ButtonLink.astro';
+import HeroLayout from './HeroLayout.astro';
 
 export type Props = {
   title: string;
@@ -15,89 +16,63 @@ export type Props = {
   githubUrl: string;
   homepage?: string | null;
   isPrivate?: boolean;
+  tagline?: string;
+  size?: 'default' | 'large';
 };
 
-const { title, preamble, link, image, duration, githubUrl, homepage, isPrivate } = Astro.props;
+const {
+  title,
+  preamble,
+  link,
+  image,
+  duration,
+  githubUrl,
+  homepage,
+  isPrivate,
+  tagline,
+  size = 'default',
+} = Astro.props;
 ---
 
-<div class="hero-section">
-  <div>
-    <h1>{title}</h1>
-    {preamble && <p class="preamble">{preamble}</p>}
-    {duration && <p class="duration">Varighet: {duration}</p>}
-    {link && <ButtonLink href={link.href}>{link.label}</ButtonLink>}
-
-    <div class="project-actions">
-      {
-        !isPrivate && (
-          <ButtonLink href={githubUrl} target="_blank" rel="noopener noreferrer" variant="primary">
-            View on GitHub
-          </ButtonLink>
-        )
-      }
-      {
-        homepage && (
-          <ButtonLink href={homepage} target="_blank" rel="noopener noreferrer" variant="secondary">
-            Homepage
-          </ButtonLink>
-        )
-      }
-    </div>
-  </div>
-  <div class="image-container">
-    {image && <img src={image} alt="" loading="eager" fetchpriority="high" />}
-  </div>
-</div>
-
-<style>
-  .hero-section {
-    display: grid;
-
-    @media (--sm) {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-
-    @media (--lg) {
-      gap: 5rem;
-    }
+<HeroLayout
+  title={title}
+  preamble={preamble}
+  image={image}
+  duration={duration}
+  tagline={tagline}
+  size={size}
+>
+  {
+    link && (
+      <ButtonLink slot="actions" href={link.href}>
+        {link.label}
+      </ButtonLink>
+    )
   }
-
-  h1 {
-    font-size: var(--fs-heading-l);
-    margin-block-end: 2rem;
+  {
+    !isPrivate && (
+      <ButtonLink
+        slot="actions"
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+      >
+        View on GitHub
+      </ButtonLink>
+    )
   }
-
-  p {
-    font-size: var(--fs-body-l);
+  {
+    homepage && (
+      <ButtonLink
+        slot="actions"
+        href={homepage}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="secondary"
+      >
+        Homepage
+      </ButtonLink>
+    )
   }
-
-  .duration {
-    font-size: var(--fs-body-m);
-    color: var(--color-text-muted);
-    font-weight: 500;
-    margin-block-end: 1rem;
-  }
-
-  .image-container {
-    display: none;
-
-    img {
-      margin-inline: auto;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    @media (--sm) {
-      display: block;
-    }
-  }
-
-  /* Action Buttons */
-  .project-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-  }
-</style>
+</HeroLayout>

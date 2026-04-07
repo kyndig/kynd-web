@@ -4,8 +4,24 @@ import HeroSection from '@/components/HeroSection.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 import ProjectGrid from '@/components/projects/ProjectGrid.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
+import CategoryFilter from '@/components/CategoryFilter.astro';
 
 const projects = await getProjectsWithDuration();
+
+const categoryCount = new Map<string, number>();
+for (const project of projects) {
+  for (const tag of project.data.tags ?? []) {
+    categoryCount.set(tag, (categoryCount.get(tag) ?? 0) + 1);
+  }
+}
+
+const categories = [
+  { label: 'Alle', value: 'all', count: projects.length },
+  ...Array.from(categoryCount.entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([value, count]) => ({ label: value, value, count })),
+];
+const categoryValues = categories.map((category) => category.value);
 ---
 
 <Layout
@@ -16,10 +32,76 @@ const projects = await getProjectsWithDuration();
   <HeroSection
     title="Prosjekter som viser hvordan vi jobber."
     preamble="Et utvalg arbeid innen produktutvikling, teknologi, ledelse og forbedring i både nye og etablerte kontekster."
+    tagline="Prosjekter"
   />
+  <CategoryFilter categories={categories} queryParam="kategori" />
   <ProjectGrid projects={projects} />
+  <script is:inline define:vars={{ categoryValues }}>
+    (() => {
+      const queryParam = 'kategori';
+      const validCategories = new Set(categoryValues);
+      const chips = Array.from(document.querySelectorAll('[data-category-value]'));
+      const projectCards = Array.from(document.querySelectorAll('[data-project-tags]'));
+      const wideClass = 'project-card--wide';
+      const wideCycleOffsets = new Set([0, 3]);
+
+      const normalizeCategory = (value) => {
+        if (!value) return 'all';
+        return validCategories.has(value) ? value : 'all';
+      };
+
+      const getActiveCategory = () => {
+        const params = new URLSearchParams(window.location.search);
+        return normalizeCategory(params.get(queryParam));
+      };
+
+      const getCardTags = (card) => {
+        const raw = card.getAttribute('data-project-tags');
+        if (!raw) return [];
+        try {
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const applyCategory = () => {
+        const activeCategory = getActiveCategory();
+        for (const chip of chips) {
+          const value = chip.getAttribute('data-category-value') ?? 'all';
+          const isActive = value === activeCategory;
+          chip.classList.toggle('is-active', isActive);
+          if (isActive) {
+            chip.setAttribute('aria-current', 'true');
+          } else {
+            chip.removeAttribute('aria-current');
+          }
+        }
+
+        const visibleCards = [];
+        for (const card of projectCards) {
+          const tags = getCardTags(card);
+          const isVisible = activeCategory === 'all' || tags.includes(activeCategory);
+          card.hidden = !isVisible;
+          card.classList.remove(wideClass);
+          if (isVisible) {
+            visibleCards.push(card);
+          }
+        }
+
+        for (const [index, card] of visibleCards.entries()) {
+          card.classList.toggle(wideClass, wideCycleOffsets.has(index % 4));
+        }
+      };
+
+      applyCategory();
+      window.addEventListener('popstate', applyCategory);
+    })();
+  </script>
   <ContactCTA
     title="Trenger dere lignende støtte?"
     body="Fortell oss kort hva dere står i, så avklarer vi raskt om vi er riktig match."
+    variant="surface-low"
   />
 </Layout>

@@ -73,7 +73,10 @@ const navItems = [
   header {
     position: sticky;
     top: 0;
-    background-color: var(--color-background);
+    background-color: var(--color-frosted-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-block-end: 1px solid var(--color-frosted-border);
     padding-block: 1rem;
     z-index: 100;
     block-size: var(--size-header);
@@ -195,7 +198,8 @@ const navItems = [
     right: 0;
     inline-size: 100%;
     max-inline-size: 17.5rem;
-    background-color: var(--color-background);
+    background-color: var(--color-surface);
+    border-inline-start: 1px solid var(--color-frosted-border);
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;

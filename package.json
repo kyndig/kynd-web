@@ -28,6 +28,7 @@
     "check": "pnpm astro:check && pnpm typecheck && pnpm lint && pnpm prettier:check",
     "ci:local": "pnpm install --frozen-lockfile && pnpm check && pnpm build",
     "check:fix": "pnpm lint --fix && pnpm prettier:format",
+    "test:e2e:contact-cta": "playwright test tests/e2e/contact-cta-contrast.spec.ts",
     "preinstall": "npx only-allow pnpm",
     "handbook:create": "node scripts/create-handbook.js"
   },
@@ -50,6 +51,7 @@
     "@astrojs/check": "^0.9.8",
     "@csstools/postcss-global-data": "^3.1.0",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.59.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",

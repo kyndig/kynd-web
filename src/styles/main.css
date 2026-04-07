@@ -1,6 +1,7 @@
 @import 'reset.css' layer(reset);
 @import 'variables.css';
 @import 'utilities.css';
+@import 'decorative-pattern.css';
 
 @import 'button.css';
 

@@ -1,0 +1,97 @@
+---
+import Badge from './Badge.astro';
+
+type Category = {
+  label: string;
+  value: string;
+  count?: number;
+};
+
+type Props = {
+  categories: Category[];
+  active?: string;
+  basePath?: string;
+  queryParam?: string;
+};
+
+const {
+  categories,
+  active = 'all',
+  basePath = Astro.url.pathname,
+  queryParam = 'kategori',
+} = Astro.props;
+
+const hrefFor = (value: string) => {
+  const params = new URLSearchParams(Astro.url.searchParams);
+  if (value === 'all') {
+    params.delete(queryParam);
+  } else {
+    params.set(queryParam, value);
+  }
+  const query = params.toString();
+  return query ? `${basePath}?${query}` : basePath;
+};
+---
+
+<nav class="category-filter" aria-label="Filtrer etter kategori">
+  <ul>
+    {
+      categories.map((category) => {
+        const isActive = category.value === active;
+        return (
+          <li>
+            <a
+              class:list={['category-chip', isActive && 'is-active']}
+              href={hrefFor(category.value)}
+              data-category-value={category.value}
+            >
+              <Badge label={category.label} tone="outline" size="sm" />
+              {typeof category.count === 'number' && <span class="count">{category.count}</span>}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<style>
+  .category-filter ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .category-chip :global(.badge) {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .category-chip.is-active :global(.badge) {
+    background: var(--color-accent);
+    border-color: var(--color-border);
+    color: var(--color-primary);
+  }
+
+  .count {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+  }
+
+  .category-chip.is-active .count {
+    color: var(--color-text);
+  }
+</style>

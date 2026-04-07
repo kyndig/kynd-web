@@ -46,8 +46,8 @@ import Logo from './Logo.astro';
     padding-inline: var(--content-inner-padding);
     padding-block: 4rem;
     margin-inline: auto;
-    background-color: var(--color-primary);
-    color: var(--color-secondary);
+    background-color: var(--color-surface-inverse);
+    color: var(--color-on-surface-inverse);
     display: flex;
     flex-direction: column;
     gap: 4rem;
@@ -63,7 +63,8 @@ import Logo from './Logo.astro';
     column-gap: 2rem;
     row-gap: 4rem;
     padding-block-end: 4rem;
-    border-block-end: 0.0625rem solid var(--color-secondary);
+    border-block-end: 0.0625rem solid
+      color-mix(in srgb, var(--color-on-surface-inverse) 35%, transparent);
 
     @media (--md) {
       grid-template-columns: repeat(3, 1fr);

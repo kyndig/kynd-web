@@ -1,6 +1,7 @@
 ---
 import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import JobCard from '@/components/JobCard.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
@@ -40,6 +41,18 @@ const handbookHighlights = [
     description: 'Hvordan seleksjon, avklaring og invitasjon fungerer i praksis.',
   },
 ];
+
+const openRoles = [
+  {
+    title: 'Senior fullstack-utvikler',
+    summary:
+      'Du tar tekniske valg med konsekvensforståelse og jobber tett med produkt og forretning.',
+    href: '/kontakt',
+    location: 'Oslo / hybrid',
+    employmentType: 'Fast',
+    tags: ['TypeScript', 'Astro', 'Produktfokus'],
+  },
+];
 ---
 
 <Layout
@@ -50,6 +63,7 @@ const handbookHighlights = [
   <HeroSection
     title="Ikke et vanlig konsulentselskap. Heldigvis."
     preamble="Vi hjelper andre med å bygge gode produkter, og bygger våre egne på si."
+    tagline="Karriere"
   />
 
   <PageSection
@@ -107,6 +121,15 @@ const handbookHighlights = [
   </PageSection>
 
   <PageSection
+    heading="Aktuelle roller"
+    subheading="Vi ansetter sjelden og bevisst. Når vi åpner roller, er det med tydelige forventninger."
+  >
+    <div class="jobs-grid">
+      {openRoles.map((role) => <JobCard {...role} />)}
+    </div>
+  </PageSection>
+
+  <PageSection
     heading="Fordyp deg i håndboka"
     subheading="Vil du vite mer om hvordan vi jobber i praksis? Start med disse kapitlene."
   >
@@ -151,6 +174,11 @@ const handbookHighlights = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.5rem;
     }
+  }
+
+  .jobs-grid {
+    display: grid;
+    gap: 1rem;
   }
 
   .handbook-card {
