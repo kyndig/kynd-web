@@ -14,6 +14,13 @@ corepack enable
 pnpm install
 ```
 
+If `corepack: command not found` (common with Homebrew Node, which does not ship a `corepack` binary on `PATH`), install the CLI once, then enable:
+
+```bash
+npm install -g corepack
+corepack enable
+```
+
 ### 2. Run Locally
 
 Start the development server:
