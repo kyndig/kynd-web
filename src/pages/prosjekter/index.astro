@@ -42,6 +42,8 @@ const categoryValues = categories.map((category) => category.value);
       const validCategories = new Set(categoryValues);
       const chips = Array.from(document.querySelectorAll('[data-category-value]'));
       const projectCards = Array.from(document.querySelectorAll('[data-project-tags]'));
+      const wideClass = 'project-card--wide';
+      const wideCycleOffsets = new Set([0, 3]);
 
       const normalizeCategory = (value) => {
         if (!value) return 'all';
@@ -77,13 +79,19 @@ const categoryValues = categories.map((category) => category.value);
           }
         }
 
+        const visibleCards = [];
         for (const card of projectCards) {
-          if (activeCategory === 'all') {
-            card.hidden = false;
-            continue;
-          }
           const tags = getCardTags(card);
-          card.hidden = !tags.includes(activeCategory);
+          const isVisible = activeCategory === 'all' || tags.includes(activeCategory);
+          card.hidden = !isVisible;
+          card.classList.remove(wideClass);
+          if (isVisible) {
+            visibleCards.push(card);
+          }
+        }
+
+        for (const [index, card] of visibleCards.entries()) {
+          card.classList.toggle(wideClass, wideCycleOffsets.has(index % 4));
         }
       };
 
