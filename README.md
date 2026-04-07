@@ -7,9 +7,10 @@ The project uses GitHub App authentication to automatically fetch content from G
 
 ### 1. Install Dependencies
 
-Make sure you have Node.js and `pnpm` installed:
+Use a current [Node.js](https://nodejs.org/) release (this repo’s CI uses Node 24). Enable [Corepack](https://nodejs.org/api/corepack.html) once so the `pnpm` version matches `package.json` (`packageManager` field):
 
 ```bash
+corepack enable
 pnpm install
 ```
 
