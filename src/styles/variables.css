@@ -17,11 +17,16 @@
   --color-secondary: var(--color-white);
   --color-secondary-shade: var(--color-light-gray);
   --color-accent: var(--color-light-green);
+  --color-on-primary: var(--color-white);
 
   --color-text: var(--color-primary);
   --color-text-muted: var(--color-gray);
   --color-focus: var(--color-red);
   --color-background: var(--color-secondary);
+  --color-surface: var(--color-background);
+  --color-surface-low: var(--color-secondary-shade);
+  --color-surface-high: #e6e6e6;
+  --color-border: var(--color-primary);
   --color-shadow: var(--color-black);
   --color-error: var(--color-red);
 
@@ -31,6 +36,8 @@
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-display: var(--font);
 
   --size-header: 5rem;
 
@@ -45,6 +52,8 @@
   --content-inner-padding: 2rem;
 
   --fs-heading-l: 2rem; /* 32px */
+  --fs-heading-xl: 2.5rem; /* 40px */
+  --fs-heading-2xl: 3rem; /* 48px */
   --fs-heading-m: 1.125rem; /* 18px */
   --fs-heading-s: 1rem; /* 16px */
   --fs-heading-xs: 1rem; /* 16px */
@@ -52,6 +61,7 @@
   --fs-body-l: 1rem; /* 16px */
   --fs-body-m: 0.875rem; /* 14px */
   --fs-body-s: 0.75rem; /* 12px */
+  --fs-body-xs: 0.6875rem; /* 11px */
 
   --fs-label-l: 0.875rem; /* 14px */
   --fs-label-m: 0.75rem; /* 12px */
@@ -64,6 +74,8 @@
     --content-inner-padding: 4rem;
 
     --fs-heading-l: 3.75rem; /* 60px */
+    --fs-heading-xl: 5rem; /* 80px */
+    --fs-heading-2xl: 6rem; /* 96px */
     --fs-heading-m: 2.5rem; /* 40px */
     --fs-heading-s: 1.75rem; /* 28px */
     --fs-heading-xs: 1.25rem; /* 20px */
@@ -71,10 +83,30 @@
     --fs-body-l: 1.75rem; /* 28px */
     --fs-body-m: 1.125rem; /* 18px */
     --fs-body-s: 0.875rem; /* 14px */
+    --fs-body-xs: 0.75rem; /* 12px */
 
     --fs-label-l: 1.25rem; /* 20px */
     --fs-label-m: 1rem; /* 16px */
 
     --fs-input: 1.125rem; /* 18px */
   }
+}
+
+:root[data-theme='dark'] {
+  --color-primary: #2f4043;
+  --color-secondary: #e8eff0;
+  --color-secondary-shade: #1d2729;
+  --color-accent: #b9ff66;
+  --color-on-primary: #f5f9fa;
+
+  --color-text: var(--color-secondary);
+  --color-text-muted: #a9b8bb;
+  --color-focus: #ff8fa5;
+  --color-background: #151d1f;
+  --color-surface: var(--color-background);
+  --color-surface-low: var(--color-secondary-shade);
+  --color-surface-high: #243033;
+  --color-border: #526366;
+  --color-shadow: #000000;
+  --color-error: #ff8fa5;
 }

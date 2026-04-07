@@ -28,6 +28,22 @@ const ogUrl = Astro.url.toString();
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<script is:inline>
+  (() => {
+    try {
+      const storageKey = 'kynd-theme';
+      const root = document.documentElement;
+      const storedTheme = window.localStorage.getItem(storageKey);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : prefersDark ? 'dark' : 'light';
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme;
+    } catch {
+      document.documentElement.dataset.theme = 'light';
+      document.documentElement.style.colorScheme = 'light';
+    }
+  })();
+</script>
 
 <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -35,6 +51,7 @@ const ogUrl = Astro.url.toString();
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="kynd" />
 <link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#ffffff" />
 
 <Font cssVariable="--font" preload />
 

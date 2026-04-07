@@ -61,7 +61,7 @@ export default defineConfig({
       fallbacks: ['sans-serif'],
       styles: ['normal'],
       subsets: ['latin'],
-      weights: ['400', '500', '600'],
+      weights: ['400', '500', '600', '700', '800'],
     },
   ],
 });

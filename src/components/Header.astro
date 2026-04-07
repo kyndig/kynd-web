@@ -22,6 +22,15 @@ const navItems = [
           </NavLink>
         ))
       }
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label="Bytt til mørk modus"
+      >
+        <span data-theme-toggle-label>Mørk modus</span>
+      </button>
     </nav>
 
     <nav class="mobile-nav">
@@ -45,6 +54,15 @@ const navItems = [
               </NavLink>
             ))
           }
+          <button
+            class="theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-pressed="false"
+            aria-label="Bytt til mørk modus"
+          >
+            <span data-theme-toggle-label>Mørk modus</span>
+          </button>
         </nav>
       </div>
     </nav>
@@ -133,6 +151,30 @@ const navItems = [
     }
   }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    font-size: var(--fs-label-m);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 0.65rem 1rem;
+    transition:
+      background-color var(--animation-duration),
+      color var(--animation-duration),
+      border-color var(--animation-duration);
+
+    &:hover {
+      background-color: var(--color-surface-high);
+    }
+  }
+
   #drawer-overlay {
     visibility: hidden;
     position: fixed;
@@ -181,14 +223,85 @@ const navItems = [
       text-decoration: none;
       color: var(--color-text);
     }
+
+    .theme-toggle {
+      width: max-content;
+      margin-inline-start: 1rem;
+      margin-block-start: 0.5rem;
+    }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const storageKey = 'kynd-theme';
+    const root = document.documentElement;
+    const prefersDarkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+    const themeToggles = Array.from(document.querySelectorAll('[data-theme-toggle]'));
+
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const drawerOverlay = document.getElementById('drawer-overlay');
     const drawerMenu = document.getElementById('drawer-menu');
+
+    function getInitialTheme() {
+      try {
+        const storedTheme = window.localStorage.getItem(storageKey);
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+          return storedTheme;
+        }
+      } catch {
+        // Ignore storage access issues and fall back to media query.
+      }
+
+      return prefersDarkMedia.matches ? 'dark' : 'light';
+    }
+
+    function persistTheme(theme) {
+      try {
+        window.localStorage.setItem(storageKey, theme);
+      } catch {
+        // Ignore storage access issues to keep toggle functional.
+      }
+    }
+
+    function syncThemeControls(theme) {
+      const isDark = theme === 'dark';
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme;
+
+      themeToggles.forEach((toggle) => {
+        const label = toggle.querySelector('[data-theme-toggle-label]');
+        toggle.setAttribute('aria-pressed', String(isDark));
+        toggle.setAttribute('aria-label', isDark ? 'Bytt til lys modus' : 'Bytt til mørk modus');
+
+        if (label) {
+          label.textContent = isDark ? 'Lys modus' : 'Mørk modus';
+        }
+      });
+    }
+
+    syncThemeControls(getInitialTheme());
+
+    themeToggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        syncThemeControls(nextTheme);
+        persistTheme(nextTheme);
+      });
+    });
+
+    prefersDarkMedia.addEventListener('change', (event) => {
+      try {
+        const storedTheme = window.localStorage.getItem(storageKey);
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+          return;
+        }
+      } catch {
+        // Fall through to system theme updates when storage is unavailable.
+      }
+
+      syncThemeControls(event.matches ? 'dark' : 'light');
+    });
 
     function openDrawer() {
       drawerOverlay?.classList.add('open');

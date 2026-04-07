@@ -6,6 +6,10 @@
   padding-block: calc(1.25rem - var(--border-width));
   padding-inline: calc(2.1875rem - var(--border-width));
   font-size: var(--fs-label-l);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
   border: var(--border-width) solid transparent;
   text-align: center;
 
@@ -14,7 +18,7 @@
   }
 
   &.primary {
-    color: var(--color-secondary);
+    color: var(--color-on-primary);
     background-color: var(--color-primary);
 
     &:hover {
@@ -37,8 +41,8 @@
 
   &.secondary {
     color: var(--color-primary);
-    background-color: var(--color-secondary);
-    border-color: var(--color-primary);
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
   }
 
   &.tertiary {
