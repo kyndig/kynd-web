@@ -4,8 +4,23 @@ import HeroSection from '@/components/HeroSection.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 import ProjectGrid from '@/components/projects/ProjectGrid.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
+import CategoryFilter from '@/components/CategoryFilter.astro';
 
 const projects = await getProjectsWithDuration();
+
+const categoryCount = new Map<string, number>();
+for (const project of projects) {
+  for (const tag of project.data.tags ?? []) {
+    categoryCount.set(tag, (categoryCount.get(tag) ?? 0) + 1);
+  }
+}
+
+const categories = [
+  { label: 'Alle', value: 'all', count: projects.length },
+  ...Array.from(categoryCount.entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([value, count]) => ({ label: value, value, count })),
+];
 ---
 
 <Layout
@@ -16,10 +31,13 @@ const projects = await getProjectsWithDuration();
   <HeroSection
     title="Prosjekter som viser hvordan vi jobber."
     preamble="Et utvalg arbeid innen produktutvikling, teknologi, ledelse og forbedring i både nye og etablerte kontekster."
+    tagline="Prosjekter"
   />
+  <CategoryFilter categories={categories} active="all" queryParam="kategori" />
   <ProjectGrid projects={projects} />
   <ContactCTA
     title="Trenger dere lignende støtte?"
     body="Fortell oss kort hva dere står i, så avklarer vi raskt om vi er riktig match."
+    variant="surface-low"
   />
 </Layout>

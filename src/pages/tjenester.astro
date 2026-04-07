@@ -9,36 +9,42 @@ import Layout from '@/layouts/Base.astro';
 const services = [
   {
     title: 'Fullstack-utvikling',
+    icon: '01',
     description:
       'Vi bygger nye løsninger og videreutvikler eksisterende produkter tett sammen med teamet ditt.',
     outcome: 'Kortere vei fra idé til produksjon, med tekniske valg som holder over tid.',
   },
   {
     title: 'Produkt- og tjenestedesign',
+    icon: '02',
     description:
       'Vi gjør innsikt, brukerbehov og tjenesteflyt om til tydelige prioriteringer og konkret leveranse.',
     outcome: 'Bedre sammenheng mellom brukerbehov, forretning og faktisk produktretning.',
   },
   {
     title: 'Teknologiledelse',
+    icon: '03',
     description:
       'Vi tar tekniske beslutninger der konsekvensene er store: arkitektur, kvalitet og leveransekapasitet.',
     outcome: 'Klarere retning, færre omveier og bedre gjennomføring i produktteamet.',
   },
   {
     title: 'Organisasjonsdesign',
+    icon: '04',
     description:
       'Vi hjelper med roller, ansvar og samarbeidsformer når organisasjonen hindrer produktfart.',
     outcome: 'Tydeligere eierskap og bedre flyt mellom teknologi, produkt og forretning.',
   },
   {
     title: 'Prosjekt- og teamledelse',
+    icon: '05',
     description:
       'Vi leder initiativer gjennom usikkerhet og kompleksitet, med tydelig fremdrift og beslutningskraft.',
     outcome: 'Mer forutsigbar levering og raskere avklaringer i krevende prosjektløp.',
   },
   {
     title: 'Strategisk rådgivning',
+    icon: '06',
     description:
       'Vi bistår i prioritering av produkt- og teknologivalg når innsatsen må gi tydelig verdi.',
     outcome: 'Skjerpet prioritering og mindre ressursbruk på tiltak uten effekt.',
@@ -80,6 +86,7 @@ const collaborationConsequences = [
   <HeroSection
     title="Hvordan vi hjelper deg å få ting til å virke."
     preamble="Fra utforsking og MVP-er til forbedring av eksisterende produkter, team og teknologivalg."
+    tagline="Tjenester"
   />
 
   <PageSection
@@ -87,7 +94,18 @@ const collaborationConsequences = [
     subheading="Vi går inn der erfarne folk gir størst forskjell, både i leveranse og retning."
   >
     <div class="services-grid">
-      {services.map((service) => <ServiceCard {...service} />)}
+      {
+        services.map((service) => (
+          <ServiceCard
+            title={service.title}
+            description={service.description}
+            outcome={service.outcome}
+            variant="surface-low"
+          >
+            <span slot="icon">{service.icon}</span>
+          </ServiceCard>
+        ))
+      }
     </div>
   </PageSection>
 
@@ -110,7 +128,7 @@ const collaborationConsequences = [
     <FitSection fit={fit} noFit={noFit} />
   </PageSection>
 
-  <ContactCTA />
+  <ContactCTA variant="dark" />
 </Layout>
 
 <style>

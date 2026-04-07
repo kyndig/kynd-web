@@ -2,7 +2,9 @@
 import ClientLogoStrip from '@/components/ClientLogoStrip.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import NumberedConceptCard from '@/components/NumberedConceptCard.astro';
 import PageSection from '@/components/PageSection.astro';
+import FullBleed from '@/components/layout/FullBleed.astro';
 import Layout from '@/layouts/Base.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 
@@ -36,6 +38,8 @@ const collaborationStyle = [
   <HeroSection
     title="Nysgjerrige hoder. Erfarne hender."
     preamble="For nye idéer, gamle systemer og alt som må fungere mellom dem."
+    tagline="Kynd"
+    size="large"
     link={{ label: 'Ta en prat med oss', href: '/kontakt' }}
     image="/patterns/pattern-0.svg"
   />
@@ -44,7 +48,13 @@ const collaborationStyle = [
     subheading="Et fellesskap av erfarne folk som kombinerer produktblikk, teknologiforståelse og gjennomføring."
   >
     <ul class="card-grid">
-      {keyConcepts.map((concept) => <li>{concept}</li>)}
+      {
+        keyConcepts.map((concept, index) => (
+          <li>
+            <NumberedConceptCard number={index + 1} title={concept} />
+          </li>
+        ))
+      }
     </ul>
   </PageSection>
   <PageSection
@@ -79,7 +89,9 @@ const collaborationStyle = [
       {collaborationStyle.map((style) => <li>{style}</li>)}
     </ul>
   </PageSection>
-  <ContactCTA />
+  <FullBleed variant="surface-low">
+    <ContactCTA variant="surface-low" />
+  </FullBleed>
 </Layout>
 
 <style>
@@ -97,11 +109,7 @@ const collaborationStyle = [
   }
 
   .card-grid li {
-    border: 2px solid var(--color-primary);
-    background: var(--color-secondary-shade);
-    box-shadow: 0 0.25rem 0 0 var(--color-shadow);
-    padding: 1.5rem;
-    font-size: var(--fs-body-m);
+    list-style: none;
   }
 
   .featured-projects {

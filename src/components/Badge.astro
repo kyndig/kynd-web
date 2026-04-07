@@ -1,0 +1,59 @@
+---
+type Props = {
+  label: string;
+  tone?: 'accent' | 'neutral' | 'inverse' | 'outline';
+  size?: 'sm' | 'md';
+};
+
+const { label, tone = 'accent', size = 'md' } = Astro.props;
+---
+
+<span class:list={['badge', `badge--${tone}`, `badge--${size}`]}>{label}</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border: 2px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+  }
+
+  .badge--sm {
+    font-size: var(--fs-body-xs);
+    padding: 0.25rem 0.4rem;
+  }
+
+  .badge--md {
+    font-size: var(--fs-body-s);
+    padding: 0.3rem 0.5rem;
+  }
+
+  .badge--accent {
+    background: var(--color-accent);
+    border-color: var(--color-border);
+    color: var(--color-primary);
+  }
+
+  .badge--neutral {
+    background: var(--color-surface-low);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .badge--inverse {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .badge--outline {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+</style>

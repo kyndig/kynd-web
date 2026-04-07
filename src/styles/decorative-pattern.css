@@ -1,0 +1,37 @@
+.u-pattern {
+  position: relative;
+  isolation: isolate;
+}
+
+.u-pattern::after {
+  content: '';
+  position: absolute;
+  inset: auto -2rem -2rem auto;
+  width: clamp(10rem, 28vw, 20rem);
+  aspect-ratio: 1099 / 755;
+  background: currentColor;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: -1;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.u-pattern--grid::after {
+  aspect-ratio: 1219 / 878;
+  -webkit-mask-image: url('/patterns/pattern-2.svg');
+  mask-image: url('/patterns/pattern-2.svg');
+}
+
+.u-pattern--waves::after {
+  -webkit-mask-image: url('/patterns/pattern-1.svg');
+  mask-image: url('/patterns/pattern-1.svg');
+}
+
+.u-pattern--subtle::after {
+  opacity: 0.045;
+}

@@ -1,0 +1,57 @@
+---
+type Props = {
+  number: number | string;
+  title: string;
+  description?: string;
+};
+
+const { number, title, description } = Astro.props;
+---
+
+<article class="concept-card">
+  <div class="concept-number" aria-hidden="true">{number}</div>
+  <div class="concept-content">
+    <h3>{title}</h3>
+    {description && <p>{description}</p>}
+  </div>
+</article>
+
+<style>
+  .concept-card {
+    border: 2px solid var(--color-border);
+    background: var(--color-surface-low);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .concept-number {
+    min-width: 2.1rem;
+    min-height: 2.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent);
+    border: 2px solid var(--color-border);
+    color: var(--color-primary);
+    font-size: var(--fs-heading-xs);
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+  }
+
+  .concept-content {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .concept-content h3 {
+    font-size: var(--fs-heading-xs);
+  }
+
+  .concept-content p {
+    font-size: var(--fs-body-m);
+  }
+</style>
