@@ -7,6 +7,7 @@ export type ProjectListItem = {
     image: { src: string };
     fullLogo?: { src: string };
     kyndLogo?: { src: string };
+    tags?: string[];
   };
 };
 
@@ -20,7 +21,7 @@ const { projects } = Astro.props;
 <div class="project-grid">
   {
     projects.map((project) => (
-      <div class="project-card">
+      <div class="project-card" data-project-tags={JSON.stringify(project.data.tags ?? [])}>
         <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
         <p>{project.data.description}</p>
         <div class="logo-container">

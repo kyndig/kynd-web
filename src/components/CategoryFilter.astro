@@ -14,7 +14,12 @@ type Props = {
   queryParam?: string;
 };
 
-const { categories, active = 'all', basePath = Astro.url.pathname, queryParam = 'kategori' } = Astro.props;
+const {
+  categories,
+  active = 'all',
+  basePath = Astro.url.pathname,
+  queryParam = 'kategori',
+} = Astro.props;
 
 const hrefFor = (value: string) => {
   const params = new URLSearchParams(Astro.url.searchParams);
@@ -35,8 +40,12 @@ const hrefFor = (value: string) => {
         const isActive = category.value === active;
         return (
           <li>
-            <a class:list={['category-chip', isActive && 'is-active']} href={hrefFor(category.value)}>
-              <Badge label={category.label} tone={isActive ? 'accent' : 'outline'} size="sm" />
+            <a
+              class:list={['category-chip', isActive && 'is-active']}
+              href={hrefFor(category.value)}
+              data-category-value={category.value}
+            >
+              <Badge label={category.label} tone="outline" size="sm" />
               {typeof category.count === 'number' && <span class="count">{category.count}</span>}
             </a>
           </li>
@@ -62,6 +71,18 @@ const hrefFor = (value: string) => {
     gap: 0.4rem;
     text-decoration: none;
     color: inherit;
+  }
+
+  .category-chip :global(.badge) {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .category-chip.is-active :global(.badge) {
+    background: var(--color-accent);
+    border-color: var(--color-border);
+    color: var(--color-primary);
   }
 
   .count {
