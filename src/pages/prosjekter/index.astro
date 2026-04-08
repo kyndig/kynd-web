@@ -24,6 +24,10 @@ const categories = [
     .map(([value, count]) => ({ label: value, value, count })),
 ];
 const categoryValues = categories.map((category) => category.value);
+const queryParam = 'kategori';
+const rawActiveCategory = Astro.url.searchParams.get(queryParam);
+const activeCategory =
+  rawActiveCategory && categoryValues.includes(rawActiveCategory) ? rawActiveCategory : 'all';
 const projectPrinciples = [
   'Vi jobber i spenn mellom produkt, teknologi og organisasjon.',
   'Vi prioriterer varig effekt over kortsiktig output.',
@@ -59,12 +63,11 @@ const projectPrinciples = [
     heading="Utvalgte prosjekter"
     subheading="Filtrer på fagområde for å se relevante caser."
   >
-    <CategoryFilter categories={categories} queryParam="kategori" />
+    <CategoryFilter categories={categories} queryParam={queryParam} active={activeCategory} />
     <ProjectGrid projects={projects} />
   </PageSection>
-  <script is:inline define:vars={{ categoryValues }}>
+  <script is:inline define:vars={{ categoryValues, queryParam }}>
     (() => {
-      const queryParam = 'kategori';
       const validCategories = new Set(categoryValues);
       const chips = Array.from(document.querySelectorAll('[data-category-value]'));
       const projectCards = Array.from(document.querySelectorAll('[data-project-tags]'));
@@ -79,6 +82,18 @@ const projectPrinciples = [
       const getActiveCategory = () => {
         const params = new URLSearchParams(window.location.search);
         return normalizeCategory(params.get(queryParam));
+      };
+
+      const setActiveCategory = (category) => {
+        const normalized = normalizeCategory(category);
+        const nextUrl = new URL(window.location.href);
+        if (normalized === 'all') {
+          nextUrl.searchParams.delete(queryParam);
+        } else {
+          nextUrl.searchParams.set(queryParam, normalized);
+        }
+        window.history.pushState({}, '', nextUrl);
+        applyCategory();
       };
 
       const getCardTags = (card) => {
@@ -122,6 +137,14 @@ const projectPrinciples = [
       };
 
       applyCategory();
+      for (const chip of chips) {
+        chip.addEventListener('click', (event) => {
+          if (event.defaultPrevented) return;
+          const value = chip.getAttribute('data-category-value') ?? 'all';
+          event.preventDefault();
+          setActiveCategory(value);
+        });
+      }
       window.addEventListener('popstate', applyCategory);
     })();
   </script>
