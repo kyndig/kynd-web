@@ -9,12 +9,14 @@ type Props = {
   location?: string;
   employmentType?: string;
   tags?: string[];
+  tone?: 'default' | 'dark';
 };
 
-const { title, summary, href, location, employmentType, tags = [] } = Astro.props;
+const { title, summary, href, location, employmentType, tags = [], tone = 'default' } = Astro.props;
+const buttonVariant = tone === 'dark' ? 'tertiary' : 'primary';
 ---
 
-<article class="job-card">
+<article class:list={['job-card', tone === 'dark' && 'job-card--dark']}>
   <header>
     <h3>{title}</h3>
     <div class="meta">
@@ -37,7 +39,7 @@ const { title, summary, href, location, employmentType, tags = [] } = Astro.prop
     )
   }
 
-  <ButtonLink href={href} size="large">Les mer og søk</ButtonLink>
+  <ButtonLink href={href} size="large" variant={buttonVariant}>Les mer og søk</ButtonLink>
 </article>
 
 <style>
@@ -71,5 +73,16 @@ const { title, summary, href, location, employmentType, tags = [] } = Astro.prop
 
   .job-card p {
     font-size: var(--fs-body-m);
+  }
+
+  .job-card--dark {
+    border-color: var(--color-secondary);
+    background: color-mix(in srgb, var(--color-primary), white 8%);
+    color: var(--color-secondary);
+  }
+
+  .job-card--dark :global(.badge--outline) {
+    border-color: currentColor;
+    color: currentColor;
   }
 </style>

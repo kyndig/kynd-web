@@ -140,7 +140,7 @@ const processSteps = [
       subheading="Vi ansetter sjelden og bevisst. Når vi åpner roller, er det med tydelige forventninger."
     >
       <div class="u-grid-cards">
-        {openRoles.map((role) => <JobCard {...role} />)}
+        {openRoles.map((role) => <JobCard {...role} tone="dark" />)}
       </div>
     </PageSection>
   </FullBleed>
@@ -180,11 +180,5 @@ const processSteps = [
 <style>
   .u-list-disc {
     margin: 0;
-  }
-
-  :global(.fullBleed.dark .job-card) {
-    border-color: var(--color-secondary);
-    background: color-mix(in srgb, var(--color-primary), white 8%);
-    color: var(--color-secondary);
   }
 </style>
