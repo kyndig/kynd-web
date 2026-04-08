@@ -96,11 +96,7 @@ const collaborationStyle = [
     subheading="Målet er lav friksjon, tydelighet og fremdrift fra første uke."
   >
     <ul class="u-grid-cards u-grid-cards--3">
-      {
-        collaborationStyle.map((style) => (
-          <li class="text-card">{style}</li>
-        ))
-      }
+      {collaborationStyle.map((style) => <li class="text-card">{style}</li>)}
     </ul>
   </PageSection>
   <FullBleed variant="dark">
