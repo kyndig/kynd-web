@@ -17,6 +17,11 @@ const keyConcepts = [
   'Vi fungerer både i nye initiativer og etablerte produktmiljøer.',
   'Du får erfarne folk med skapertrang og gjennomføringsevne.',
 ];
+const manifestoPoints = [
+  'Vi går inn i krevende beslutninger, ikke bare oppgaver.',
+  'Vi kobler strategi, produkt og teknologi i samme arbeidsloop.',
+  'Vi bygger fart uten å skyve teknisk og organisatorisk gjeld foran oss.',
+];
 const helpAreas = [
   'Utforske nye idéer og komme raskt til en MVP.',
   'Forbedre eksisterende produkter uten å skape mer kompleksitet.',
@@ -46,6 +51,26 @@ const collaborationStyle = [
     image="/patterns/pattern-0.svg"
   />
   <PageSection
+    heading="Manifest og arbeidsform"
+    subheading="Vi er et produktmiljø for selskaper som trenger både fremdrift og solide beslutninger."
+  >
+    <Split minBreakpoint="md" gap="2rem" columns="1.15fr 0.85fr">
+      <div slot="left" class="manifesto-copy">
+        <p>
+          Kynd ble etablert for å bygge verdi i skjæringen mellom produkt, teknologi og
+          organisasjon. Vi tar ansvar i hele løpet: fra utforsking og prioritering til produksjon og
+          videre drift.
+        </p>
+        <ul class="u-list-disc">
+          {manifestoPoints.map((point) => <li>{point}</li>)}
+        </ul>
+      </div>
+      <div slot="right" class="manifesto-visual" aria-hidden="true">
+        <img src="/patterns/pattern-2.svg" alt="" />
+      </div>
+    </Split>
+  </PageSection>
+  <PageSection
     heading="Hva Kynd er"
     subheading="Et fellesskap av erfarne folk som kombinerer produktblikk, teknologiforståelse og gjennomføring."
   >
@@ -63,7 +88,7 @@ const collaborationStyle = [
     heading="Hva vi hjelper med"
     subheading="Du trenger ikke ha alt ferdig definert. Vi hjelper deg å finne riktig neste steg."
   >
-    <ul class="u-grid-cards u-grid-cards--3">
+    <ul class="help-grid">
       {helpAreas.map((area) => <li class="text-card">{area}</li>)}
     </ul>
   </PageSection>
@@ -103,6 +128,55 @@ const collaborationStyle = [
 </Layout>
 
 <style>
+  .manifesto-copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .manifesto-copy p {
+    font-size: var(--fs-body-m);
+    max-inline-size: 65ch;
+  }
+
+  .manifesto-copy .u-list-disc {
+    margin: 0;
+  }
+
+  .manifesto-visual {
+    border: 2px solid var(--color-border);
+    background: var(--color-surface-low);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    min-block-size: 14rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .manifesto-visual img {
+    inline-size: min(100%, 20rem);
+    block-size: auto;
+  }
+
+  .help-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .help-grid li:first-child {
+    @media (--md) {
+      grid-column: span 2;
+    }
+  }
+
   .text-card {
     border: 1px solid var(--color-border);
     background: var(--color-surface);
