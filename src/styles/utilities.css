@@ -21,6 +21,9 @@
 .u-grid-cards {
   display: grid;
   gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .u-grid-cards--2 {
