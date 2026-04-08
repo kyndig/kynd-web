@@ -16,11 +16,11 @@ This map captures concrete downstream consumers for all `#28` component-system t
 
 ## New Components Scope (#34)
 
-| Component/Utility                           | Primary Consumer(s)                                                                                      | Status                                           |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `NumberedConceptCard`                       | `src/pages/index.astro` ("Hva Kynd er" cards), `src/pages/om-kynd.astro`                                 | Implemented                                      |
-| `Badge`                                     | `src/components/CategoryFilter.astro`, `src/components/QuoteBlock.astro`, `src/components/JobCard.astro` | Implemented                                      |
-| `CategoryFilter`                            | `src/pages/prosjekter/index.astro`                                                                       | Implemented                                      |
-| `QuoteBlock`                                | `src/pages/om-kynd.astro`                                                                                | Implemented                                      |
-| `JobCard`                                   | `src/pages/bli-en-av-oss.astro`                                                                          | Implemented                                      |
-| Decorative pattern utilities (`u-pattern*`) | `src/components/HeroLayout.astro`                                                                        | Implemented (API naming differs from issue text) |
+| Component/Utility                                          | Primary Consumer(s)                                                                                      | Status      |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------- |
+| `NumberedConceptCard`                                      | `src/pages/index.astro` ("Hva Kynd er" cards), `src/pages/om-kynd.astro`                                 | Implemented |
+| `Badge`                                                    | `src/components/CategoryFilter.astro`, `src/components/QuoteBlock.astro`, `src/components/JobCard.astro` | Implemented |
+| `CategoryFilter`                                           | `src/pages/prosjekter/index.astro`                                                                       | Implemented |
+| `QuoteBlock`                                               | `src/pages/om-kynd.astro`                                                                                | Implemented |
+| `JobCard`                                                  | `src/pages/bli-en-av-oss.astro`                                                                          | Implemented |
+| Decorative pattern utilities (`.pattern-*` + `u-pattern*`) | `src/components/HeroLayout.astro`                                                                        | Implemented |
