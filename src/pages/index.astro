@@ -4,7 +4,9 @@ import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import NumberedConceptCard from '@/components/NumberedConceptCard.astro';
 import PageSection from '@/components/PageSection.astro';
+import TeaserCard from '@/components/TeaserCard.astro';
 import FullBleed from '@/components/layout/FullBleed.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 
@@ -47,7 +49,7 @@ const collaborationStyle = [
     heading="Hva Kynd er"
     subheading="Et fellesskap av erfarne folk som kombinerer produktblikk, teknologiforståelse og gjennomføring."
   >
-    <ul class="card-grid">
+    <ul class="u-grid-cards u-grid-cards--3">
       {
         keyConcepts.map((concept, index) => (
           <li>
@@ -61,93 +63,51 @@ const collaborationStyle = [
     heading="Hva vi hjelper med"
     subheading="Du trenger ikke ha alt ferdig definert. Vi hjelper deg å finne riktig neste steg."
   >
-    <ul class="card-grid card-grid--text">
-      {helpAreas.map((area) => <li class="card-grid__item card-grid__item--text">{area}</li>)}
+    <ul class="u-grid-cards u-grid-cards--3">
+      {helpAreas.map((area) => <li class="text-card">{area}</li>)}
     </ul>
   </PageSection>
   <PageSection
     heading="Utvalgte samarbeid"
     subheading="Noen av prosjektene som viser hvordan vi kobler problem, innsats og effekt."
   >
-    <ClientLogoStrip projects={projects} />
-    <ul class="featured-projects">
-      {
-        featuredProjects.map((project) => (
-          <li>
-            <a href={`/prosjekter/${project.id}`}>{project.data.title}</a>
-            <p>{project.data.description}</p>
-          </li>
-        ))
-      }
-    </ul>
+    <Split minBreakpoint="md" gap="2rem" columns="1.1fr 0.9fr">
+      <ClientLogoStrip slot="left" projects={projects} />
+      <ul slot="right" class="u-grid-cards">
+        {
+          featuredProjects.map((project) => (
+            <li>
+              <TeaserCard
+                title={project.data.title}
+                href={`/prosjekter/${project.id}`}
+                description={project.data.description}
+                tone="secondary"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </Split>
   </PageSection>
   <PageSection
     heading="Slik er det å jobbe med oss"
     subheading="Målet er lav friksjon, tydelighet og fremdrift fra første uke."
   >
-    <ul class="card-grid card-grid--text">
-      {
-        collaborationStyle.map((style) => (
-          <li class="card-grid__item card-grid__item--text">{style}</li>
-        ))
-      }
+    <ul class="u-grid-cards u-grid-cards--3">
+      {collaborationStyle.map((style) => <li class="text-card">{style}</li>)}
     </ul>
   </PageSection>
-  <FullBleed variant="surface-low">
-    <ContactCTA variant="surface-low" />
+  <FullBleed variant="dark">
+    <ContactCTA variant="dark" />
   </FullBleed>
 </Layout>
 
 <style>
-  .card-grid {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 1rem;
-
-    @media (--md) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-  }
-
-  .card-grid__item {
-    list-style: none;
-  }
-
-  .card-grid__item--text {
+  .text-card {
     border: 1px solid var(--color-border);
     background: var(--color-surface);
     box-shadow: var(--shadow);
     padding: 1rem;
-    font-size: var(--fs-body-s);
-  }
-
-  .featured-projects {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 0;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .featured-projects li {
-    border: 2px solid var(--color-primary);
-    background: var(--color-secondary);
-    padding: 1rem;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .featured-projects a {
-    font-size: var(--fs-heading-xs);
-    width: fit-content;
-    background-color: var(--color-accent);
-    padding: 0.2rem 0.4rem;
-  }
-
-  .featured-projects p {
     font-size: var(--fs-body-s);
   }
 </style>
