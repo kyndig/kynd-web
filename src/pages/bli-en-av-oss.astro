@@ -4,6 +4,8 @@ import HeroSection from '@/components/HeroSection.astro';
 import JobCard from '@/components/JobCard.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
+import TeaserCard from '@/components/TeaserCard.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 
 const principles = [
@@ -53,6 +55,12 @@ const openRoles = [
     tags: ['TypeScript', 'Astro', 'Produktfokus'],
   },
 ];
+
+const processSteps = [
+  'Først en kort forventningsavklaring om motivasjon, ansvar og retning.',
+  'Deretter en faglig samtale om valg, konsekvenser og samarbeid i praksis.',
+  'Til slutt en konkret invitasjon med tydelige rammer når begge parter ser match.',
+];
 ---
 
 <Layout
@@ -80,7 +88,7 @@ const openRoles = [
   </PageSection>
 
   <PageSection heading="Prinsipper" subheading="Disse prinsippene styrer hverdagen i Kynd.">
-    <ul class="list">
+    <ul class="u-list-disc">
       {principles.map((item) => <li>{item}</li>)}
     </ul>
   </PageSection>
@@ -102,7 +110,7 @@ const openRoles = [
     heading="Hvem vi ser etter"
     subheading="Vi er bevisst selektive. Riktig match er viktigere enn rask vekst."
   >
-    <ul class="list">
+    <ul class="u-list-disc">
       {weLookFor.map((item) => <li>{item}</li>)}
     </ul>
   </PageSection>
@@ -111,20 +119,25 @@ const openRoles = [
     heading="Dating og invitasjon"
     subheading="Rekrutteringsprosessen handler om gjensidig vurdering av verdi, tillit og samarbeid."
   >
-    <Prose wide>
-      <p>
-        Vi bruker en trinnvis prosess for å bli kjent, diskutere forventninger og avklare praktiske
-        rammer. Hvis begge parter opplever god match, blir neste steg en invitasjon med tydelige
-        avtaler for arbeid og eierskap.
-      </p>
-    </Prose>
+    <Split minBreakpoint="md" gap="2rem">
+      <Prose wide slot="left">
+        <p>
+          Vi bruker en trinnvis prosess for å bli kjent, diskutere forventninger og avklare praktiske
+          rammer. Hvis begge parter opplever god match, blir neste steg en invitasjon med tydelige
+          avtaler for arbeid og eierskap.
+        </p>
+      </Prose>
+      <ul slot="right" class="u-list-disc">
+        {processSteps.map((step) => <li>{step}</li>)}
+      </ul>
+    </Split>
   </PageSection>
 
   <PageSection
     heading="Aktuelle roller"
     subheading="Vi ansetter sjelden og bevisst. Når vi åpner roller, er det med tydelige forventninger."
   >
-    <div class="jobs-grid">
+    <div class="u-grid-cards">
       {openRoles.map((role) => <JobCard {...role} />)}
     </div>
   </PageSection>
@@ -133,16 +146,20 @@ const openRoles = [
     heading="Fordyp deg i håndboka"
     subheading="Vil du vite mer om hvordan vi jobber i praksis? Start med disse kapitlene."
   >
-    <div class="handbook-grid">
+    <ul class="u-grid-cards u-grid-cards--2">
       {
         handbookHighlights.map((chapter) => (
-          <article class="handbook-card">
-            <a href={chapter.href}>{chapter.title}</a>
-            <p>{chapter.description}</p>
-          </article>
+          <li>
+            <TeaserCard
+              title={chapter.title}
+              href={chapter.href}
+              description={chapter.description}
+              tone="secondary-shade"
+            />
+          </li>
         ))
       }
-    </div>
+    </ul>
     <Prose wide>
       <p>
         Hele håndboka er fortsatt offentlig tilgjengelig på <a href="/bok">/bok</a> for deg som vil gå
@@ -158,46 +175,7 @@ const openRoles = [
 </Layout>
 
 <style>
-  .list {
-    list-style: disc;
-    padding-inline-start: 1rem;
-    display: grid;
-    gap: 0.75rem;
-    font-size: var(--fs-body-m);
-  }
-
-  .handbook-grid {
-    display: grid;
-    gap: 1rem;
-
-    @media (--md) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-  }
-
-  .jobs-grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .handbook-card {
-    border: 2px solid var(--color-primary);
-    background: var(--color-secondary-shade);
-    padding: 1rem;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .handbook-card a {
-    font-size: var(--fs-heading-xs);
-    width: fit-content;
-    background-color: var(--color-accent);
-    padding: 0.2rem 0.4rem;
-  }
-
-  .handbook-card p {
-    font-size: var(--fs-body-s);
+  .u-list-disc {
     margin: 0;
   }
 </style>
