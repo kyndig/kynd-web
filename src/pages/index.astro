@@ -72,9 +72,7 @@ const collaborationStyle = [
     subheading="Noen av prosjektene som viser hvordan vi kobler problem, innsats og effekt."
   >
     <Split minBreakpoint="md" gap="2rem" columns="1.1fr 0.9fr">
-      <div slot="left" class="logo-strip-wrap">
-        <ClientLogoStrip projects={projects} />
-      </div>
+      <ClientLogoStrip slot="left" projects={projects} />
       <ul slot="right" class="u-grid-cards">
         {
           featuredProjects.map((project) => (
@@ -111,10 +109,5 @@ const collaborationStyle = [
     box-shadow: var(--shadow);
     padding: 1rem;
     font-size: var(--fs-body-s);
-  }
-
-  .logo-strip-wrap {
-    display: grid;
-    gap: 1.5rem;
   }
 </style>
