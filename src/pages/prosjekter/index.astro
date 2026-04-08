@@ -1,6 +1,8 @@
 ---
 import Layout from '@/layouts/Base.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import NumberedConceptCard from '@/components/NumberedConceptCard.astro';
+import PageSection from '@/components/PageSection.astro';
 import { getProjectsWithDuration } from '@/utils/projectHelpers';
 import ProjectGrid from '@/components/projects/ProjectGrid.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
@@ -22,6 +24,11 @@ const categories = [
     .map(([value, count]) => ({ label: value, value, count })),
 ];
 const categoryValues = categories.map((category) => category.value);
+const projectPrinciples = [
+  'Vi jobber i spenn mellom produkt, teknologi og organisasjon.',
+  'Vi prioriterer varig effekt over kortsiktig output.',
+  'Vi tar ansvar for gjennomføring sammen med teamet vi støtter.',
+];
 ---
 
 <Layout
@@ -34,8 +41,27 @@ const categoryValues = categories.map((category) => category.value);
     preamble="Et utvalg arbeid innen produktutvikling, teknologi, ledelse og forbedring i både nye og etablerte kontekster."
     tagline="Prosjekter"
   />
-  <CategoryFilter categories={categories} queryParam="kategori" />
-  <ProjectGrid projects={projects} />
+  <PageSection
+    heading="Prinsipper i praksis"
+    subheading="Prosjektene under viser hvordan vi kobler retning, tekniske valg og leveranse i samme løp."
+  >
+    <ul class="u-grid-cards u-grid-cards--3">
+      {
+        projectPrinciples.map((principle, index) => (
+          <li>
+            <NumberedConceptCard number={index + 1} title={principle} />
+          </li>
+        ))
+      }
+    </ul>
+  </PageSection>
+  <PageSection
+    heading="Utvalgte prosjekter"
+    subheading="Filtrer på fagområde for å se relevante caser."
+  >
+    <CategoryFilter categories={categories} queryParam="kategori" />
+    <ProjectGrid projects={projects} />
+  </PageSection>
   <script is:inline define:vars={{ categoryValues }}>
     (() => {
       const queryParam = 'kategori';
