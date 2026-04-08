@@ -5,9 +5,11 @@
 ## Linked Issues
 
 <!-- Use closing keywords only for issues fully delivered by this PR. -->
+
 - Closes #
 
 <!-- Use related references for issues that should stay open after merge. -->
+
 - Related:
 
 ## Issue Hygiene

@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile } from 'node:fs/promises';
 
 // Optional repository variables:
 // - ISSUE_HYGIENE_BASE_BRANCHES=main,overhaul
@@ -8,9 +8,8 @@ import { readFile } from "node:fs/promises";
 // - ISSUE_HYGIENE_STATUS_FIELD_NAME=Status
 // - ISSUE_HYGIENE_DONE_OPTION_NAME=Done
 
-const REST_API_BASE = process.env.GITHUB_API_URL || "https://api.github.com";
-const GRAPHQL_API_URL =
-  process.env.GITHUB_GRAPHQL_URL || "https://api.github.com/graphql";
+const REST_API_BASE = process.env.GITHUB_API_URL || 'https://api.github.com';
+const GRAPHQL_API_URL = process.env.GITHUB_GRAPHQL_URL || 'https://api.github.com/graphql';
 const CLOSING_KEYWORD_PATTERN =
   /\b(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\b/i;
 
@@ -28,25 +27,25 @@ function parseCsv(value, fallback = []) {
   }
 
   return value
-    .split(",")
+    .split(',')
     .map((entry) => entry.trim())
     .filter(Boolean);
 }
 
 function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function parseClosingIssueNumbers(text, owner, repo) {
   const refs = new Set();
   const fullRepoRefPattern = new RegExp(
     `${escapeRegExp(owner)}\\/${escapeRegExp(repo)}#(\\d+)`,
-    "gi",
+    'gi',
   );
   const shortRefPattern = /(^|[^\w/])#(\d+)/g;
   const issueUrlPattern = new RegExp(
     `https?:\\/\\/github\\.com\\/${escapeRegExp(owner)}\\/${escapeRegExp(repo)}\\/issues\\/(\\d+)`,
-    "gi",
+    'gi',
   );
 
   for (const line of text.split(/\r?\n/)) {
@@ -73,16 +72,16 @@ function parseClosingIssueNumbers(text, owner, repo) {
 async function githubRequest(path, init = {}) {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
-    throw new Error("Missing GITHUB_TOKEN.");
+    throw new Error('Missing GITHUB_TOKEN.');
   }
 
   const response = await fetch(`${REST_API_BASE}${path}`, {
     ...init,
     headers: {
-      Accept: "application/vnd.github+json",
+      Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      "User-Agent": "kynd-web-issue-hygiene",
+      'Content-Type': 'application/json',
+      'User-Agent': 'kynd-web-issue-hygiene',
       ...(init.headers || {}),
     },
   });
@@ -102,15 +101,15 @@ async function githubRequest(path, init = {}) {
 async function graphqlRequest(query, variables) {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
-    throw new Error("Missing GITHUB_TOKEN.");
+    throw new Error('Missing GITHUB_TOKEN.');
   }
 
   const response = await fetch(GRAPHQL_API_URL, {
-    method: "POST",
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      "User-Agent": "kynd-web-issue-hygiene",
+      'Content-Type': 'application/json',
+      'User-Agent': 'kynd-web-issue-hygiene',
     },
     body: JSON.stringify({ query, variables }),
   });
@@ -118,9 +117,7 @@ async function graphqlRequest(query, variables) {
   const payload = await response.json();
 
   if (!response.ok || payload.errors?.length) {
-    throw new Error(
-      `GitHub GraphQL request failed: ${JSON.stringify(payload.errors || payload)}`,
-    );
+    throw new Error(`GitHub GraphQL request failed: ${JSON.stringify(payload.errors || payload)}`);
   }
 
   return payload.data;
@@ -198,8 +195,7 @@ async function updateProjectStatus(issueNodeId, config) {
     issueId: issueNodeId,
   });
 
-  const project =
-    projectData.organization?.projectV2 || projectData.user?.projectV2 || null;
+  const project = projectData.organization?.projectV2 || projectData.user?.projectV2 || null;
 
   if (!project) {
     log(
@@ -210,8 +206,7 @@ async function updateProjectStatus(issueNodeId, config) {
 
   const statusField = project.fields.nodes.find(
     (field) =>
-      field?.name === config.statusFieldName &&
-      field.__typename === "ProjectV2SingleSelectField",
+      field?.name === config.statusFieldName && field.__typename === 'ProjectV2SingleSelectField',
   );
 
   if (!statusField) {
@@ -221,9 +216,7 @@ async function updateProjectStatus(issueNodeId, config) {
     return null;
   }
 
-  const doneOption = statusField.options.find(
-    (option) => option.name === config.doneOptionName,
-  );
+  const doneOption = statusField.options.find((option) => option.name === config.doneOptionName);
 
   if (!doneOption) {
     log(
@@ -237,9 +230,7 @@ async function updateProjectStatus(issueNodeId, config) {
   );
 
   if (!projectItem) {
-    log(
-      `Issue is not on project ${config.projectNumber}; skipping project sync.`,
-    );
+    log(`Issue is not on project ${config.projectNumber}; skipping project sync.`);
     return null;
   }
 
@@ -277,10 +268,10 @@ async function updateProjectStatus(issueNodeId, config) {
 
 async function closeIssue(owner, repo, issueNumber) {
   return githubRequest(`/repos/${owner}/${repo}/issues/${issueNumber}`, {
-    method: "PATCH",
+    method: 'PATCH',
     body: JSON.stringify({
-      state: "closed",
-      state_reason: "completed",
+      state: 'closed',
+      state_reason: 'completed',
     }),
   });
 }
@@ -288,13 +279,13 @@ async function closeIssue(owner, repo, issueNumber) {
 async function deleteLabel(owner, repo, issueNumber, labelName) {
   return githubRequest(
     `/repos/${owner}/${repo}/issues/${issueNumber}/labels/${encodeURIComponent(labelName)}`,
-    { method: "DELETE" },
+    { method: 'DELETE' },
   );
 }
 
 async function addComment(owner, repo, issueNumber, body) {
   return githubRequest(`/repos/${owner}/${repo}/issues/${issueNumber}/comments`, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify({ body }),
   });
 }
@@ -309,15 +300,13 @@ async function processIssue(owner, repo, issueNumber, pullRequest, config) {
 
   const actions = [];
 
-  if (issue.state !== "closed") {
+  if (issue.state !== 'closed') {
     await closeIssue(owner, repo, issueNumber);
-    actions.push("Closed as completed");
+    actions.push('Closed as completed');
   }
 
   const labels = (issue.labels || []).map((label) => label.name).filter(Boolean);
-  const blockedLabels = labels.filter((label) =>
-    config.blockedLabels.has(label.toLowerCase()),
-  );
+  const blockedLabels = labels.filter((label) => config.blockedLabels.has(label.toLowerCase()));
 
   for (const label of blockedLabels) {
     await deleteLabel(owner, repo, issueNumber, label);
@@ -325,9 +314,9 @@ async function processIssue(owner, repo, issueNumber, pullRequest, config) {
 
   if (blockedLabels.length > 0) {
     actions.push(
-      `Removed blocker label${blockedLabels.length > 1 ? "s" : ""}: ${blockedLabels
+      `Removed blocker label${blockedLabels.length > 1 ? 's' : ''}: ${blockedLabels
         .map((label) => `\`${label}\``)
-        .join(", ")}`,
+        .join(', ')}`,
     );
   }
 
@@ -347,72 +336,65 @@ async function processIssue(owner, repo, issueNumber, pullRequest, config) {
     issueNumber,
     [
       `Updated automatically after PR #${pullRequest.number} merged into \`${pullRequest.base.ref}\`.`,
-      "",
+      '',
       ...actions.map((action) => `- ${action}`),
-      "",
+      '',
       pullRequest.html_url,
-    ].join("\n"),
+    ].join('\n'),
   );
 
-  log(`#${issueNumber}: ${actions.join("; ")}.`);
+  log(`#${issueNumber}: ${actions.join('; ')}.`);
 }
 
 async function main() {
   const eventPath = process.env.GITHUB_EVENT_PATH;
   if (!eventPath) {
-    throw new Error("Missing GITHUB_EVENT_PATH.");
+    throw new Error('Missing GITHUB_EVENT_PATH.');
   }
 
-  const event = JSON.parse(await readFile(eventPath, "utf8"));
+  const event = JSON.parse(await readFile(eventPath, 'utf8'));
   const pullRequest = event.pull_request;
 
   if (!pullRequest?.merged) {
-    log("Pull request was not merged; nothing to do.");
+    log('Pull request was not merged; nothing to do.');
     return;
   }
 
-  const [owner, repo] = (process.env.GITHUB_REPOSITORY || "").split("/");
+  const [owner, repo] = (process.env.GITHUB_REPOSITORY || '').split('/');
   if (!owner || !repo) {
-    throw new Error("Missing GITHUB_REPOSITORY.");
+    throw new Error('Missing GITHUB_REPOSITORY.');
   }
 
   const allowedBaseBranches = new Set(
-    parseCsv(process.env.ISSUE_HYGIENE_BASE_BRANCHES, ["main", "overhaul"]),
+    parseCsv(process.env.ISSUE_HYGIENE_BASE_BRANCHES, ['main', 'overhaul']),
   );
 
   if (!allowedBaseBranches.has(pullRequest.base.ref)) {
-    log(
-      `Base branch "${pullRequest.base.ref}" is not configured for issue hygiene; skipping.`,
-    );
+    log(`Base branch "${pullRequest.base.ref}" is not configured for issue hygiene; skipping.`);
     return;
   }
 
   const linkedIssueNumbers = parseClosingIssueNumbers(
-    `${pullRequest.title || ""}\n${pullRequest.body || ""}`,
+    `${pullRequest.title || ''}\n${pullRequest.body || ''}`,
     owner,
     repo,
   );
 
   if (linkedIssueNumbers.length === 0) {
-    log("No closing issue references found in the merged PR.");
+    log('No closing issue references found in the merged PR.');
     return;
   }
 
   const config = {
     blockedLabels: new Set(
-      parseCsv(process.env.ISSUE_HYGIENE_BLOCKED_LABELS, ["blocked"]).map((label) =>
+      parseCsv(process.env.ISSUE_HYGIENE_BLOCKED_LABELS, ['blocked']).map((label) =>
         label.toLowerCase(),
       ),
     ),
-    doneOptionName: process.env.ISSUE_HYGIENE_DONE_OPTION_NAME?.trim() || "Done",
-    projectNumber: Number.parseInt(
-      process.env.ISSUE_HYGIENE_PROJECT_NUMBER || "",
-      10,
-    ),
-    projectOwner:
-      process.env.ISSUE_HYGIENE_PROJECT_OWNER?.trim() || owner,
-    statusFieldName:
-      process.env.ISSUE_HYGIENE_STATUS_FIELD_NAME?.trim() || "Status",
+    doneOptionName: process.env.ISSUE_HYGIENE_DONE_OPTION_NAME?.trim() || 'Done',
+    projectNumber: Number.parseInt(process.env.ISSUE_HYGIENE_PROJECT_NUMBER || '', 10),
+    projectOwner: process.env.ISSUE_HYGIENE_PROJECT_OWNER?.trim() || owner,
+    statusFieldName: process.env.ISSUE_HYGIENE_STATUS_FIELD_NAME?.trim() || 'Status',
   };
 
   for (const issueNumber of linkedIssueNumbers) {
