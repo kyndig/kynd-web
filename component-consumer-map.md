@@ -23,4 +23,4 @@ This map captures concrete downstream consumers for all `#28` component-system t
 | `CategoryFilter`                            | `src/pages/prosjekter/index.astro`                                                                       | Implemented                                      |
 | `QuoteBlock`                                | `src/pages/om-kynd.astro`                                                                                | Implemented                                      |
 | `JobCard`                                   | `src/pages/bli-en-av-oss.astro`                                                                          | Implemented                                      |
-| Decorative pattern utilities (`u-pattern*`) | `src/components/HeroLayout.astro`                                                                        | Implemented (API naming differs from issue text) |
+| Decorative pattern utilities (`.pattern-*` + `u-pattern*`) | `src/components/HeroLayout.astro`                                                                        | Implemented |

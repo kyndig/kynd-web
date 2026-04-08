@@ -75,11 +75,12 @@ Tokenized CSS used across multiple components.
 | #48   | #34    | `CategoryFilter` component                | `src/components/CategoryFilter.astro`                                                     | Implemented                                  |
 | #49   | #34    | `QuoteBlock` component                    | `src/components/QuoteBlock.astro`                                                         | Implemented                                  |
 | #50   | #34    | `JobCard` component                       | `src/components/JobCard.astro`                                                            | Implemented                                  |
-| #51   | #34    | Decorative pattern utilities              | `src/styles/decorative-pattern.css`, `src/styles/utilities.css`                           | Implemented (naming differs from issue text) |
+| #51   | #34    | Decorative pattern utilities              | `src/styles/decorative-pattern.css`, `src/styles/utilities.css`                           | Implemented                                   |
 
-## Notable Delta
+## Decorative Utility Compatibility
 
-- Issue `#51` describes `.pattern-dots` and `.pattern-lines`. The implemented utility pattern API currently uses `.u-pattern` and `.u-pattern--waves` in `src/styles/decorative-pattern.css` and is consumed by `HeroLayout`. This is functionally delivered as a reusable decorative utility, but naming does not exactly match the original text.
+- Issue `#51` acceptance is now satisfied with canonical `.pattern-dots` and `.pattern-lines` utilities in `src/styles/decorative-pattern.css`.
+- Legacy `.u-pattern` and `.u-pattern--waves` utilities remain available for backwards compatibility.
 
 ## Dependency Graph
 
