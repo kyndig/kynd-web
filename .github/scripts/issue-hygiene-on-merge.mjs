@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 
 // Optional repository variables:
 // - ISSUE_HYGIENE_BASE_BRANCHES=main,overhaul
@@ -36,7 +37,7 @@ function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function parseClosingIssueNumbers(text, owner, repo) {
+export function parseClosingIssueNumbers(text, owner, repo) {
   const refs = new Set();
   const fullRepoRefPattern = new RegExp(
     `${escapeRegExp(owner)}\\/${escapeRegExp(repo)}#(\\d+)`,
@@ -346,7 +347,36 @@ async function processIssue(owner, repo, issueNumber, pullRequest, config) {
   log(`#${issueNumber}: ${actions.join('; ')}.`);
 }
 
-async function main() {
+export async function processLinkedIssues(
+  owner,
+  repo,
+  linkedIssueNumbers,
+  pullRequest,
+  config,
+  processIssueFn = processIssue,
+) {
+  const failedIssueNumbers = [];
+
+  for (const issueNumber of linkedIssueNumbers) {
+    try {
+      await processIssueFn(owner, repo, issueNumber, pullRequest, config);
+    } catch (error) {
+      const message = error instanceof Error ? error.stack || error.message : String(error);
+      fail(`Failed to process issue #${issueNumber}: ${message}`);
+      failedIssueNumbers.push(issueNumber);
+    }
+  }
+
+  if (failedIssueNumbers.length > 0) {
+    throw new Error(
+      `Issue hygiene failed for ${failedIssueNumbers.length} issue(s): ${failedIssueNumbers
+        .map((issueNumber) => `#${issueNumber}`)
+        .join(', ')}`,
+    );
+  }
+}
+
+export async function main() {
   const eventPath = process.env.GITHUB_EVENT_PATH;
   if (!eventPath) {
     throw new Error('Missing GITHUB_EVENT_PATH.');
@@ -397,12 +427,14 @@ async function main() {
     statusFieldName: process.env.ISSUE_HYGIENE_STATUS_FIELD_NAME?.trim() || 'Status',
   };
 
-  for (const issueNumber of linkedIssueNumbers) {
-    await processIssue(owner, repo, issueNumber, pullRequest, config);
-  }
+  await processLinkedIssues(owner, repo, linkedIssueNumbers, pullRequest, config);
 }
 
-main().catch((error) => {
-  fail(error instanceof Error ? error.stack || error.message : String(error));
-  process.exitCode = 1;
-});
+const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (isDirectRun) {
+  main().catch((error) => {
+    fail(error instanceof Error ? error.stack || error.message : String(error));
+    process.exitCode = 1;
+  });
+}
