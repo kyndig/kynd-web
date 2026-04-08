@@ -7,6 +7,7 @@ import Prose from '@/components/Prose.astro';
 import QuoteBlock from '@/components/QuoteBlock.astro';
 import TeaserCard from '@/components/TeaserCard.astro';
 import FullBleed from '@/components/layout/FullBleed.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 
 const coreValues = [
@@ -31,28 +32,31 @@ const coreValues = [
     heading="Hvorfor Kynd finnes"
     subheading="Vi reagerte på en bransje der for mye handler om timer, og for lite om faktisk verdi."
   >
-    <Prose wide>
-      <p>
-        Kynd ble startet for å samle folk som vil ta ansvar for mer enn teknisk leveranse. Vi mener
-        at gode produkter bygges når produkt, teknologi og organisasjon vurderes samtidig, ikke i
-        separate løp.
-      </p>
-      <p>
-        Derfor jobber vi tett med team og ledelse der beslutningene tas. Vi utfordrer premisser som
-        ikke holder over tid, og bidrar til valg som gir varig effekt i både produkt og drift.
-      </p>
-    </Prose>
+    <Split minBreakpoint="md" gap="2rem" columns="1.1fr 0.9fr">
+      <Prose wide slot="left">
+        <p>
+          Kynd ble startet for å samle folk som vil ta ansvar for mer enn teknisk leveranse. Vi
+          mener at gode produkter bygges når produkt, teknologi og organisasjon vurderes samtidig,
+          ikke i separate løp.
+        </p>
+        <p>
+          Derfor jobber vi tett med team og ledelse der beslutningene tas. Vi utfordrer premisser
+          som ikke holder over tid, og bidrar til valg som gir varig effekt i både produkt og drift.
+        </p>
+      </Prose>
+      <QuoteBlock
+        slot="right"
+        quote="Vi selger ikke kapasitet. Vi går inn i beslutninger som faktisk påvirker kvalitet, fart og verdi over tid."
+        author="Kynd"
+        authorRole="Arbeidsform"
+      />
+    </Split>
   </PageSection>
 
   <PageSection
     heading="Hva vi gjør annerledes"
     subheading="Vi foretrekker tydelighet fremfor konsulentspråk og generiske modeller."
   >
-    <QuoteBlock
-      quote="Vi selger ikke kapasitet. Vi går inn i beslutninger som faktisk påvirker kvalitet, fart og verdi over tid."
-      author="Kynd"
-      authorRole="Arbeidsform"
-    />
     <ul class="u-list-disc">
       <li>Senior kompetanse tett på beslutninger med høy konsekvens.</li>
       <li>Selektivt samarbeid med tydelige forventninger til begge parter.</li>
@@ -65,7 +69,7 @@ const coreValues = [
     heading="Verdier i praksis"
     subheading="Disse verdiene styrer hvordan vi prioriterer i usikre og komplekse produktløp."
   >
-    <ul class="u-grid-cards u-grid-cards--3">
+    <ul class="values-grid">
       {
         coreValues.map((value, index) => (
           <li>
@@ -110,6 +114,31 @@ const coreValues = [
 </Layout>
 
 <style>
+  .values-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .values-grid li {
+    @media (--md) {
+      grid-column: span 2;
+    }
+  }
+
+  .values-grid li:nth-child(2) {
+    @media (--md) {
+      grid-column: span 4;
+    }
+  }
+
   .u-list-disc {
     margin: 0;
   }
