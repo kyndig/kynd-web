@@ -1,0 +1,45 @@
+---
+export type Props = {
+  title: string;
+  href: string;
+  description?: string;
+  tone?: 'secondary' | 'secondary-shade';
+};
+
+const { title, href, description, tone = 'secondary-shade' } = Astro.props;
+---
+
+<article class:list={['teaser-card', `teaser-card--${tone}`]}>
+  <a href={href}>{title}</a>
+  {description && <p>{description}</p>}
+</article>
+
+<style>
+  .teaser-card {
+    border: 2px solid var(--color-primary);
+    padding: 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .teaser-card--secondary {
+    background: var(--color-secondary);
+  }
+
+  .teaser-card--secondary-shade {
+    background: var(--color-secondary-shade);
+  }
+
+  a {
+    font-size: var(--fs-heading-xs);
+    width: fit-content;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    padding: 0.2rem 0.4rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: var(--fs-body-s);
+  }
+</style>

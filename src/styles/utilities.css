@@ -9,3 +9,30 @@
   white-space: nowrap;
   border-width: 0;
 }
+
+.u-list-disc {
+  list-style: disc;
+  padding-inline-start: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  font-size: var(--fs-body-m);
+}
+
+.u-grid-cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.u-grid-cards--2 {
+  @media (--md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.u-grid-cards--3 {
+  @media (--md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
