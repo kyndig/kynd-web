@@ -63,19 +63,19 @@ Tokenized CSS used across multiple components.
 
 ## Issue-to-Component Mapping
 
-| Issue | Parent | Scope                                     | Primary Files                                                                             | Current Code Status                          |
-| ----- | ------ | ----------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
-| #41   | #33    | Button/ButtonLink visual restyle          | `src/styles/button.css`, `src/components/Button.astro`, `src/components/ButtonLink.astro` | Implemented                                  |
-| #42   | #33    | Hero tagline + size support               | `src/components/HeroSection.astro`, `src/components/HeroLayout.astro`                     | Implemented                                  |
-| #43   | #33    | `ContactCTA` + `FullBleed` variants       | `src/components/ContactCTA.astro`, `src/components/layout/FullBleed.astro`                | Implemented                                  |
-| #44   | #33    | `ServiceCard` restyle + icon slot         | `src/components/ServiceCard.astro`                                                        | Implemented                                  |
-| #45   | #33    | Header/Footer token and frosted treatment | `src/components/Header.astro`, `src/components/Footer.astro`                              | Implemented                                  |
-| #46   | #34    | `NumberedConceptCard`                     | `src/components/NumberedConceptCard.astro`                                                | Implemented                                  |
-| #47   | #34    | `Badge` component                         | `src/components/Badge.astro`                                                              | Implemented                                  |
-| #48   | #34    | `CategoryFilter` component                | `src/components/CategoryFilter.astro`                                                     | Implemented                                  |
-| #49   | #34    | `QuoteBlock` component                    | `src/components/QuoteBlock.astro`                                                         | Implemented                                  |
-| #50   | #34    | `JobCard` component                       | `src/components/JobCard.astro`                                                            | Implemented                                  |
-| #51   | #34    | Decorative pattern utilities              | `src/styles/decorative-pattern.css`, `src/styles/utilities.css`                           | Implemented                                   |
+| Issue | Parent | Scope                                     | Primary Files                                                                             | Current Code Status |
+| ----- | ------ | ----------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------- |
+| #41   | #33    | Button/ButtonLink visual restyle          | `src/styles/button.css`, `src/components/Button.astro`, `src/components/ButtonLink.astro` | Implemented         |
+| #42   | #33    | Hero tagline + size support               | `src/components/HeroSection.astro`, `src/components/HeroLayout.astro`                     | Implemented         |
+| #43   | #33    | `ContactCTA` + `FullBleed` variants       | `src/components/ContactCTA.astro`, `src/components/layout/FullBleed.astro`                | Implemented         |
+| #44   | #33    | `ServiceCard` restyle + icon slot         | `src/components/ServiceCard.astro`                                                        | Implemented         |
+| #45   | #33    | Header/Footer token and frosted treatment | `src/components/Header.astro`, `src/components/Footer.astro`                              | Implemented         |
+| #46   | #34    | `NumberedConceptCard`                     | `src/components/NumberedConceptCard.astro`                                                | Implemented         |
+| #47   | #34    | `Badge` component                         | `src/components/Badge.astro`                                                              | Implemented         |
+| #48   | #34    | `CategoryFilter` component                | `src/components/CategoryFilter.astro`                                                     | Implemented         |
+| #49   | #34    | `QuoteBlock` component                    | `src/components/QuoteBlock.astro`                                                         | Implemented         |
+| #50   | #34    | `JobCard` component                       | `src/components/JobCard.astro`                                                            | Implemented         |
+| #51   | #34    | Decorative pattern utilities              | `src/styles/decorative-pattern.css`, `src/styles/utilities.css`                           | Implemented         |
 
 ## Decorative Utility Compatibility
 
