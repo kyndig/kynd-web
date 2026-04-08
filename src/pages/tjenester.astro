@@ -95,20 +95,22 @@ const collaborationConsequences = [
     heading="Hva vi faktisk gjør"
     subheading="Vi går inn der erfarne folk gir størst forskjell, både i leveranse og retning."
   >
-    <div class="u-grid-cards u-grid-cards--2">
+    <ul class="services-bento" aria-label="Tjenesteområder">
       {
-        services.map((service) => (
-          <ServiceCard
-            title={service.title}
-            description={service.description}
-            outcome={service.outcome}
-            variant="surface-low"
-          >
-            <span slot="icon">{service.icon}</span>
-          </ServiceCard>
+        services.map((service, index) => (
+          <li class:list={['services-bento-item', { featured: index === 0 || index === 3 }]}>
+            <ServiceCard
+              title={service.title}
+              description={service.description}
+              outcome={service.outcome}
+              variant="surface-low"
+            >
+              <span slot="icon">{service.icon}</span>
+            </ServiceCard>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </PageSection>
 
   <PageSection
@@ -133,12 +135,44 @@ const collaborationConsequences = [
   </PageSection>
 
   <FullBleed variant="surface-low">
-    <ContactCTA variant="dark" />
+    <div class="cta-shell">
+      <ContactCTA variant="dark" />
+    </div>
   </FullBleed>
 </Layout>
 
 <style>
+  .services-bento {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .services-bento-item {
+    @media (--md) {
+      grid-column: span 3;
+    }
+  }
+
+  .services-bento-item.featured {
+    @media (--md) {
+      grid-column: span 4;
+    }
+  }
+
   .u-list-disc {
     margin: 0;
+  }
+
+  .cta-shell {
+    max-inline-size: 58rem;
+    margin-inline: auto;
   }
 </style>
