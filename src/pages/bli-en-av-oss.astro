@@ -5,6 +5,7 @@ import JobCard from '@/components/JobCard.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import TeaserCard from '@/components/TeaserCard.astro';
+import FullBleed from '@/components/layout/FullBleed.astro';
 import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 
@@ -133,14 +134,16 @@ const processSteps = [
     </Split>
   </PageSection>
 
-  <PageSection
-    heading="Aktuelle roller"
-    subheading="Vi ansetter sjelden og bevisst. Når vi åpner roller, er det med tydelige forventninger."
-  >
-    <div class="u-grid-cards">
-      {openRoles.map((role) => <JobCard {...role} />)}
-    </div>
-  </PageSection>
+  <FullBleed variant="dark">
+    <PageSection
+      heading="Aktuelle roller"
+      subheading="Vi ansetter sjelden og bevisst. Når vi åpner roller, er det med tydelige forventninger."
+    >
+      <div class="u-grid-cards">
+        {openRoles.map((role) => <JobCard {...role} />)}
+      </div>
+    </PageSection>
+  </FullBleed>
 
   <PageSection
     heading="Fordyp deg i håndboka"
@@ -177,5 +180,11 @@ const processSteps = [
 <style>
   .u-list-disc {
     margin: 0;
+  }
+
+  :global(.fullBleed.dark .job-card) {
+    border-color: var(--color-secondary);
+    background: color-mix(in srgb, var(--color-primary), white 8%);
+    color: var(--color-secondary);
   }
 </style>
