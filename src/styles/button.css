@@ -6,8 +6,8 @@
   padding-block: calc(1.25rem - var(--border-width));
   padding-inline: calc(2.1875rem - var(--border-width));
   font-size: var(--fs-label-l);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1;
   border: var(--border-width) solid transparent;
