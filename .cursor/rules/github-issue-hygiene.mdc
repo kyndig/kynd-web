@@ -1,0 +1,16 @@
+---
+description: Keep GitHub issues aligned with delivered work
+alwaysApply: true
+---
+
+# GitHub Issue Hygiene
+
+- Treat issue maintenance as part of done when a task involves GitHub issues, PRs, or merged work.
+- If issue scope is unclear, ask which issue numbers are in scope before wrapping up.
+- Distinguish between issue `state`, labels, and GitHub Project `Status`; if the user says "status" ambiguously, clarify which one they mean.
+- When work is complete and merged, review linked issues and update them instead of only mentioning them in chat.
+- Close issues whose scope is delivered; if the work is partial, keep the issue open and add a short comment describing what remains.
+- When work lands on `overhaul`, do not wait for `main` before closing an issue whose scope is delivered.
+- Remove stale `blocked` labels or equivalent blockers when the dependency is resolved.
+- When closing an issue after a merged PR, add a short comment linking the relevant PR(s) and noting whether the merge target was `overhaul` or `main`.
+- If tooling, permissions, or missing issue references prevent an update, say so explicitly in the final response instead of silently skipping issue hygiene.
