@@ -1,10 +1,19 @@
 ---
 import ContactCTA from '@/components/ContactCTA.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import NumberedConceptCard from '@/components/NumberedConceptCard.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import QuoteBlock from '@/components/QuoteBlock.astro';
+import TeaserCard from '@/components/TeaserCard.astro';
+import FullBleed from '@/components/layout/FullBleed.astro';
 import Layout from '@/layouts/Base.astro';
+
+const coreValues = [
+  'Integritet i tekniske og strategiske anbefalinger.',
+  'Tydelig kommunikasjon fremfor konsulentspråk.',
+  'Ansvar for effekt, ikke bare aktivitet.',
+];
 ---
 
 <Layout
@@ -44,7 +53,7 @@ import Layout from '@/layouts/Base.astro';
       author="Kynd"
       authorRole="Arbeidsform"
     />
-    <ul class="difference-list">
+    <ul class="u-list-disc">
       <li>Senior kompetanse tett på beslutninger med høy konsekvens.</li>
       <li>Selektivt samarbeid med tydelige forventninger til begge parter.</li>
       <li>Konkret rådgivning og operativ levering i samme team.</li>
@@ -53,44 +62,59 @@ import Layout from '@/layouts/Base.astro';
   </PageSection>
 
   <PageSection
-    heading="Konsulentarbeid og produktambisjon"
-    subheading="Vi bygger verdi for kunder i dag, og bygger også kompetanse og produkter på lang sikt."
+    heading="Verdier i praksis"
+    subheading="Disse verdiene styrer hvordan vi prioriterer i usikre og komplekse produktløp."
   >
-    <Prose wide>
-      <p>
-        Kynd er bygget som et konsulentselskap med ambisjon om å skape mer enn klassisk
-        konsulentleveranse. Vi hjelper kunder med å bygge gode produkter, og bruker erfaringene til
-        å utvikle egne initiativer over tid.
-      </p>
-      <p>
-        Denne kombinasjonen krever nøkternhet, integritet og gjennomføringsevne. Målet er ikke å
-        virke annerledes, men å være nyttige i krevende kontekster.
-      </p>
-    </Prose>
+    <ul class="u-grid-cards u-grid-cards--3">
+      {
+        coreValues.map((value, index) => (
+          <li>
+            <NumberedConceptCard number={index + 1} title={value} />
+          </li>
+        ))
+      }
+    </ul>
   </PageSection>
+
+  <FullBleed variant="dark">
+    <PageSection
+      heading="Konsulentarbeid og produktambisjon"
+      subheading="Vi bygger verdi for kunder i dag, og bygger også kompetanse og produkter på lang sikt."
+    >
+      <Prose wide>
+        <p>
+          Kynd er bygget som et konsulentselskap med ambisjon om å skape mer enn klassisk
+          konsulentleveranse. Vi hjelper kunder med å bygge gode produkter, og bruker erfaringene
+          til å utvikle egne initiativer over tid.
+        </p>
+        <p>
+          Denne kombinasjonen krever nøkternhet, integritet og gjennomføringsevne. Målet er ikke å
+          virke annerledes, men å være nyttige i krevende kontekster.
+        </p>
+      </Prose>
+    </PageSection>
+  </FullBleed>
 
   <PageSection heading="Folka i Kynd" subheading="Menneskene bak leveransene.">
-    <a class="people-link" href="/folka">Møt folka</a>
+    <TeaserCard
+      title="Møt folka"
+      href="/folka"
+      description="Bli kjent med menneskene som bygger Kynd i praksis."
+      tone="secondary"
+    />
   </PageSection>
 
-  <ContactCTA />
+  <FullBleed variant="surface-low">
+    <ContactCTA variant="surface-low" />
+  </FullBleed>
 </Layout>
 
 <style>
-  .difference-list {
-    list-style: disc;
-    padding-inline-start: 1rem;
-    display: grid;
-    gap: 0.75rem;
-    font-size: var(--fs-body-m);
+  .u-list-disc {
+    margin: 0;
   }
 
-  .people-link {
-    display: inline-block;
-    font-size: var(--fs-heading-xs);
-    background-color: var(--color-accent);
-    color: var(--color-primary);
-    padding: 0.5rem 0.75rem;
-    border: 2px solid var(--color-primary);
+  :global(.fullBleed.dark .prose) {
+    color: var(--color-secondary);
   }
 </style>
