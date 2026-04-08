@@ -1,18 +1,21 @@
-.u-pattern {
+:where(.u-pattern, .pattern-dots, .pattern-lines) {
   position: relative;
   isolation: isolate;
 }
 
-.u-pattern::after {
+:where(.u-pattern, .pattern-dots, .pattern-lines)::after {
   content: '';
   position: absolute;
   inset: auto -2rem -2rem auto;
   width: clamp(10rem, 28vw, 20rem);
   aspect-ratio: 1099 / 755;
-  background: currentColor;
-  opacity: 0.07;
   pointer-events: none;
   z-index: -1;
+}
+
+.u-pattern::after {
+  background: currentColor;
+  opacity: 0.07;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;
@@ -24,4 +27,20 @@
 .u-pattern--waves::after {
   -webkit-mask-image: url('/patterns/pattern-1.svg');
   mask-image: url('/patterns/pattern-1.svg');
+}
+
+.pattern-dots::after {
+  --pattern-color: color-mix(in srgb, var(--color-border) 40%, transparent);
+  background-image: radial-gradient(circle, var(--pattern-color) 1px, transparent 1.5px);
+  background-size: 0.75rem 0.75rem;
+  opacity: 1;
+}
+
+.pattern-lines::after {
+  --pattern-color: color-mix(in srgb, var(--color-border) 35%, transparent);
+  background-image:
+    linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
+  background-size: 1rem 1rem;
+  opacity: 1;
 }
