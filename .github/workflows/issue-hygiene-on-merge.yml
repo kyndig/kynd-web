@@ -1,0 +1,38 @@
+name: Issue Hygiene
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+  repository-projects: write
+
+jobs:
+  sync-linked-issues:
+    name: Sync Linked Issues
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Sync issue hygiene after merge
+        env:
+          # Optional repository variables:
+          # ISSUE_HYGIENE_BASE_BRANCHES=main,overhaul
+          # ISSUE_HYGIENE_BLOCKED_LABELS=blocked,blocked-by-dependency
+          # ISSUE_HYGIENE_PROJECT_OWNER=kynd
+          # ISSUE_HYGIENE_PROJECT_NUMBER=1
+          # ISSUE_HYGIENE_STATUS_FIELD_NAME=Status
+          # ISSUE_HYGIENE_DONE_OPTION_NAME=Done
+          GITHUB_TOKEN: ${{ github.token }}
+          ISSUE_HYGIENE_BASE_BRANCHES: ${{ vars.ISSUE_HYGIENE_BASE_BRANCHES }}
+          ISSUE_HYGIENE_BLOCKED_LABELS: ${{ vars.ISSUE_HYGIENE_BLOCKED_LABELS }}
+          ISSUE_HYGIENE_PROJECT_OWNER: ${{ vars.ISSUE_HYGIENE_PROJECT_OWNER }}
+          ISSUE_HYGIENE_PROJECT_NUMBER: ${{ vars.ISSUE_HYGIENE_PROJECT_NUMBER }}
+          ISSUE_HYGIENE_STATUS_FIELD_NAME: ${{ vars.ISSUE_HYGIENE_STATUS_FIELD_NAME }}
+          ISSUE_HYGIENE_DONE_OPTION_NAME: ${{ vars.ISSUE_HYGIENE_DONE_OPTION_NAME }}
+        run: node .github/scripts/issue-hygiene-on-merge.mjs
