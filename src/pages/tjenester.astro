@@ -4,6 +4,8 @@ import FitSection from '@/components/FitSection.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import PageSection from '@/components/PageSection.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
+import FullBleed from '@/components/layout/FullBleed.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 
 const services = [
@@ -93,7 +95,7 @@ const collaborationConsequences = [
     heading="Hva vi faktisk gjør"
     subheading="Vi går inn der erfarne folk gir størst forskjell, både i leveranse og retning."
   >
-    <div class="services-grid">
+    <div class="u-grid-cards u-grid-cards--2">
       {
         services.map((service) => (
           <ServiceCard
@@ -113,12 +115,14 @@ const collaborationConsequences = [
     heading="Slik leverer vi"
     subheading="Arbeidsformen er en del av tjenesten. Vi utfordrer tidlig, prioriterer hardt og tar ansvar for konsekvensene."
   >
-    <ul class="principles">
-      {operatingPrinciples.map((item) => <li>{item}</li>)}
-    </ul>
-    <ul class="consequences">
-      {collaborationConsequences.map((item) => <li>{item}</li>)}
-    </ul>
+    <Split minBreakpoint="md" gap="2rem">
+      <ul slot="left" class="u-list-disc">
+        {operatingPrinciples.map((item) => <li>{item}</li>)}
+      </ul>
+      <ul slot="right" class="u-list-disc">
+        {collaborationConsequences.map((item) => <li>{item}</li>)}
+      </ul>
+    </Split>
   </PageSection>
 
   <PageSection
@@ -128,34 +132,13 @@ const collaborationConsequences = [
     <FitSection fit={fit} noFit={noFit} />
   </PageSection>
 
-  <ContactCTA variant="dark" />
+  <FullBleed variant="surface-low">
+    <ContactCTA variant="dark" />
+  </FullBleed>
 </Layout>
 
 <style>
-  .services-grid {
-    display: grid;
-    gap: 1rem;
-
-    @media (--md) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-  }
-
-  .consequences {
-    list-style: disc;
-    padding-inline-start: 1rem;
-    display: grid;
-    gap: 0.75rem;
-    font-size: var(--fs-body-m);
-    margin-block-start: 1rem;
-  }
-
-  .principles {
-    list-style: disc;
-    padding-inline-start: 1rem;
-    display: grid;
-    gap: 0.75rem;
-    font-size: var(--fs-body-m);
+  .u-list-disc {
+    margin: 0;
   }
 </style>
