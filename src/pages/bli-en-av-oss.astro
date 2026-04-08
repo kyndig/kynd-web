@@ -62,6 +62,27 @@ const processSteps = [
   'Deretter en faglig samtale om valg, konsekvenser og samarbeid i praksis.',
   'Til slutt en konkret invitasjon med tydelige rammer når begge parter ser match.',
 ];
+
+const builderMindsetCards = [
+  {
+    title: 'Hva vi bygger sammen',
+    body: 'Kynd er et selskap av og for de ansatte. Medeierskap betyr ansvar, ikke bare rettigheter.',
+    points: [
+      'Aktivt bidrag til retning, kvalitet og kultur.',
+      'Langsiktig handlingsrom foran kortsiktig gevinstoptimalisering.',
+    ],
+  },
+  {
+    title: 'Prinsipper og forventninger',
+    body: 'Disse prinsippene styrer hverdagen i Kynd.',
+    points: principles,
+  },
+  {
+    title: 'Fag, produkttid og hvem vi ser etter',
+    body: 'Vi investerer i kompetanse fordi faglig utvikling er en del av leveransekvalitet.',
+    points: weLookFor,
+  },
+];
 ---
 
 <Layout
@@ -76,43 +97,25 @@ const processSteps = [
   />
 
   <PageSection
-    heading="Hva vi bygger sammen"
-    subheading="Kynd er et selskap av og for de ansatte. Medeierskap betyr ansvar, ikke bare rettigheter."
-  >
-    <Prose wide>
-      <p>
-        Vi har en modell der ansatte inviteres inn i medeierskap, med tydelig forventning om aktivt
-        bidrag til retning, kvalitet og kultur. Målet er et robust selskap med langsiktig
-        handlingsrom, ikke kortsiktig gevinstoptimalisering.
-      </p>
-    </Prose>
-  </PageSection>
-
-  <PageSection heading="Prinsipper" subheading="Disse prinsippene styrer hverdagen i Kynd.">
-    <ul class="u-list-disc">
-      {principles.map((item) => <li>{item}</li>)}
-    </ul>
-  </PageSection>
-
-  <PageSection
-    heading="Fag og produkttid"
-    subheading="Vi investerer i kompetanse, eksperimentering og produkttid fordi faglig utvikling er en del av leveransekvalitet."
-  >
-    <Prose wide>
-      <p>
-        Kynd prioriterer tid til læring, konferanser og intern produktutforsking. Vi mener dette gir
-        bedre beslutninger i kundearbeid, sterkere teknisk handverk og mer ansvarlige prioriteringer
-        over tid.
-      </p>
-    </Prose>
-  </PageSection>
-
-  <PageSection
-    heading="Hvem vi ser etter"
+    heading="Builder-mindset i praksis"
     subheading="Vi er bevisst selektive. Riktig match er viktigere enn rask vekst."
   >
-    <ul class="u-list-disc">
-      {weLookFor.map((item) => <li>{item}</li>)}
+    <ul class="careers-bento">
+      {
+        builderMindsetCards.map((card, index) => (
+          <li class:list={['careers-bento-item', { featured: index === 0 }]}>
+            <article class="careers-card">
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+              <ul class="u-list-disc">
+                {card.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </article>
+          </li>
+        ))
+      }
     </ul>
   </PageSection>
 
@@ -178,6 +181,48 @@ const processSteps = [
 </Layout>
 
 <style>
+  .careers-bento {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+
+    @media (--md) {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  .careers-bento-item {
+    @media (--md) {
+      grid-column: span 3;
+    }
+  }
+
+  .careers-bento-item.featured {
+    @media (--md) {
+      grid-column: span 6;
+    }
+  }
+
+  .careers-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-low);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 1rem;
+  }
+
+  .careers-card h3 {
+    font-size: var(--fs-heading-xs);
+  }
+
+  .careers-card p {
+    font-size: var(--fs-body-m);
+  }
+
   .u-list-disc {
     margin: 0;
   }
