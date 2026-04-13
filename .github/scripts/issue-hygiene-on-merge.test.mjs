@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { parseClosingIssueNumbers, processLinkedIssues } from './issue-hygiene-on-merge.mjs';
+import {
+  parseClosingIssueNumbers,
+  parseRelatedIssueNumbers,
+  parseTaskListIssueNumbers,
+  processLinkedIssues,
+  processReadyRelatedIssues,
+} from './issue-hygiene-on-merge.mjs';
 
 test('processLinkedIssues continues after a per-issue failure and reports all failed issue numbers', async () => {
   const attemptedIssues = [];
@@ -48,4 +54,65 @@ test('parseClosingIssueNumbers only closes references directly attached to a clo
   );
 
   assert.deepEqual(closingIssueNumbers, [10, 40, 41, 42]);
+});
+
+test('parseRelatedIssueNumbers only collects explicit related references', () => {
+  const relatedIssueNumbers = parseRelatedIssueNumbers(
+    [
+      'Related: #29 and kynd-no/kynd-web#30',
+      'Parent epic: https://github.com/kynd-no/kynd-web/issues/31',
+      'See #32 for context.',
+    ].join('\n'),
+    'kynd-no',
+    'kynd-web',
+  );
+
+  assert.deepEqual(relatedIssueNumbers, [29, 30, 31]);
+});
+
+test('parseTaskListIssueNumbers only reads issue references from markdown task lists', () => {
+  const taskListIssueNumbers = parseTaskListIssueNumbers(
+    [
+      '- [x] #35 [page-home] Rebuild Home page from Stitch',
+      '- [ ] kynd-no/kynd-web#36 [page-services] Rebuild Services page from Stitch',
+      'Blocked by: #29',
+    ].join('\n'),
+    'kynd-no',
+    'kynd-web',
+  );
+
+  assert.deepEqual(taskListIssueNumbers, [35, 36]);
+});
+
+test('processReadyRelatedIssues closes a related parent once every checklist issue is closed', async () => {
+  const processedIssues = [];
+  const pullRequest = {
+    base: { ref: 'overhaul' },
+    html_url: 'https://github.com/kynd-no/kynd-web/pull/123',
+    number: 123,
+  };
+  const issueMap = {
+    29: {
+      body: ['- [x] #35', '- [x] #36'].join('\n'),
+      state: 'open',
+    },
+    35: { body: '', state: 'closed' },
+    36: { body: '', state: 'closed' },
+  };
+
+  await processReadyRelatedIssues(
+    'kynd-no',
+    'kynd-web',
+    [29],
+    pullRequest,
+    { blockedLabels: new Set() },
+    {
+      loadIssueFn: async (_owner, _repo, issueNumber) => issueMap[issueNumber],
+      processIssueFn: async (_owner, _repo, issueNumber) => {
+        processedIssues.push(issueNumber);
+      },
+    },
+  );
+
+  assert.deepEqual(processedIssues, [29]);
 });

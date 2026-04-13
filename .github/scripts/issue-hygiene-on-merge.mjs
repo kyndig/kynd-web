@@ -1,3 +1,5 @@
+/* global console, fetch, process */
+
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
@@ -66,6 +68,15 @@ function createIssueReferenceConfig(owner, repo) {
   };
 }
 
+function addIssueNumbers(refs, references, extractIssueNumber) {
+  for (const reference of references) {
+    const issueNumber = extractIssueNumber(reference);
+    if (issueNumber !== null) {
+      refs.add(issueNumber);
+    }
+  }
+}
+
 export function parseClosingIssueNumbers(text, owner, repo) {
   const refs = new Set();
   const { issueReferenceSource, extractIssueNumber } = createIssueReferenceConfig(owner, repo);
@@ -77,14 +88,44 @@ export function parseClosingIssueNumbers(text, owner, repo) {
   for (const line of text.split(/\r?\n/)) {
     for (const clauseMatch of line.matchAll(closingClausePattern)) {
       const references = clauseMatch[1].match(new RegExp(issueReferenceSource, 'gi')) || [];
-
-      for (const reference of references) {
-        const issueNumber = extractIssueNumber(reference);
-        if (issueNumber !== null) {
-          refs.add(issueNumber);
-        }
-      }
+      addIssueNumbers(refs, references, extractIssueNumber);
     }
+  }
+
+  return [...refs];
+}
+
+export function parseRelatedIssueNumbers(text, owner, repo) {
+  const refs = new Set();
+  const { issueReferenceSource, extractIssueNumber } = createIssueReferenceConfig(owner, repo);
+  const relatedClausePattern = new RegExp(
+    String.raw`\b(?:related|parent(?:\s+epic)?)\b\s*:?\s*((?:${issueReferenceSource})(?:\s*(?:,\s*|(?:and|or)\s+)(?:${issueReferenceSource}))*)`,
+    'gi',
+  );
+
+  for (const line of text.split(/\r?\n/)) {
+    for (const clauseMatch of line.matchAll(relatedClausePattern)) {
+      const references = clauseMatch[1].match(new RegExp(issueReferenceSource, 'gi')) || [];
+      addIssueNumbers(refs, references, extractIssueNumber);
+    }
+  }
+
+  return [...refs];
+}
+
+export function parseTaskListIssueNumbers(text, owner, repo) {
+  const refs = new Set();
+  const { issueReferenceSource, extractIssueNumber } = createIssueReferenceConfig(owner, repo);
+  const taskListPattern = /^\s*[-*]\s+\[(?: |x|X)\]\s+(.*)$/;
+
+  for (const line of text.split(/\r?\n/)) {
+    const taskMatch = line.match(taskListPattern);
+    if (!taskMatch) {
+      continue;
+    }
+
+    const references = taskMatch[1].match(new RegExp(issueReferenceSource, 'gi')) || [];
+    addIssueNumbers(refs, references, extractIssueNumber);
   }
 
   return [...refs];
@@ -311,8 +352,12 @@ async function addComment(owner, repo, issueNumber, body) {
   });
 }
 
+async function fetchIssue(owner, repo, issueNumber) {
+  return githubRequest(`/repos/${owner}/${repo}/issues/${issueNumber}`);
+}
+
 async function processIssue(owner, repo, issueNumber, pullRequest, config) {
-  const issue = await githubRequest(`/repos/${owner}/${repo}/issues/${issueNumber}`);
+  const issue = await fetchIssue(owner, repo, issueNumber);
 
   if (issue.pull_request) {
     log(`#${issueNumber} is a pull request, not an issue; skipping.`);
@@ -396,6 +441,60 @@ export async function processLinkedIssues(
   }
 }
 
+export async function processReadyRelatedIssues(
+  owner,
+  repo,
+  relatedIssueNumbers,
+  pullRequest,
+  config,
+  { loadIssueFn = fetchIssue, processIssueFn = processIssue } = {},
+) {
+  const seenIssueNumbers = new Set();
+
+  for (const issueNumber of relatedIssueNumbers) {
+    if (seenIssueNumbers.has(issueNumber)) {
+      continue;
+    }
+
+    seenIssueNumbers.add(issueNumber);
+
+    const issue = await loadIssueFn(owner, repo, issueNumber);
+
+    if (issue.pull_request) {
+      log(`#${issueNumber} is a pull request, not an issue; skipping related issue sync.`);
+      continue;
+    }
+
+    if (issue.state === 'closed') {
+      log(`#${issueNumber} is already closed; skipping related issue sync.`);
+      continue;
+    }
+
+    const taskListIssueNumbers = parseTaskListIssueNumbers(issue.body || '', owner, repo);
+    if (taskListIssueNumbers.length === 0) {
+      log(`#${issueNumber} has no issue task list; skipping related issue sync.`);
+      continue;
+    }
+
+    let allTaskListIssuesClosed = true;
+
+    for (const taskListIssueNumber of taskListIssueNumbers) {
+      const taskIssue = await loadIssueFn(owner, repo, taskListIssueNumber);
+      if (taskIssue.state !== 'closed') {
+        allTaskListIssuesClosed = false;
+        break;
+      }
+    }
+
+    if (!allTaskListIssuesClosed) {
+      log(`#${issueNumber} still has open checklist issues; skipping related issue sync.`);
+      continue;
+    }
+
+    await processIssueFn(owner, repo, issueNumber, pullRequest, config);
+  }
+}
+
 export async function main() {
   const eventPath = process.env.GITHUB_EVENT_PATH;
   if (!eventPath) {
@@ -429,9 +528,14 @@ export async function main() {
     owner,
     repo,
   );
+  const relatedIssueNumbers = parseRelatedIssueNumbers(
+    `${pullRequest.title || ''}\n${pullRequest.body || ''}`,
+    owner,
+    repo,
+  ).filter((issueNumber) => !linkedIssueNumbers.includes(issueNumber));
 
-  if (linkedIssueNumbers.length === 0) {
-    log('No closing issue references found in the merged PR.');
+  if (linkedIssueNumbers.length === 0 && relatedIssueNumbers.length === 0) {
+    log('No closing or related issue references found in the merged PR.');
     return;
   }
 
@@ -448,6 +552,7 @@ export async function main() {
   };
 
   await processLinkedIssues(owner, repo, linkedIssueNumbers, pullRequest, config);
+  await processReadyRelatedIssues(owner, repo, relatedIssueNumbers, pullRequest, config);
 }
 
 const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
