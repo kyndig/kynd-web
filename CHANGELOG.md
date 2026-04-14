@@ -57,10 +57,10 @@ To keep PRs small and manageable:
 3. **PR C (Polish and follow-up fixes)**  
    `4a8c746`
 
-After these, the branch is ready for content/IA-focused PR slices aligned with `OVERHAUL.md`:
+After these, the branch is ready for content/IA-focused PR slices tracked in [#69 Epic: Content + IA Overhaul](https://github.com/kyndig/kynd-web/issues/69):
 
-- Forside positioning rewrite
-- Tjenester (for/not-for fit)
-- Hvordan vi jobber
-- Om Kynd + Join/Kultur separation
-- Kontakt conversion flow
+- [#70](https://github.com/kyndig/kynd-web/issues/70) Home positioning rewrite
+- [#71](https://github.com/kyndig/kynd-web/issues/71) Services fit and offer clarity
+- [#72](https://github.com/kyndig/kynd-web/issues/72) Hvordan vi jobber page direction
+- [#73](https://github.com/kyndig/kynd-web/issues/73) Om Kynd and join/culture separation
+- [#74](https://github.com/kyndig/kynd-web/issues/74) Contact conversion flow
