@@ -11,15 +11,15 @@ import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
 
 const coreValues = [
-  'Integritet i tekniske og strategiske anbefalinger.',
-  'Tydelig kommunikasjon fremfor konsulentspråk.',
-  'Ansvar for effekt, ikke bare aktivitet.',
+  'Fellesskap, ikke bare konsulentskall',
+  'Gründertenkning kombinert med senior gjennomføring',
+  'Nøktern og troverdig annerledeshet',
 ];
 ---
 
 <Layout
   title="Om Kynd"
-  description="Kynd ble startet for å bygge et fagmiljø der produkt, teknologi og organisasjon sees i sammenheng. Les om hvorfor vi finnes og hva vi gjør annerledes."
+  description="Kynd er et fellesskap for produktutvikling. Les hvorfor vi finnes, hva vi gjør annerledes, og hvordan vi kombinerer gjennomføring med langsiktig produktambisjon."
   image="/patterns/pattern-1.svg"
 >
   <HeroSection
@@ -30,23 +30,23 @@ const coreValues = [
 
   <PageSection
     heading="Hvorfor Kynd finnes"
-    subheading="Vi reagerte på en bransje der for mye handler om timer, og for lite om faktisk verdi."
+    subheading="Vi reagerte på en bransje der for mye handler om timer, og for lite om effekt."
   >
     <Split minBreakpoint="md" gap="2rem" columns="1.1fr 0.9fr">
       <Prose wide slot="left">
         <p>
           Kynd ble startet for å samle folk som vil ta ansvar for mer enn teknisk leveranse. Vi
-          mener at gode produkter bygges når produkt, teknologi og organisasjon vurderes samtidig,
-          ikke i separate løp.
+          mener at gode produkter bygges når produkt, teknologi og organisasjon vurderes samtidig.
         </p>
         <p>
           Derfor jobber vi tett med team og ledelse der beslutningene tas. Vi utfordrer premisser
-          som ikke holder over tid, og bidrar til valg som gir varig effekt i både produkt og drift.
+          som ikke holder over tid, og bidrar til valg som gir varig effekt i produkt, drift og
+          samarbeid.
         </p>
       </Prose>
       <QuoteBlock
         slot="right"
-        quote="Vi selger ikke kapasitet. Vi går inn i beslutninger som faktisk påvirker kvalitet, fart og verdi over tid."
+        quote="Vi selger ikke kapasitet. Vi går inn i beslutninger som påvirker kvalitet, fart og verdi over tid."
         author="Kynd"
         authorRole="Arbeidsform"
       />
@@ -55,7 +55,7 @@ const coreValues = [
 
   <PageSection
     heading="Hva vi gjør annerledes"
-    subheading="Vi foretrekker tydelighet fremfor konsulentspråk og generiske modeller."
+    subheading="Vi foretrekker tydelighet fremfor konsulentspråk og standardpakker."
   >
     <ul class="u-list-disc">
       <li>Senior kompetanse tett på beslutninger med høy konsekvens.</li>
@@ -83,13 +83,13 @@ const coreValues = [
   <FullBleed variant="dark">
     <PageSection
       heading="Konsulentarbeid og produktambisjon"
-      subheading="Vi bygger verdi for kunder i dag, og bygger også kompetanse og produkter på lang sikt."
+      subheading="Vi bygger verdi for kunder i dag, og bygger samtidig kompetanse og produkter på lang sikt."
     >
       <Prose wide>
         <p>
           Kynd er bygget som et konsulentselskap med ambisjon om å skape mer enn klassisk
-          konsulentleveranse. Vi hjelper kunder med å bygge gode produkter, og bruker erfaringene
-          til å utvikle egne initiativer over tid.
+          konsulentleveranse. Vi hjelper kunder med å bygge gode produkter, og bruker læringen til å
+          utvikle egne initiativer over tid.
         </p>
         <p>
           Denne kombinasjonen krever nøkternhet, integritet og gjennomføringsevne. Målet er ikke å
@@ -109,7 +109,11 @@ const coreValues = [
   </PageSection>
 
   <FullBleed variant="surface-low">
-    <ContactCTA variant="surface-low" />
+    <ContactCTA
+      variant="surface-low"
+      title="Vil du utforske et samarbeid?"
+      body="Ta en prat med oss. Vi starter med en uforpliktende avklaring av behov, mål og neste steg."
+    />
   </FullBleed>
 </Layout>
 

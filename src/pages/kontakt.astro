@@ -1,17 +1,43 @@
 ---
 import ContactUs from '@/components/ContactUs.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
+import Split from '@/components/layout/Split.astro';
 import Layout from '@/layouts/Base.astro';
+
+const nextSteps = [
+  'Vi svarer raskt med forslag til tidspunkt for en kort avklaring.',
+  'I første møte kartlegger vi behov, mål og rammer sammen.',
+  'Etterpå får du et konkret forslag til neste steg - helt uforpliktende.',
+];
 ---
 
 <Layout
   title="Kontakt"
-  description="Ta kontakt med Kynd for en uforpliktende prat om produktutvikling, teknologi og samarbeid."
+  description="Ta en prat med Kynd om produktutvikling, teknologi og samarbeid. Uforpliktende første møte med tydelig neste steg."
   image="/patterns/pattern-0.svg"
 >
   <HeroSection
-    title="Kontakt"
-    preamble="Vi tar gjerne en uforpliktende prat om utfordringer, muligheter og hva som er riktig neste steg."
+    title="Ta en prat med oss"
+    preamble="Uforpliktende første møte. Vi avklarer behov og foreslår et konkret neste steg."
+    tagline="Kontakt"
   />
+  <PageSection
+    heading="Slik fungerer det"
+    subheading="Lav terskel, tydelig neste steg og ingen krav om ferdig bestilling."
+  >
+    <Split minBreakpoint="md" gap="2rem">
+      <Prose slot="left" wide>
+        <p>
+          Du trenger ikke å vite nøyaktig hva du trenger før du tar kontakt. Bruk meldingsfeltet til
+          å beskrive situasjonen kort, så tar vi det derfra.
+        </p>
+      </Prose>
+      <ul slot="right" class="u-list-disc">
+        {nextSteps.map((step) => <li>{step}</li>)}
+      </ul>
+    </Split>
+  </PageSection>
   <ContactUs />
 </Layout>

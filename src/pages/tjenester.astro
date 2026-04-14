@@ -55,9 +55,9 @@ const services = [
 
 const fit = [
   'Virksomheter som vil få produkt, teknologi og organisasjon til å trekke i samme retning.',
-  'Produktteam som ønsker tydelige prioriteringer og senior dømmekraft i vanskelige valg.',
+  'Produktteam som trenger tydelige prioriteringer og senior dømmekraft i vanskelige valg.',
   'Miljøer som trenger hjelp både operativt og strategisk, tidlig eller sent i løpet.',
-  'Organisasjoner som ønsker samarbeidspartner, ikke ren kapasitetsfylling.',
+  'Organisasjoner som ønsker samarbeidspartner, ikke bare kapasitet.',
 ];
 
 const noFit = [
@@ -82,7 +82,7 @@ const collaborationConsequences = [
 
 <Layout
   title="Tjenester"
-  description="Kynd leverer fullstack-utvikling, produkt- og tjenestedesign, teknologiledelse, organisasjonsdesign, prosjekt- og teamledelse og strategisk rådgivning."
+  description="Kynd hjelper med fullstack-utvikling, design, teknologiledelse, organisasjonsdesign, prosjekt- og teamledelse og strategisk rådgivning."
   image="/patterns/pattern-1.svg"
 >
   <HeroSection
@@ -93,7 +93,7 @@ const collaborationConsequences = [
 
   <PageSection
     heading="Hva vi faktisk gjør"
-    subheading="Vi går inn der erfarne folk gir størst forskjell, både i leveranse og retning."
+    subheading="Vi går inn der erfarne folk gjør størst forskjell, både i leveranse og retning."
   >
     <ul class="services-bento" aria-label="Tjenesteområder">
       {
@@ -114,7 +114,7 @@ const collaborationConsequences = [
   </PageSection>
 
   <PageSection
-    heading="Slik leverer vi"
+    heading="Slik jobber vi med deg"
     subheading="Arbeidsformen er en del av tjenesten. Vi utfordrer tidlig, prioriterer hardt og tar ansvar for konsekvensene."
   >
     <Split minBreakpoint="md" gap="2rem">
@@ -129,14 +129,17 @@ const collaborationConsequences = [
 
   <PageSection
     heading="Hvem vi passer for"
-    subheading="Dette er bevisst selekterende. Riktig match gir bedre resultater for begge parter."
+    subheading="Riktig match gir bedre resultater for begge parter."
   >
     <FitSection fit={fit} noFit={noFit} />
   </PageSection>
 
   <FullBleed variant="surface-low">
     <div class="cta-shell">
-      <ContactCTA variant="dark" />
+      <ContactCTA
+        variant="dark"
+        body="Uforpliktende første møte. Du trenger ikke ha ferdig bestilling før vi snakker sammen."
+      />
     </div>
   </FullBleed>
 </Layout>
