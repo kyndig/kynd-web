@@ -2,13 +2,15 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  parseClosingIssueNumbers,
-  parseRelatedIssueNumbers,
-  parseTaskListIssueNumbers,
   processIssueGroups,
   processLinkedIssues,
   processReadyRelatedIssues,
-} from './issue-hygiene-on-merge.mjs';
+} from './issue-hygiene/index.mjs';
+import {
+  parseClosingIssueNumbers,
+  parseRelatedIssueNumbers,
+  parseTaskListIssueNumbers,
+} from './issue-hygiene/parse-issues.mjs';
 
 test('processLinkedIssues continues after a per-issue failure and reports all failed issue numbers', async () => {
   const attemptedIssues = [];
