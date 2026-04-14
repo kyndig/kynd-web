@@ -495,6 +495,45 @@ export async function processReadyRelatedIssues(
   }
 }
 
+function toErrorMessage(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+export async function processIssueGroups(
+  owner,
+  repo,
+  linkedIssueNumbers,
+  relatedIssueNumbers,
+  pullRequest,
+  config,
+  {
+    processLinkedIssuesFn = processLinkedIssues,
+    processReadyRelatedIssuesFn = processReadyRelatedIssues,
+  } = {},
+) {
+  const groupFailures = [];
+
+  try {
+    await processLinkedIssuesFn(owner, repo, linkedIssueNumbers, pullRequest, config);
+  } catch (error) {
+    const message = toErrorMessage(error);
+    fail(`Linked issue sync failed: ${message}`);
+    groupFailures.push(`linked issues: ${message}`);
+  }
+
+  try {
+    await processReadyRelatedIssuesFn(owner, repo, relatedIssueNumbers, pullRequest, config);
+  } catch (error) {
+    const message = toErrorMessage(error);
+    fail(`Related issue sync failed: ${message}`);
+    groupFailures.push(`related issues: ${message}`);
+  }
+
+  if (groupFailures.length > 0) {
+    throw new Error(`Issue hygiene had failures in ${groupFailures.join('; ')}`);
+  }
+}
+
 export async function main() {
   const eventPath = process.env.GITHUB_EVENT_PATH;
   if (!eventPath) {
@@ -551,8 +590,14 @@ export async function main() {
     statusFieldName: process.env.ISSUE_HYGIENE_STATUS_FIELD_NAME?.trim() || 'Status',
   };
 
-  await processLinkedIssues(owner, repo, linkedIssueNumbers, pullRequest, config);
-  await processReadyRelatedIssues(owner, repo, relatedIssueNumbers, pullRequest, config);
+  await processIssueGroups(
+    owner,
+    repo,
+    linkedIssueNumbers,
+    relatedIssueNumbers,
+    pullRequest,
+    config,
+  );
 }
 
 const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;

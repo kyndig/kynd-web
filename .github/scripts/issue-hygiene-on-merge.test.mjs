@@ -5,6 +5,7 @@ import {
   parseClosingIssueNumbers,
   parseRelatedIssueNumbers,
   parseTaskListIssueNumbers,
+  processIssueGroups,
   processLinkedIssues,
   processReadyRelatedIssues,
 } from './issue-hygiene-on-merge.mjs';
@@ -115,4 +116,66 @@ test('processReadyRelatedIssues closes a related parent once every checklist iss
   );
 
   assert.deepEqual(processedIssues, [29]);
+});
+
+test('processIssueGroups still processes related issues when linked processing fails', async () => {
+  const callOrder = [];
+  const pullRequest = {
+    base: { ref: 'overhaul' },
+    html_url: 'https://github.com/kynd-no/kynd-web/pull/123',
+    number: 123,
+  };
+
+  await assert.rejects(
+    () =>
+      processIssueGroups(
+        'kynd-no',
+        'kynd-web',
+        [10],
+        [29],
+        pullRequest,
+        { blockedLabels: new Set() },
+        {
+          processLinkedIssuesFn: async () => {
+            callOrder.push('linked');
+            throw new Error('linked failure');
+          },
+          processReadyRelatedIssuesFn: async () => {
+            callOrder.push('related');
+          },
+        },
+      ),
+    /Issue hygiene had failures in linked issues: linked failure/,
+  );
+
+  assert.deepEqual(callOrder, ['linked', 'related']);
+});
+
+test('processIssueGroups reports both linked and related failures together', async () => {
+  const pullRequest = {
+    base: { ref: 'overhaul' },
+    html_url: 'https://github.com/kynd-no/kynd-web/pull/123',
+    number: 123,
+  };
+
+  await assert.rejects(
+    () =>
+      processIssueGroups(
+        'kynd-no',
+        'kynd-web',
+        [10],
+        [29],
+        pullRequest,
+        { blockedLabels: new Set() },
+        {
+          processLinkedIssuesFn: async () => {
+            throw new Error('linked failure');
+          },
+          processReadyRelatedIssuesFn: async () => {
+            throw new Error('related failure');
+          },
+        },
+      ),
+    /Issue hygiene had failures in linked issues: linked failure; related issues: related failure/,
+  );
 });
