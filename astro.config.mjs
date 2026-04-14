@@ -12,6 +12,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      // IA decisions: only canonical public routes should be indexed.
       filter: (page) =>
         !page.includes('/om-oss') &&
         !page.includes('/hvordan-vi-jobber') &&

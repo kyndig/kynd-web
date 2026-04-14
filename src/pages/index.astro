@@ -13,33 +13,33 @@ import { getProjectsWithDuration } from '@/utils/projectHelpers';
 const projects = await getProjectsWithDuration();
 const featuredProjects = projects.slice(0, 3);
 const keyConcepts = [
-  'Produkt, teknologi og organisasjon henger sammen.',
-  'Vi fungerer både i nye initiativer og etablerte produktmiljøer.',
-  'Du får erfarne folk med skapertrang og gjennomføringsevne.',
+  'Produkt, teknologi og organisasjon henger sammen',
+  'Vi fungerer både i nye initiativer og etablerte miljøer',
+  'Erfarne folk med skapertrang og gjennomføringsevne',
 ];
 const manifestoPoints = [
   'Vi går inn i krevende beslutninger, ikke bare oppgaver.',
-  'Vi kobler strategi, produkt og teknologi i samme arbeidsloop.',
+  'Vi kobler strategi, produkt og teknologi i samme arbeidsløp.',
   'Vi bygger fart uten å skyve teknisk og organisatorisk gjeld foran oss.',
 ];
 const helpAreas = [
   'Utforske nye idéer og komme raskt til en MVP.',
-  'Forbedre eksisterende produkter uten å skape mer kompleksitet.',
+  'Forbedre eksisterende produkter uten å skape unødvendig kompleksitet.',
   'Ta teknologivalg som holder over tid i drift, team og forretning.',
   'Styrke produkt- og teamledelse når retning og prioritering glipper.',
-  'Koble strategi, produkt og gjennomføring i samme arbeidsløp.',
-  'Skalere systemer og samarbeid uten å miste fart eller kvalitet.',
+  'Koble strategi, produkt og gjennomføring i samme løp.',
+  'Støtte team som trenger mer fremdrift uten å miste kvalitet.',
 ];
 const collaborationStyle = [
-  'Vi sier tydelig fra når antakelser ikke holder, tidlig i prosessen.',
-  'Vi jobber tett med beslutningstakerne, ikke i et side-spor.',
-  'Vi tar ansvar for resultatet sammen med teamet, ikke bare leveransen.',
+  'Vi avklarer mål og risiko tidlig, så beslutninger tas på riktig grunnlag.',
+  'Vi jobber tett med beslutningstakere og team, ikke i et side-spor.',
+  'Vi tar ansvar for resultatet sammen med dere, ikke bare leveransen.',
 ];
 ---
 
 <Layout
   title="Nysgjerrige hoder. Erfarne hender."
-  description="Kynd er et fellesskap for produktutvikling. Vi hjelper med teknologi, produkt, organisasjon og gjennomføring i både nye initiativer og etablerte produktmiljøer."
+  description="Kynd er et fellesskap for produktutvikling. Vi hjelper med teknologi, produkt, organisasjon og gjennomføring i både nye initiativer og etablerte miljøer."
   image="/patterns/pattern-0.svg"
 >
   <HeroSection
@@ -51,15 +51,15 @@ const collaborationStyle = [
     image="/patterns/pattern-0.svg"
   />
   <PageSection
-    heading="Manifest og arbeidsform"
-    subheading="Vi er et produktmiljø for selskaper som trenger både fremdrift og solide beslutninger."
+    heading="Hva Kynd er i praksis"
+    subheading="Vi er et produktmiljø for selskaper som trenger både fremdrift og gode beslutninger."
   >
     <Split minBreakpoint="md" gap="2rem" columns="1.15fr 0.85fr">
       <div slot="left" class="manifesto-copy">
         <p>
           Kynd ble etablert for å bygge verdi i skjæringen mellom produkt, teknologi og
-          organisasjon. Vi tar ansvar i hele løpet: fra utforsking og prioritering til produksjon og
-          videre drift.
+          organisasjon. Vi tar ansvar i hele løpet: fra utforsking og prioritering til
+          implementering og videre drift.
         </p>
         <ul class="u-list-disc">
           {manifestoPoints.map((point) => <li>{point}</li>)}
@@ -93,7 +93,7 @@ const collaborationStyle = [
     </ul>
   </PageSection>
   <PageSection
-    heading="Utvalgte samarbeid"
+    heading="Bevis i praksis"
     subheading="Noen av prosjektene som viser hvordan vi kobler problem, innsats og effekt."
   >
     <Split minBreakpoint="md" gap="2rem" columns="1.1fr 0.9fr">
@@ -116,14 +116,18 @@ const collaborationStyle = [
   </PageSection>
   <PageSection
     heading="Slik er det å jobbe med oss"
-    subheading="Målet er lav friksjon, tydelighet og fremdrift fra første uke."
+    subheading="Lav friksjon, tydelighet og fremdrift fra første uke."
   >
     <ul class="u-grid-cards u-grid-cards--3">
       {collaborationStyle.map((style) => <li class="text-card">{style}</li>)}
     </ul>
   </PageSection>
   <FullBleed variant="dark">
-    <ContactCTA variant="dark" />
+    <ContactCTA
+      variant="dark"
+      title="Ta en prat med oss"
+      body="Uforpliktende første møte. Vi avklarer hva dere trenger, og foreslår et konkret neste steg."
+    />
   </FullBleed>
 </Layout>
 
