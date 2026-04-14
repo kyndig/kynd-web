@@ -2,6 +2,11 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  parseClosingIssueNumbers as parseClosingIssueNumbersFromShim,
+  parseRelatedIssueNumbers as parseRelatedIssueNumbersFromShim,
+  parseTaskListIssueNumbers as parseTaskListIssueNumbersFromShim,
+} from './issue-hygiene-on-merge.mjs';
+import {
   processIssueGroups,
   processLinkedIssues,
   processReadyRelatedIssues,
@@ -11,6 +16,12 @@ import {
   parseRelatedIssueNumbers,
   parseTaskListIssueNumbers,
 } from './issue-hygiene/parse-issues.mjs';
+
+test('compatibility shim re-exports parse helper functions', () => {
+  assert.equal(parseClosingIssueNumbersFromShim, parseClosingIssueNumbers);
+  assert.equal(parseRelatedIssueNumbersFromShim, parseRelatedIssueNumbers);
+  assert.equal(parseTaskListIssueNumbersFromShim, parseTaskListIssueNumbers);
+});
 
 test('processLinkedIssues continues after a per-issue failure and reports all failed issue numbers', async () => {
   const attemptedIssues = [];

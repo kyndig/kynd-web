@@ -3,6 +3,7 @@
 import { pathToFileURL } from 'node:url';
 
 export * from './issue-hygiene/index.mjs';
+export * from './issue-hygiene/parse-issues.mjs';
 import { main } from './issue-hygiene/index.mjs';
 
 function fail(message) {
