@@ -142,7 +142,10 @@ import TextArea from './TextArea.astro';
         console.error(error);
         if (formError) {
           const errorMessage = isInputError(error)
-            ? error.fields.email?.concat(error.fields.message ?? []).concat(error.fields.name ?? []).join(', ')
+            ? error.fields.email
+                ?.concat(error.fields.message ?? [])
+                .concat(error.fields.name ?? [])
+                .join(', ')
             : (error as { message?: string })?.message;
 
           formError.textContent = errorMessage || 'Noe gikk galt 😅';

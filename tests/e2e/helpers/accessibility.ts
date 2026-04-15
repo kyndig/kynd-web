@@ -23,7 +23,7 @@ function formatViolations(
   violations: Array<{
     id: string;
     impact?: string | null;
-    nodes: Array<{ target: string[]; failureSummary?: string | null }>;
+    nodes: Array<{ target: unknown; failureSummary?: string | null }>;
   }>,
 ) {
   if (violations.length === 0) {
@@ -32,7 +32,13 @@ function formatViolations(
 
   return violations
     .map((violation) => {
-      const targets = violation.nodes.map((node) => node.target.join(' > ')).join(', ');
+      const targets = violation.nodes
+        .map((node) =>
+          Array.isArray(node.target)
+            ? node.target.map((targetPart) => String(targetPart)).join(' > ')
+            : String(node.target),
+        )
+        .join(', ');
       const summaries = violation.nodes
         .map((node) => node.failureSummary)
         .filter(Boolean)
