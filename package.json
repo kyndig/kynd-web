@@ -31,8 +31,7 @@
     "test:e2e:contact-cta": "playwright test tests/e2e/contact-cta-contrast.spec.ts",
     "preinstall": "npx only-allow pnpm",
     "handbook:create": "node scripts/create-handbook.js",
-    "test:e2e": "playwright test",
-    "test:e2e:ci": "playwright test"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
