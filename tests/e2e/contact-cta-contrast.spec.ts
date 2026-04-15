@@ -32,20 +32,8 @@ function contrastRatio(foreground: Rgb, background: Rgb): number {
 test('dark ContactCTA heading keeps AA contrast against accent badge background', async ({
   page,
 }) => {
-  const baseUrls = [process.env.BASE_URL, 'http://localhost:4321', 'http://localhost:5173'].filter(
-    (url): url is string => Boolean(url),
-  );
-
-  let resolvedUrl: string | undefined;
-  for (const baseUrl of baseUrls) {
-    const response = await page.goto(`${baseUrl}/tjenester`, { waitUntil: 'domcontentloaded' });
-    if (response?.ok()) {
-      resolvedUrl = baseUrl;
-      break;
-    }
-  }
-
-  expect(resolvedUrl, 'Expected a running local dev server. Set BASE_URL if needed.').toBeTruthy();
+  const response = await page.goto('/tjenester', { waitUntil: 'domcontentloaded' });
+  expect(response?.ok()).toBeTruthy();
 
   const heading = page.locator('.contact-cta.dark h2');
   await expect(heading).toBeVisible();
