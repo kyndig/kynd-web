@@ -89,4 +89,23 @@ Run ESLint only:
 pnpm lint
 ```
 
+## QA Automation
+
+The repository has layered QA checks so regressions are caught early without making PR CI flaky:
+
+- **Static quality**: `pnpm check`
+- **Browser + accessibility checks**: `pnpm test:e2e`
+- **Internal dead-link checks**: `pnpm check:links:internal`
+- **External link drift checks**: scheduled workflow (`External Link Check`)
+
+Quick local loop:
+
+```bash
+pnpm check
+pnpm test:e2e
+pnpm check:links:internal
+```
+
+See [QA-AUTOMATION.md](QA-AUTOMATION.md) for scope, CI behavior, and how to extend tests.
+
 Made with 🫶 by [kynd](https://kynd.no)

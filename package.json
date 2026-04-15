@@ -31,7 +31,13 @@
     "test:e2e:contact-cta": "playwright test tests/e2e/contact-cta-contrast.spec.ts",
     "preinstall": "npx only-allow pnpm",
     "handbook:create": "node scripts/create-handbook.js",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:ci": "pnpm test:e2e",
+    "links:internal": "linkinator http://127.0.0.1:4321 --recurse --skip \"^(?!http://127.0.0.1:4321).*\" --skip \"^http://127.0.0.1:4321/.netlify/images\"",
+    "check:links:internal": "pnpm build && pnpm check:links:internal:dist",
+    "check:links:external": "linkinator https://kynd.no --recurse --skip \"^mailto:\" --skip \"^tel:\"",
+    "serve:dist": "serve -l 4321 dist --no-clipboard",
+    "check:links:internal:dist": "start-server-and-test \"pnpm serve:dist\" http://127.0.0.1:4321 \"pnpm links:internal\""
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
@@ -58,9 +64,12 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "linkinator": "^7.6.1",
     "postcss-custom-media": "^11.0.6",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
+    "serve": "^14.2.6",
+    "start-server-and-test": "^3.0.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1"
   },
