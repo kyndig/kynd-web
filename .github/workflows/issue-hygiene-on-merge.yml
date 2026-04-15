@@ -35,4 +35,4 @@ jobs:
           ISSUE_HYGIENE_PROJECT_NUMBER: ${{ vars.ISSUE_HYGIENE_PROJECT_NUMBER }}
           ISSUE_HYGIENE_STATUS_FIELD_NAME: ${{ vars.ISSUE_HYGIENE_STATUS_FIELD_NAME }}
           ISSUE_HYGIENE_DONE_OPTION_NAME: ${{ vars.ISSUE_HYGIENE_DONE_OPTION_NAME }}
-        run: node .github/scripts/issue-hygiene-on-merge.mjs
+        run: node .github/scripts/issue-hygiene/index.mjs

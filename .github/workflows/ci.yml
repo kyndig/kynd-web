@@ -34,6 +34,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Issue hygiene tests
+        run: node --test .github/scripts/issue-hygiene-on-merge.test.mjs
+
       - name: Check
         run: pnpm check
 
