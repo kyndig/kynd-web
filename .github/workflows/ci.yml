@@ -48,3 +48,6 @@ jobs:
 
       - name: E2E
         run: pnpm test:e2e:ci
+
+      - name: Internal link check
+        run: pnpm check:links:internal
