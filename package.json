@@ -32,7 +32,7 @@
     "preinstall": "npx only-allow pnpm",
     "handbook:create": "node scripts/create-handbook.js",
     "test:e2e": "playwright test",
-    "test:e2e:ci": "playwright test",
+    "test:e2e:ci": "pnpm test:e2e",
     "links:internal": "linkinator http://127.0.0.1:4321 --recurse --skip \"^(?!http://127.0.0.1:4321).*\" --skip \"^http://127.0.0.1:4321/.netlify/images\"",
     "check:links:internal": "pnpm build && pnpm check:links:internal:dist",
     "check:links:external": "linkinator https://kynd.no --recurse --skip \"^mailto:\" --skip \"^tel:\"",
