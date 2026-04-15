@@ -26,10 +26,7 @@ test('footer links resolve to live destinations', async ({ page }) => {
 test('home conversion CTA reaches contact page', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const contactCtaLink = page
-    .locator('a[href="/kontakt"]')
-    .filter({ hasNot: page.locator('header a, footer a') })
-    .first();
+  const contactCtaLink = page.locator('main a[href="/kontakt"]').first();
 
   await contactCtaLink.click();
   await expect(page).toHaveURL(/\/kontakt$/);
