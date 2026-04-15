@@ -34,9 +34,10 @@
     "test:e2e": "playwright test",
     "test:e2e:ci": "playwright test",
     "links:internal": "linkinator http://127.0.0.1:4321 --recurse --skip \"^(?!http://127.0.0.1:4321).*\" --skip \"^http://127.0.0.1:4321/.netlify/images\"",
-    "check:links:internal": "pnpm build && start-server-and-test \"pnpm serve:dist\" http://127.0.0.1:4321 \"pnpm links:internal\"",
+    "check:links:internal": "pnpm build && pnpm check:links:internal:dist",
     "check:links:external": "linkinator https://kynd.no --recurse --skip \"^https://kynd.no/\"",
-    "serve:dist": "serve -l 4321 dist --no-clipboard"
+    "serve:dist": "serve -l 4321 dist --no-clipboard",
+    "check:links:internal:dist": "start-server-and-test \"pnpm serve:dist\" http://127.0.0.1:4321 \"pnpm links:internal\""
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
