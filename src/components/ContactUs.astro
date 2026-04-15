@@ -140,16 +140,17 @@ import TextArea from './TextArea.astro';
 
       if (error) {
         console.error(error);
-        if (isInputError(error) && formError) {
-          const errorMessage = error.fields.email
-            ?.concat(error.fields.message ?? [])
-            .concat(error.fields.name ?? [])
-            .join(', ');
-          formError.textContent = errorMessage ?? 'Noe gikk galt 😅';
+        if (formError) {
+          const errorMessage = isInputError(error)
+            ? error.fields.email?.concat(error.fields.message ?? []).concat(error.fields.name ?? []).join(', ')
+            : (error as { message?: string })?.message;
+
+          formError.textContent = errorMessage || 'Noe gikk galt 😅';
           formError.style.display = 'block';
-          if (submitButton) {
-            submitButton.textContent = originalText;
-          }
+        }
+
+        if (submitButton) {
+          submitButton.textContent = originalText;
         }
       } else {
         form.reset();

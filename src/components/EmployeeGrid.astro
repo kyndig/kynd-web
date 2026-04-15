@@ -11,7 +11,7 @@ const employees = await getCollection('employees');
     employees.map(({ data, id }) => (
       <ImageLink
         src={data.image}
-        alt={data.name}
+        alt=""
         name={data.name}
         href={`/folka/${id}`}
         layout="full-width"
