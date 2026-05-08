@@ -23,18 +23,15 @@ export default defineConfig({
   image: {
     responsiveStyles: true,
   },
-  experimental: {
-    preserveScriptOrder: true,
-    fonts: [
-      {
-        provider: fontProviders.fontsource(),
-        name: 'Montserrat',
-        cssVariable: '--font',
-        fallbacks: ['sans-serif'],
-        styles: ['normal'],
-        subsets: ['latin'],
-        weights: ['400', '500', '600'],
-      },
-    ],
-  },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Montserrat',
+      cssVariable: '--font',
+      fallbacks: ['sans-serif'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      weights: ['400', '500', '600'],
+    },
+  ],
 });

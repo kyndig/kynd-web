@@ -14,6 +14,10 @@
     "url": "https://github.com/kynd-no/kynd-web"
   },
   "packageManager": "pnpm@10.29.3",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": "10.29.3"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -31,15 +35,15 @@
     "handbook:create": "node scripts/create-handbook.js"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/netlify": "^6.6.4",
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/netlify": "^7.0.8",
+    "@astrojs/sitemap": "^3.7.2",
     "@slack/web-api": "^7.14.1",
-    "astro": "^5.17.2",
+    "astro": "^6.3.1",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.6",
+    "@astrojs/check": "^0.9.9",
     "@csstools/postcss-global-data": "^4.0.0",
     "@eslint/js": "^9.39.1",
     "eslint": "^9.39.1",

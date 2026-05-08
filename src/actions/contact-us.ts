@@ -1,7 +1,7 @@
 import { WebClient } from '@slack/web-api';
 import { defineAction } from 'astro:actions';
 import { SLACK_TOKEN, SLACK_CHANNEL_ID } from 'astro:env/server';
-import { z } from 'astro:schema';
+import { z } from 'astro/zod';
 
 const web = new WebClient(SLACK_TOKEN);
 
@@ -9,7 +9,7 @@ export const contactUs = defineAction({
   accept: 'form',
   input: z.object({
     name: z.string().optional(),
-    email: z.string().email('Ugyldig e-post'),
+    email: z.email({ message: 'Ugyldig e-post' }),
     message: z.string(),
   }),
   handler: async (input) => {
