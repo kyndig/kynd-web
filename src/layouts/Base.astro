@@ -6,9 +6,10 @@ import Header from '@/components/Header.astro';
 type Props = {
   title?: string;
   description?: string;
+  hideHeader?: boolean;
 };
 
-const { title, description } = Astro.props;
+const { title, description, hideHeader = false } = Astro.props;
 ---
 
 <html lang="no">
@@ -16,7 +17,7 @@ const { title, description } = Astro.props;
     <BaseHead title={title} description={description} />
   </head>
   <body>
-    <Header />
+    {!hideHeader && <Header />}
     <main>
       <slot />
     </main>
