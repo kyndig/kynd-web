@@ -1,68 +1,580 @@
 ---
-import teamImage from '@/assets/felles-1.jpg';
-import ContactUs from '@/components/ContactUs.astro';
-import HeroSection from '@/components/HeroSection.astro';
-import Image from '@/components/Image.astro';
-import PageSection from '@/components/PageSection.astro';
-import Prose from '@/components/Prose.astro';
+import Logo from '@/components/Logo.astro';
 import Layout from '@/layouts/Base.astro';
-// import LinkCard from '@/components/LinkCard.astro';
-// import Link from '@/components/Link.astro';
+
+const concepts = [
+  {
+    title: 'PRODUKT, TEKNOLOGI OG ORGANISASJON MA VIRKE SAMMEN',
+    text: 'Siloer dreper innovasjon. Vi integrerer strategi og utforelse for a sikre at hver linje med kode stotter forretningsmalene dine.',
+  },
+  {
+    title: 'ERFARNE FOLK MED GRUNDERBLIKK',
+    text: 'Vi har sett innsiden av bade enhjorninger og enterprise-giganter. Vi kombinerer senior trygghet med farten til en startup.',
+  },
+  {
+    title: 'TRYGG NOK FOR ETABLERTE SELSKAPER, SKARP NOK FOR NYE INITIATIV',
+    text: 'Vi handterer kompleksiteten i legacy-systemer samtidig som vi utfordrer status quo med moderne metodikk og verktoy.',
+  },
+];
+
+const signatureItems = [
+  'STRATEGISK RADGIVNING',
+  'PRODUKTUTVIKLING & UX',
+  'SKYARKITEKTUR & PLATFORM ENGINEERING',
+];
+
+const signatureHeading = 'VI ER IKKE KONSULENTER SOM FORSVINNER.';
 ---
 
-<Layout>
-  <HeroSection
-    title="Something forfriskende, kynd"
-    preamble="En gjeng kompetente folk som bygger et annerledes konsulentbyrå sammen."
-    image="/patterns/pattern-0.svg"
-  />
-  <PageSection heading="Team" subheading="Vi skaper kynd sammen">
-    <Prose align="right">
-      <p>
-        Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel - som har gått sammen om å
-        lage en transparent, spennende og nytenkende arbeidsplass. Vi er et konsulentbyrå innen
-        fullstack softwareutvikling, organisasjonsdesign og smidig teknologiledelse.
-      </p>
-      <!-- <Link href="/folka" variant="dark-primary">Les mer</Link> -->
-    </Prose>
-    <Image
-      src={teamImage}
-      alt="Tre amigos - Axel, Daniel og Frederik - står foran en gul vegg med armene i kryss og ser ganske så fornøyde ut"
-      layout="full-width"
-    />
-  </PageSection>
+<Layout hideHeader>
+  <div class="home">
+    <header class="home-header">
+      <a href="/" class="logo-link" aria-label="Forside">
+        <Logo />
+      </a>
+      <nav class="home-nav">
+        <a class="nav-link active" href="/">HOME</a>
+        <a class="nav-link" href="#tjenester">TJENESTER</a>
+        <a class="nav-link" href="/prosjekter">PROSJEKTER</a>
+        <a class="nav-link" href="/om-oss">OM KYND</a>
+      </nav>
+      <a class="join-link" href="/om-oss">BLI EN AV OSS</a>
+    </header>
 
-  <!-- <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
-    <div class="services-grid">
-      <LinkCard
-        variant="default"
-        heading="Fullstack Softwareutvikling"
-        href="/tjenester/fullstack"
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-tag">CURIOUS MINDS. EXPERIENCED HANDS.</p>
+        <h1 class="hero-title">
+          <span>NYSGJERRIGE</span>
+          <span>HODER.</span>
+          <em>Erfarne</em>
+          <em>hender.</em>
+        </h1>
+      </div>
+      <div class="hero-copy">
+        <p>For nye ideer, gamle systemer og alt som ma fungere mellom dem.</p>
+        <a class="cta-primary" href="#kontakt">
+          KONTAKT OSS
+          <img src="/home/arrow-right.svg" alt="" />
+        </a>
+      </div>
+    </section>
+
+    <section class="manifest-band">
+      <img
+        src="/home/hero-band-image.png"
+        alt="Tre personer i et mote omgitt av modernistisk arkitektur"
+        loading="lazy"
       />
-      <LinkCard variant="green" heading="Design UX/UI" href="/tjenester/design" />
-      <LinkCard variant="black" heading="Digital Strategi" href="/tjenester/strategi" />
-    </div>
-  </PageSection> -->
-  <PageSection
-    heading="Kontakt oss"
-    subheading="Nysgjerrig på samarbeid, enten som medeier eller kunde? Hit us up!"
-  >
-    <ContactUs />
-  </PageSection>
+      <div class="manifest-card">
+        <h2>VART MANIFEST</h2>
+        <p>
+          VI BYGGER IKKE BARE TEKNOLOGI. VI FORMER BROEN MELLOM DET SOM VAR OG DET SOM SKAL BLI.
+          MED PRESISJON OG NYSGJERRIGHET.
+        </p>
+      </div>
+    </section>
+
+    <section id="tjenester" class="concept-grid">
+      {
+        concepts.map((concept) => (
+          <article class="concept-card">
+            <div class="concept-heading-group">
+              <span class="concept-number" aria-hidden="true"></span>
+              <h2 class="concept-title">{concept.title}</h2>
+            </div>
+            <div class="concept-body-group">
+              <p class="concept-text">{concept.text}</p>
+              <div class="concept-bar" />
+            </div>
+          </article>
+        ))
+      }
+    </section>
+
+    <section class="signature-section">
+      <div class="signature-image-wrap">
+        <img src="/home/signature-image.png" alt="Geometrisk kontorfasade i skygge" loading="lazy" />
+        <div class="signature-badge">OSLO / BERGEN / REMOTE</div>
+      </div>
+      <div class="signature-content">
+        <h2>{signatureHeading}</h2>
+        <p>
+          Vi gar inn som en del av teamet ditt. Vi tar eierskap til problemene, vi feiler sammen, og
+          vi vinner sammen. Vart mal er a gjore oss selv overflodige ved a bygge kompetanse internt
+          hos dere.
+        </p>
+        <ul>
+          {
+            signatureItems.map((item) => <li>{item}</li>)
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section id="kontakt" class="cta-section">
+      <h2>
+        KLAR FOR <span>KYND?</span>
+      </h2>
+      <p>LA OSS TA EN UFORPLIKTENDE PRAT OM DITT NESTE STORE (ELLER VANSKELIGE) PROSJEKT.</p>
+      <div class="cta-actions">
+        <a class="cta-primary" href="mailto:hei@kynd.no">SEND OSS EN E-POST</a>
+        <a class="cta-secondary" href="/prosjekter">SE VARE PROSJEKTER</a>
+      </div>
+    </section>
+  </div>
 </Layout>
 
 <style>
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-    gap: 2rem;
-    justify-items: center;
+  :global(main) {
+    inline-size: min(var(--content-max-width), 100%);
+    margin-inline: auto;
+    padding: 0;
+    display: block;
   }
 
-  @media (max-width: 48em) {
-    .services-grid {
+  :global(body) {
+    background-color: #faf9f6;
+  }
+
+  .home {
+    background-color: #faf9f6;
+  }
+
+  .home-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem var(--content-inner-padding);
+    background-color: rgba(250, 249, 246, 0.82);
+    backdrop-filter: blur(0.375rem);
+  }
+
+  .logo-link {
+    width: 6.25rem;
+    color: var(--color-primary);
+    display: inline-flex;
+  }
+
+  .home-nav {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-link {
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.05em;
+    color: color-mix(in srgb, var(--color-primary) 60%, transparent);
+    padding-bottom: 0.25rem;
+    border-bottom: 0.125rem solid transparent;
+  }
+
+  .nav-link.active {
+    color: var(--color-primary);
+    border-color: var(--color-accent);
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    background-color: var(--color-accent);
+  }
+
+  .join-link {
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.1em;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    padding: 0.625rem 1rem;
+    white-space: nowrap;
+  }
+
+  .join-link:hover {
+    position: relative;
+    box-shadow: none;
+    transform-style: preserve-3d;
+  }
+
+  .join-link:hover::after {
+    content: '';
+    position: absolute;
+    top: 0.625rem;
+    left: -0.625rem;
+    width: 100%;
+    height: 100%;
+    outline: 0.125rem solid var(--color-shadow);
+    transform: translateZ(-1px);
+  }
+
+  .hero {
+    display: grid;
+    gap: 2rem;
+    padding: 2.5rem var(--content-inner-padding) 3.5rem;
+  }
+
+  .hero-tag {
+    color: #446900;
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.18em;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-title {
+    display: grid;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    line-height: 0.95;
+    gap: 0.2rem;
+  }
+
+  .hero-title span {
+    font-size: clamp(2.6rem, 11vw, 7.5rem);
+    letter-spacing: -0.04em;
+  }
+
+  .hero-title em {
+    text-transform: none;
+    font-size: clamp(2rem, 9vw, 6rem);
+    font-style: italic;
+    font-weight: var(--font-weight-semibold);
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  .hero-copy {
+    max-width: 24rem;
+    justify-self: end;
+  }
+
+  .hero-copy p {
+    font-size: var(--fs-body-m);
+    color: #44474a;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.1em;
+    font-weight: var(--font-weight-semibold);
+    padding: 0.875rem 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .cta-primary:hover {
+    box-shadow: var(--shadow);
+  }
+
+  .cta-primary img {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .manifest-band {
+    position: relative;
+    background-color: #f4f3f0;
+    margin-inline: var(--content-inner-padding);
+  }
+
+  .manifest-band img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    min-height: 14rem;
+    filter: saturate(0);
+  }
+
+  .manifest-card {
+    margin: -1.75rem var(--content-inner-padding) 0 auto;
+    max-width: 24rem;
+    padding: 1.25rem;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    position: relative;
+  }
+
+  .manifest-card h2 {
+    font-size: var(--fs-heading-xs);
+    margin-bottom: 0.5rem;
+  }
+
+  .manifest-card p {
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .concept-grid {
+    display: grid;
+    gap: 1px;
+    background-color: rgba(197, 198, 202, 0.2);
+    margin: 3rem var(--content-inner-padding);
+    counter-reset: concept-item;
+  }
+
+  .concept-card {
+    background-color: #faf9f6;
+    padding: 2rem;
+    display: grid;
+    gap: 1.25rem;
+    counter-increment: concept-item;
+  }
+
+  .concept-heading-group,
+  .concept-body-group {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .concept-body-group {
+    align-content: start;
+  }
+
+  .concept-number {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2rem;
+    line-height: var(--line-height-l);
+  }
+
+  .concept-number::before {
+    content: counter(concept-item, decimal-leading-zero);
+  }
+
+  .concept-title {
+    color: #1b1c1a;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: var(--line-height-l);
+    font-size: var(--fs-heading-s);
+  }
+
+  .concept-text {
+    color: #44474a;
+    line-height: var(--line-height-m);
+    font-size: var(--fs-body-m);
+  }
+
+  .concept-bar {
+    width: 4rem;
+    height: 0.25rem;
+    background-color: #446900;
+  }
+
+  .signature-section {
+    background-color: #f4f3f0;
+    display: grid;
+    gap: 2rem;
+    padding: 3rem var(--content-inner-padding);
+  }
+
+  .signature-image-wrap {
+    position: relative;
+    max-width: 40rem;
+  }
+
+  .signature-image-wrap::before {
+    content: '';
+    position: absolute;
+    width: 6rem;
+    height: 6rem;
+    left: -1rem;
+    top: -1rem;
+    background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+
+  .signature-image-wrap img {
+    width: 100%;
+    display: block;
+  }
+
+  .signature-badge {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.08em;
+    padding: 0.8rem;
+  }
+
+  .signature-content {
+    display: grid;
+    gap: 1.5rem;
+    color: var(--color-primary);
+  }
+
+  .signature-content h2 {
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+    font-size: var(--fs-heading-m);
+  }
+
+  .signature-content p {
+    color: #44474a;
+    line-height: 1.8;
+    max-width: 38rem;
+    font-size: var(--fs-body-m);
+  }
+
+  .signature-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 30rem;
+    counter-reset: signature-item;
+  }
+
+  .signature-content li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.5rem;
+  }
+
+  .concept-number::before,
+  .signature-content li::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    font-size: var(--fs-label-m);
+    font-weight: var(--font-weight-medium);
+    flex-shrink: 0;
+    line-height: var(--line-height-l);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .signature-content li::before {
+    counter-increment: signature-item;
+    content: counter(signature-item, decimal-leading-zero);
+  }
+
+  .cta-section {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    padding: 4rem var(--content-inner-padding);
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .cta-section h2 {
+    text-transform: uppercase;
+    font-size: clamp(2rem, 9vw, 6.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+
+  .cta-section h2 span {
+    color: var(--color-accent);
+  }
+
+  .cta-section p {
+    max-width: 42rem;
+    color: color-mix(in srgb, var(--color-secondary) 60%, transparent);
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: var(--color-secondary);
+    font-size: var(--fs-label-m);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.875rem 1.25rem;
+  }
+
+  .cta-secondary:hover {
+    box-shadow: var(--shadow);
+  }
+
+  @media (--md) {
+    .home-header {
+      padding: 1.5rem var(--content-inner-padding);
+    }
+
+    .home-nav {
+      display: flex;
+    }
+
+    .hero {
+      grid-template-columns: 2fr 1fr;
+      align-items: end;
+      gap: 2.5rem;
+      padding: 2rem var(--content-inner-padding) 3rem;
+    }
+
+    .manifest-card {
+      position: absolute;
+      right: var(--content-inner-padding);
+      bottom: 2rem;
+      margin: 0;
+    }
+
+    .concept-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      margin: 4rem var(--content-inner-padding);
+    }
+
+    .concept-card {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2rem;
+      align-items: start;
+    }
+
+    .signature-section {
+      grid-template-columns: 6fr 5fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 5rem var(--content-inner-padding);
+    }
+  }
+
+  @media (--lg) {
+    .concept-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .concept-card {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+    }
+
+    .cta-section {
+      padding: 7rem var(--content-inner-padding);
     }
   }
 </style>
