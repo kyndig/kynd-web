@@ -1,0 +1,174 @@
+---
+export type Props = {
+  slug?: string;
+  heading: string;
+  /** When true (default), the heading gets the green accent background. */
+  accentHeading?: boolean;
+};
+
+const { slug, heading, accentHeading = true } = Astro.props;
+---
+
+<section id={slug}>
+  <div class="intro">
+    <h2 class:list={{ accent: accentHeading }}>{heading}</h2>
+    <slot name="intro" />
+  </div>
+  <div class="body-row">
+    <div class="body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .intro {
+    display: grid;
+    gap: 2rem;
+    max-width: 31.125rem;
+  }
+
+  h2 {
+    justify-self: start;
+    font-size: var(--fs-heading-m);
+  }
+
+  h2.accent {
+    background-color: var(--color-accent);
+    padding: 0.5rem;
+  }
+
+  .intro,
+  .body {
+    font-size: var(--fs-body-l);
+    font-weight: var(--font-weight-normal);
+  }
+
+  .body-row {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .body {
+    width: 100%;
+    max-width: 54.375rem;
+  }
+
+  .intro :global(p:not(:last-child)),
+  .body :global(p:not(:last-child)) {
+    margin-block-end: 1em;
+  }
+
+  .intro :global(h3),
+  .intro :global(h4),
+  .body :global(h3),
+  .body :global(h4) {
+    font-weight: bold;
+    margin-block-end: 0.75em;
+  }
+
+  .intro :global(code),
+  .body :global(code) {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Courier New', monospace;
+    font-size: 0.8em;
+    background-color: var(--color-light-gray);
+    padding: 0.125em 0.25em;
+    border-radius: 0.25em;
+    color: var(--color-primary);
+  }
+
+  .intro :global(ul),
+  .intro :global(ol),
+  .body :global(ul),
+  .body :global(ol) {
+    list-style: revert;
+    padding-inline-start: 1em;
+  }
+
+  .intro :global(li),
+  .body :global(li) {
+    margin-block: 0.5em;
+  }
+
+  .intro :global(a),
+  .body :global(a) {
+    word-break: break-word;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gray);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.1em;
+    transition: all var(--animation-duration) ease;
+  }
+
+  .intro :global(a:hover),
+  .body :global(a:hover) {
+    color: var(--color-primary);
+    text-decoration-color: var(--color-primary);
+    text-decoration-thickness: 0.15em;
+  }
+
+  .intro :global(a:focus-visible),
+  .body :global(a:focus-visible) {
+    outline: 0.125rem solid var(--color-focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+
+  .intro :global(a[href^='http']),
+  .body :global(a[href^='http']) {
+    position: relative;
+  }
+
+  .intro :global(a[href^='http'])::after,
+  .body :global(a[href^='http'])::after {
+    content: '';
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-inline-start: 0.25em;
+    opacity: 0.7;
+    transition: opacity var(--animation-duration) ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: baseline;
+  }
+
+  .intro :global(a[href^='http']:hover)::after,
+  .body :global(a[href^='http']:hover)::after {
+    opacity: 1;
+  }
+
+  .intro :global(a[href^='#']:hover),
+  .body :global(a[href^='#']:hover) {
+    color: var(--color-accent);
+    text-decoration-color: var(--color-accent);
+  }
+
+  .intro :global(i),
+  .intro :global(em),
+  .body :global(i),
+  .body :global(em) {
+    font-style: italic;
+  }
+
+  .intro :global(b),
+  .intro :global(strong),
+  .body :global(b),
+  .body :global(strong) {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media (--md) {
+    section {
+      gap: 4rem;
+    }
+  }
+</style>

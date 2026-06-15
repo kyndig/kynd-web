@@ -1,8 +1,8 @@
 ---
 import ContactUs from '@/components/ContactUs.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import OffsetProseSection from '@/components/OffsetProseSection.astro';
 import PageSection from '@/components/PageSection.astro';
-import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
 import LinkCard from '@/components/LinkCard.astro';
 // import Link from '@/components/Link.astro';
@@ -14,32 +14,26 @@ import LinkCard from '@/components/LinkCard.astro';
     preamble="En gjeng kompetente folk som bygger et annerledes konsulentbyrå sammen."
     image="/patterns/pattern-0.svg"
   />
-  <PageSection heading="Team" subheading="Vi skaper kynd sammen">
-    <Prose align="right">
-      <p>
-        Kynd ble stiftet i 2024 med ambisjon om å lage en transparent, spennende og nytenkende
-        arbeidsplass. Vi er et konsulentbyrå innen fullstack softwareutvikling, organisasjonsdesign
-        og smidig teknologiledelse.
-      </p>
-    </Prose>
-  </PageSection>
+  <OffsetProseSection heading="Team is everything">
+    <p>
+      Kynd ble stiftet i 2024 med ambisjon om å lage en transparent, spennende og nytenkende
+      arbeidsplass. Vi er et teknologi- og produktbyrå som hjelper organisasjoner med å løse
+      vanskelige problemer, bygge bedre team og få bedre produkter, raskere.
+    </p>
+  </OffsetProseSection>
 
-  <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
+  <PageSection heading="Tjenester" accentHeading={false}>
     <div class="services-grid">
       <LinkCard
         variant="default"
         heading="Partnerskap for problemløsing"
-        href="/tjenester#partnerskap-for-problemlosing"
+        href="/tjenester#partnerskap"
       />
-      <LinkCard
-        variant="green"
-        heading="Kompetanse rett i ditt team"
-        href="/tjenester#kompetanse-rett-i-ditt-team"
-      />
+      <LinkCard variant="green" heading="Kapasitet og kompetanse" href="/tjenester#kompetanse" />
       <LinkCard
         variant="black"
         heading="Produktfilosofi og sosioteknisk design"
-        href="/tjenester#produktfilosofi-og-sosioteknisk-design"
+        href="/tjenester#produktfilosofi"
       />
     </div>
   </PageSection>

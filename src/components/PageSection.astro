@@ -1,16 +1,18 @@
 ---
 export type Props = {
-  id?: string;
+  slug?: string;
   heading: string;
   subheading?: string;
+  /** When true (default), the heading gets the green accent background. */
+  accentHeading?: boolean;
 };
 
-const { id, heading, subheading } = Astro.props;
+const { slug, heading, subheading, accentHeading = true } = Astro.props;
 ---
 
-<section id={id}>
+<section id={slug}>
   <div class="heading-container">
-    <h2>{heading}</h2>
+    <h2 class:list={{ accent: accentHeading }}>{heading}</h2>
     <div class="subheading">{subheading}</div>
   </div>
   <slot />
@@ -41,6 +43,9 @@ const { id, heading, subheading } = Astro.props;
 
   h2 {
     font-size: var(--fs-heading-m);
+  }
+
+  h2.accent {
     background-color: var(--color-accent);
     padding: 0.5rem;
   }
