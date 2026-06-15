@@ -13,7 +13,7 @@ const { slug, heading, subheading, accentHeading = true } = Astro.props;
 <section id={slug}>
   <div class="heading-container">
     <h2 class:list={{ accent: accentHeading }}>{heading}</h2>
-    <div class="subheading">{subheading}</div>
+    {subheading && <div class="subheading">{subheading}</div>}
   </div>
   <slot />
 </section>
