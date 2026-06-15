@@ -1,7 +1,5 @@
 ---
-import omOssImage from '@/assets/felles-3.jpg';
 import HeroSection from '@/components/HeroSection.astro';
-import Image from '@/components/Image.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
@@ -10,7 +8,7 @@ import Layout from '@/layouts/Base.astro';
 <Layout title="Om oss" description="Om oss">
   <HeroSection
     title="Om oss"
-    preamble="Kynd ble stiftet i 2024 av tre amigos - Daniel, Frederik og Axel – som har gått sammen om å lage en transparent, spennende og nytenkende arbeidsplass."
+    preamble="Kynd ble stiftet i 2024 med ambisjon om å lage en transparent, spennende og nytenkende arbeidsplass."
   />
   <Prose align="right">
     <p>
@@ -18,11 +16,6 @@ import Layout from '@/layouts/Base.astro';
       produkt-, team og endringsledelse.
     </p>
   </Prose>
-  <Image
-    src={omOssImage}
-    alt="Tre amigos - Axel, Daniel og Frederik - står foran en gul vegg med armene i kryss og ser ganske så fornøyde ut"
-    layout="full-width"
-  />
   <PageSection heading="Fundamentet">
     <Prose align="left">
       <p>

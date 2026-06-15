@@ -9,6 +9,7 @@ const employees = defineCollection({
     z.object({
       name: z.string(),
       image: image(),
+      hideFromProduction: z.boolean().optional(),
     }),
 });
 
@@ -30,6 +31,7 @@ const projects = defineCollection({
         .string()
         .optional()
         .transform((val) => (val ? parseDate(val) : undefined)),
+      hideFromProduction: z.boolean().optional(),
     }),
 });
 

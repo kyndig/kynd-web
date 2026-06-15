@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import ImageLink from '@/components/ImageLink.astro';
 import LinkGrid from '@/components/LinkGrid.astro';
+import { filterForProduction } from '@/utils/contentVisibility';
 
-const employees = await getCollection('employees');
+const employees = filterForProduction(await getCollection('employees'));
 ---
 
 <LinkGrid>

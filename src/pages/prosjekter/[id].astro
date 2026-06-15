@@ -3,9 +3,10 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import HeroSection from '@/components/HeroSection.astro';
 import Layout from '@/layouts/Base.astro';
 import { calculateDuration } from '@/utils/dateHelpers';
+import { filterForProduction } from '@/utils/contentVisibility';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
+  const projects = filterForProduction(await getCollection('projects'));
   return projects.map((project) => ({
     params: { id: project.id },
     props: project,

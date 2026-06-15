@@ -3,9 +3,10 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import EmployeeGrid from '@/components/EmployeeGrid.astro';
 import Image from '@/components/Image.astro';
 import Layout from '@/layouts/Base.astro';
+import { filterForProduction } from '@/utils/contentVisibility';
 
 export async function getStaticPaths() {
-  const employees = await getCollection('employees');
+  const employees = filterForProduction(await getCollection('employees'));
   return employees.map((employee) => ({
     params: { id: employee.id },
     props: employee,
