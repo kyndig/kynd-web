@@ -1,0 +1,212 @@
+---
+export type LogoItem = {
+  id: string;
+  href: string;
+  src: string;
+  alt: string;
+};
+
+export type Props = {
+  logos: LogoItem[];
+  /** Number of logo slots rendered and rotated. */
+  visibleCount?: number;
+};
+
+const { logos, visibleCount = 5 } = Astro.props;
+
+function shuffle<T>(items: T[]): T[] {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    const current = shuffled[index];
+    const swap = shuffled[swapIndex];
+    if (current === undefined || swap === undefined) continue;
+    shuffled[index] = swap;
+    shuffled[swapIndex] = current;
+  }
+  return shuffled;
+}
+
+const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice(0, visibleCount);
+---
+
+<div class="logo-band" data-logos={JSON.stringify(logos)} data-visible-count={visibleCount}>
+  {
+    initialLogos.map((logo) => (
+      <a href={logo.href} class="logo-slot" aria-label={logo.alt} data-logo-id={logo.id}>
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          width="120"
+          height="48"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .logo-band {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
+    align-items: center;
+    width: 100%;
+
+    @media (--md) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  .logo-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    transition: opacity var(--animation-duration) ease;
+  }
+
+  .logo-slot:is(:hover, :focus-visible) {
+    opacity: 0.75;
+  }
+
+  .logo-slot img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 2rem;
+    object-fit: contain;
+
+    @media (--md) {
+      max-height: 2.5rem;
+    }
+  }
+
+  .logo-slot.is-swapping img {
+    opacity: 0;
+  }
+</style>
+
+<script>
+  type LogoItem = {
+    id: string;
+    href: string;
+    src: string;
+    alt: string;
+  };
+
+  function shuffle<T>(items: T[]): T[] {
+    const shuffled = [...items];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      const current = shuffled[index];
+      const swap = shuffled[swapIndex];
+      if (current === undefined || swap === undefined) continue;
+      shuffled[index] = swap;
+      shuffled[swapIndex] = current;
+    }
+    return shuffled;
+  }
+
+  function parseLogos(raw: string | undefined): LogoItem[] {
+    if (!raw) return [];
+
+    try {
+      const parsed = JSON.parse(raw) as LogoItem[];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function getVisibleIds(slots: HTMLAnchorElement[]): Set<string> {
+    return new Set(
+      slots.map((slot) => slot.dataset.logoId).filter((id): id is string => Boolean(id)),
+    );
+  }
+
+  function createQueueState(allLogos: LogoItem[]) {
+    let queue = shuffle(allLogos);
+    let queueIndex = 0;
+
+    const takeNext = (visibleIds: Set<string>): LogoItem => {
+      const attempts = queue.length;
+
+      for (let attempt = 0; attempt < attempts; attempt += 1) {
+        if (queueIndex >= queue.length) {
+          queue = shuffle(allLogos);
+          queueIndex = 0;
+        }
+
+        const candidate = queue[queueIndex];
+        queueIndex += 1;
+
+        if (candidate && !visibleIds.has(candidate.id)) {
+          return candidate;
+        }
+      }
+
+      const fallback = queue[queueIndex - 1] ?? allLogos[0];
+      if (!fallback) {
+        throw new Error('ClientLogoBand requires at least one logo.');
+      }
+
+      return fallback;
+    };
+
+    return { takeNext };
+  }
+
+  const bands = document.querySelectorAll<HTMLElement>('.logo-band');
+
+  bands.forEach((band) => {
+    const logos = parseLogos(band.dataset.logos);
+    const visibleCount = Number(band.dataset.visibleCount) || 5;
+
+    if (logos.length <= visibleCount) return;
+
+    const slots = [...band.querySelectorAll<HTMLAnchorElement>('.logo-slot')];
+    if (slots.length === 0) return;
+
+    const { takeNext } = createQueueState(logos);
+    let slotIndex = 0;
+
+    window.setInterval(() => {
+      const slot = slots[slotIndex];
+      if (!slot) return;
+
+      const visibleIds = getVisibleIds(slots);
+      const currentId = slot.dataset.logoId;
+
+      if (currentId) {
+        visibleIds.delete(currentId);
+      }
+
+      const logo = takeNext(visibleIds);
+
+      slot.classList.add('is-swapping');
+
+      window.setTimeout(() => {
+        slot.href = logo.href;
+        slot.setAttribute('aria-label', logo.alt);
+        slot.dataset.logoId = logo.id;
+
+        const image = slot.querySelector('img');
+        if (image) {
+          image.src = logo.src;
+          image.alt = logo.alt;
+        }
+
+        slot.classList.remove('is-swapping');
+      }, 150);
+
+      slotIndex = (slotIndex + 1) % slots.length;
+    }, 5000);
+  });
+</script>
