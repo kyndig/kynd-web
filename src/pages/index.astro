@@ -4,7 +4,7 @@ import HeroSection from '@/components/HeroSection.astro';
 import PageSection from '@/components/PageSection.astro';
 import Prose from '@/components/Prose.astro';
 import Layout from '@/layouts/Base.astro';
-// import LinkCard from '@/components/LinkCard.astro';
+import LinkCard from '@/components/LinkCard.astro';
 // import Link from '@/components/Link.astro';
 ---
 
@@ -21,21 +21,28 @@ import Layout from '@/layouts/Base.astro';
         arbeidsplass. Vi er et konsulentbyrå innen fullstack softwareutvikling, organisasjonsdesign
         og smidig teknologiledelse.
       </p>
-      <!-- <Link href="/folka" variant="dark-primary">Les mer</Link> -->
     </Prose>
   </PageSection>
 
-  <!-- <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
+  <PageSection heading="Tjenester" subheading="Hva kan vi hjelpe deg med?">
     <div class="services-grid">
       <LinkCard
         variant="default"
-        heading="Fullstack Softwareutvikling"
-        href="/tjenester/fullstack"
+        heading="Partnerskap for problemløsing"
+        href="/tjenester#partnerskap-for-problemlosing"
       />
-      <LinkCard variant="green" heading="Design UX/UI" href="/tjenester/design" />
-      <LinkCard variant="black" heading="Digital Strategi" href="/tjenester/strategi" />
+      <LinkCard
+        variant="green"
+        heading="Kompetanse rett i ditt team"
+        href="/tjenester#kompetanse-rett-i-ditt-team"
+      />
+      <LinkCard
+        variant="black"
+        heading="Produktfilosofi og sosioteknisk design"
+        href="/tjenester#produktfilosofi-og-sosioteknisk-design"
+      />
     </div>
-  </PageSection> -->
+  </PageSection>
   <PageSection
     heading="Kontakt oss"
     subheading="Nysgjerrig på samarbeid, enten som medeier eller kunde? Hit us up!"
