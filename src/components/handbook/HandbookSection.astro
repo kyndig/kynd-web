@@ -9,6 +9,6 @@ const entry = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<PageSection heading={entry.data.title} id={entry.id}>
+<PageSection heading={entry.data.title} slug={entry.id}>
   <Content />
 </PageSection>

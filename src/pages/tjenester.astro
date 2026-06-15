@@ -1,0 +1,86 @@
+---
+import ContactUs from '@/components/ContactUs.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import PageSection from '@/components/PageSection.astro';
+import Prose from '@/components/Prose.astro';
+import Layout from '@/layouts/Base.astro';
+---
+
+<Layout
+  title="Tjenester"
+  description="Kynd hjelper med partnerskap for problemløsing, kompetanse i team og produktfilosofi."
+>
+  <HeroSection
+    title="Tjenester"
+    preamble="Vi hjelper teknologi- og produktmiljøer med å løse vanskelige problemer, bygge bedre team og ta klokere produktvalg."
+    image="/patterns/pattern-0.svg"
+  />
+
+  <PageSection
+    slug="partnerskap"
+    heading="Partnerskap for problemløsing"
+    subheading="Når du trenger mer enn ekstra hender."
+  >
+    <Prose align="left">
+      <p>
+        Digitale løsninger er svaret på mange utfordringer. Gode digitale produkter trenger
+        kjærlighet, ikke bare når de blir etablert, men gjennom hele livssyklusen. For å sikre at
+        produkter fortsetter å levere verdi, er det ikke alltid at en organisasjon skal eie
+        produktet alene.
+      </p>
+    </Prose>
+    <Prose align="right">
+      <p>
+        Derfor utvikler og drifter vi digitale løsninger gjennom partnerskap, ikke bare vanlig
+        «kunde-leverandør»-forhold. Vi deler risiko og oppside, og produktet ditt vil fortsette å
+        utvikle seg ettersom behovene endres. Som de jo til stadighet gjør, til alle
+        IT-fossefallsprosjekters store frustrasjon.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <PageSection
+    slug="kompetanse"
+    heading="Kompetanse og kapasitet"
+    subheading="Når du trenger ekstra hender. "
+  >
+    <Prose align="left">
+      <p>
+        Vi kan forsterke eksisterende team med erfarne utviklere, teknologer og folk som er vant til
+        å ta ansvar for både kode, prosess og samarbeid. Vi trives best tett på produktet, brukerne
+        og beslutningene.
+      </p>
+    </Prose>
+    <Prose align="right">
+      <p>
+        Det betyr at vi ikke bare leverer oppgaver, men også bidrar til bedre flyt, tydeligere
+        prioriteringer og mer læring i teamet. Kompetansen vår dekker fullstack utvikling,
+        plattform, smidig teknologiledelse og teamutvikling.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <PageSection
+    slug="produktfilosofi"
+    heading="Produktfilosofi og sosioteknisk design"
+    subheading="«Alle» snakker om produktorganisering. Få snakker om produktfilosofi. "
+  >
+    <Prose align="left">
+      <p>
+        Skal du bygge gode produkter, trenger du en organisasjon som tilrettelegger for god
+        produktutvikling. «Fart og flyt» oppstår ikke av seg selv, og litt omorganisering hjelper
+        ikke hvis ikke de sosiotekniske aspektene tas på alvor.
+      </p>
+    </Prose>
+    <Prose align="right">
+      <p>
+        Vi hjelper med innsikt og analyse av organisasjon og kultur, kursing, opplæring og
+        hands-on-arbeid på strategisk og operativt nivå. Siden sosioteknisk og kulturell dynamikk i
+        organisasjoner bør/må oppleves, leverer vi helst praktisk produktledelse som en del av
+        arbeidet.
+      </p>
+    </Prose>
+  </PageSection>
+
+  <ContactUs />
+</Layout>
