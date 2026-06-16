@@ -206,9 +206,7 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
 
   bands.forEach((band) => {
     const logos = parseLogos(band.dataset.logos);
-    const visibleCount = Number(band.dataset.visibleCount) || 5;
-
-    if (logos.length <= visibleCount) return;
+    if (logos.length <= 1) return;
 
     const slots = [...band.querySelectorAll<HTMLAnchorElement>('.logo-slot')];
     if (slots.length === 0) return;
@@ -223,6 +221,7 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     window.setInterval(() => {
       const activeSlots = getActiveSlots(slots);
       if (activeSlots.length === 0) return;
+      if (activeSlots.length >= logos.length) return;
 
       const slot = activeSlots[slotIndex % activeSlots.length];
       if (!slot) return;
