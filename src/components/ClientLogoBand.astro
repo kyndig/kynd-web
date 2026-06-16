@@ -71,6 +71,10 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     transition: opacity var(--animation-duration) ease;
   }
 
+  .logo-slot:nth-child(n + 4) {
+    display: none;
+  }
+
   .logo-slot:is(:hover, :focus-visible) {
     opacity: 0.75;
   }
@@ -88,8 +92,10 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     }
   }
 
-  .logo-slot.is-swapping img {
-    opacity: 0;
+  @media (--md) {
+    .logo-slot:nth-child(n + 4) {
+      display: flex;
+    }
   }
 </style>
 
@@ -129,6 +135,39 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     return new Set(
       slots.map((slot) => slot.dataset.logoId).filter((id): id is string => Boolean(id)),
     );
+  }
+
+  function getActiveSlots(slots: HTMLAnchorElement[]): HTMLAnchorElement[] {
+    return slots.filter((slot) => window.getComputedStyle(slot).display !== 'none');
+  }
+
+  const imageCache = new Map<string, Promise<void>>();
+
+  function preloadImage(src: string): Promise<void> {
+    const cached = imageCache.get(src);
+    if (cached) return cached;
+
+    const promise = new Promise<void>((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error(`Failed to preload ${src}`));
+      image.src = src;
+    });
+
+    imageCache.set(src, promise);
+    return promise;
+  }
+
+  function applyLogo(slot: HTMLAnchorElement, logo: LogoItem) {
+    slot.href = logo.href;
+    slot.setAttribute('aria-label', logo.alt);
+    slot.dataset.logoId = logo.id;
+
+    const image = slot.querySelector('img');
+    if (image) {
+      image.src = logo.src;
+      image.alt = logo.alt;
+    }
   }
 
   function createQueueState(allLogos: LogoItem[]) {
@@ -174,14 +213,21 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     const slots = [...band.querySelectorAll<HTMLAnchorElement>('.logo-slot')];
     if (slots.length === 0) return;
 
+    logos.forEach((logo) => {
+      void preloadImage(logo.src);
+    });
+
     const { takeNext } = createQueueState(logos);
     let slotIndex = 0;
 
     window.setInterval(() => {
-      const slot = slots[slotIndex];
+      const activeSlots = getActiveSlots(slots);
+      if (activeSlots.length === 0) return;
+
+      const slot = activeSlots[slotIndex % activeSlots.length];
       if (!slot) return;
 
-      const visibleIds = getVisibleIds(slots);
+      const visibleIds = getVisibleIds(activeSlots);
       const currentId = slot.dataset.logoId;
 
       if (currentId) {
@@ -190,23 +236,15 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
 
       const logo = takeNext(visibleIds);
 
-      slot.classList.add('is-swapping');
+      void preloadImage(logo.src)
+        .then(() => {
+          applyLogo(slot, logo);
+        })
+        .catch(() => {
+          applyLogo(slot, logo);
+        });
 
-      window.setTimeout(() => {
-        slot.href = logo.href;
-        slot.setAttribute('aria-label', logo.alt);
-        slot.dataset.logoId = logo.id;
-
-        const image = slot.querySelector('img');
-        if (image) {
-          image.src = logo.src;
-          image.alt = logo.alt;
-        }
-
-        slot.classList.remove('is-swapping');
-      }, 150);
-
-      slotIndex = (slotIndex + 1) % slots.length;
+      slotIndex = (slotIndex + 1) % activeSlots.length;
     }, 5000);
   });
 </script>
