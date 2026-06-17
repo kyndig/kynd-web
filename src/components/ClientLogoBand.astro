@@ -1,6 +1,8 @@
 ---
 export type LogoItem = {
   id: string;
+  /** Stable client identity used to avoid duplicate clients in one view. */
+  client: string;
   href: string;
   src: string;
   alt: string;
@@ -27,13 +29,34 @@ function shuffle<T>(items: T[]): T[] {
   return shuffled;
 }
 
-const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice(0, visibleCount);
+function pickInitialLogos(items: LogoItem[], count: number): LogoItem[] {
+  const picked: LogoItem[] = [];
+  const visibleClients = new Set<string>();
+
+  for (const logo of shuffle(items)) {
+    if (visibleClients.has(logo.client)) continue;
+
+    visibleClients.add(logo.client);
+    picked.push(logo);
+    if (picked.length >= count) break;
+  }
+
+  return picked;
+}
+
+const initialLogos = pickInitialLogos(logos, visibleCount);
 ---
 
 <div class="logo-band" data-logos={JSON.stringify(logos)} data-visible-count={visibleCount}>
   {
     initialLogos.map((logo) => (
-      <a href={logo.href} class="logo-slot" aria-label={logo.alt} data-logo-id={logo.id}>
+      <a
+        href={logo.href}
+        class="logo-slot"
+        aria-label={logo.alt}
+        data-logo-id={logo.id}
+        data-client-key={logo.client}
+      >
         <img
           src={logo.src}
           alt={logo.alt}
@@ -102,6 +125,7 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
 <script>
   type LogoItem = {
     id: string;
+    client: string;
     href: string;
     src: string;
     alt: string;
@@ -131,9 +155,9 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     }
   }
 
-  function getVisibleIds(slots: HTMLAnchorElement[]): Set<string> {
+  function getVisibleClients(slots: HTMLAnchorElement[]): Set<string> {
     return new Set(
-      slots.map((slot) => slot.dataset.logoId).filter((id): id is string => Boolean(id)),
+      slots.map((slot) => slot.dataset.clientKey).filter((client): client is string => Boolean(client)),
     );
   }
 
@@ -162,6 +186,7 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     slot.href = logo.href;
     slot.setAttribute('aria-label', logo.alt);
     slot.dataset.logoId = logo.id;
+    slot.dataset.clientKey = logo.client;
 
     const image = slot.querySelector('img');
     if (image) {
@@ -174,10 +199,8 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
     let queue = shuffle(allLogos);
     let queueIndex = 0;
 
-    const takeNext = (visibleIds: Set<string>): LogoItem => {
-      const attempts = queue.length;
-
-      for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const takeNext = (visibleClients: Set<string>): LogoItem => {
+      for (let attempt = 0; attempt < queue.length; attempt += 1) {
         if (queueIndex >= queue.length) {
           queue = shuffle(allLogos);
           queueIndex = 0;
@@ -186,12 +209,17 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
         const candidate = queue[queueIndex];
         queueIndex += 1;
 
-        if (candidate && !visibleIds.has(candidate.id)) {
+        if (candidate && !visibleClients.has(candidate.client)) {
           return candidate;
         }
       }
 
-      const fallback = queue[queueIndex - 1] ?? allLogos[0];
+      queue = shuffle(allLogos);
+      queueIndex = 0;
+
+      const fallback = queue[queueIndex];
+      queueIndex += 1;
+
       if (!fallback) {
         throw new Error('ClientLogoBand requires at least one logo.');
       }
@@ -215,25 +243,26 @@ const initialLogos = logos.length <= visibleCount ? logos : shuffle(logos).slice
       void preloadImage(logo.src);
     });
 
+    const uniqueClientCount = new Set(logos.map((logo) => logo.client)).size;
     const { takeNext } = createQueueState(logos);
     let slotIndex = 0;
 
     window.setInterval(() => {
       const activeSlots = getActiveSlots(slots);
       if (activeSlots.length === 0) return;
-      if (activeSlots.length >= logos.length) return;
+      if (activeSlots.length >= uniqueClientCount) return;
 
       const slot = activeSlots[slotIndex % activeSlots.length];
       if (!slot) return;
 
-      const visibleIds = getVisibleIds(activeSlots);
-      const currentId = slot.dataset.logoId;
+      const visibleClients = getVisibleClients(activeSlots);
+      const currentClient = slot.dataset.clientKey;
 
-      if (currentId) {
-        visibleIds.delete(currentId);
+      if (currentClient) {
+        visibleClients.delete(currentClient);
       }
 
-      const logo = takeNext(visibleIds);
+      const logo = takeNext(visibleClients);
 
       void preloadImage(logo.src)
         .then(() => {

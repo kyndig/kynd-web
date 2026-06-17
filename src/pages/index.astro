@@ -12,6 +12,7 @@ import { getProjectsWithDuration } from '@/utils/projectHelpers';
 const projects = await getProjectsWithDuration();
 const clientLogos = projects.map((project) => ({
   id: project.id,
+  client: project.data.customer,
   href: `/prosjekter/${project.id}`,
   src: project.data.fullLogo?.src ?? project.data.image.src,
   alt: project.data.customer,
