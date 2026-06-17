@@ -255,14 +255,14 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
       const slot = activeSlots[slotIndex % activeSlots.length];
       if (!slot) return;
 
-      const visibleClients = getVisibleClients(activeSlots);
+      const occupiedClients = getVisibleClients(slots);
       const currentClient = slot.dataset.clientKey;
 
       if (currentClient) {
-        visibleClients.delete(currentClient);
+        occupiedClients.delete(currentClient);
       }
 
-      const logo = takeNext(visibleClients);
+      const logo = takeNext(occupiedClients);
 
       void preloadImage(logo.src)
         .then(() => {
