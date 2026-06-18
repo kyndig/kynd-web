@@ -195,6 +195,26 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     }
   }
 
+  function dedupeActiveSlots(
+    activeSlots: HTMLAnchorElement[],
+    takeNext: (visibleClients: Set<string>) => LogoItem,
+  ) {
+    const occupiedClients = new Set<string>();
+
+    for (const slot of activeSlots) {
+      const client = slot.dataset.clientKey;
+
+      if (client && !occupiedClients.has(client)) {
+        occupiedClients.add(client);
+        continue;
+      }
+
+      const logo = takeNext(occupiedClients);
+      applyLogo(slot, logo);
+      occupiedClients.add(logo.client);
+    }
+  }
+
   function createQueueState(allLogos: LogoItem[]) {
     let queue = shuffle(allLogos);
     let queueIndex = 0;
@@ -246,8 +266,25 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     const uniqueClientCount = new Set(logos.map((logo) => logo.client)).size;
     const { takeNext } = createQueueState(logos);
     let slotIndex = 0;
+    let activeSlotCount = getActiveSlots(slots).length;
+
+    const syncActiveSlotCount = () => {
+      const nextActiveSlotCount = getActiveSlots(slots).length;
+      if (nextActiveSlotCount === activeSlotCount) return;
+
+      activeSlotCount = nextActiveSlotCount;
+      dedupeActiveSlots(getActiveSlots(slots), takeNext);
+      slotIndex = 0;
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      syncActiveSlotCount();
+    });
+    resizeObserver.observe(band);
 
     window.setInterval(() => {
+      syncActiveSlotCount();
+
       const activeSlots = getActiveSlots(slots);
       if (activeSlots.length === 0) return;
       if (activeSlots.length >= uniqueClientCount) return;
