@@ -255,7 +255,7 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
       const slot = activeSlots[slotIndex % activeSlots.length];
       if (!slot) return;
 
-      const occupiedClients = getVisibleClients(slots);
+      const occupiedClients = getVisibleClients(activeSlots);
       const currentClient = slot.dataset.clientKey;
 
       if (currentClient) {
