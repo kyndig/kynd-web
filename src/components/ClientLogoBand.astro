@@ -182,6 +182,18 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     return promise;
   }
 
+  const slotSwapGeneration = new WeakMap<HTMLAnchorElement, number>();
+
+  function beginLogoSwap(slot: HTMLAnchorElement): number {
+    const generation = (slotSwapGeneration.get(slot) ?? 0) + 1;
+    slotSwapGeneration.set(slot, generation);
+    return generation;
+  }
+
+  function isLatestLogoSwap(slot: HTMLAnchorElement, generation: number): boolean {
+    return slotSwapGeneration.get(slot) === generation;
+  }
+
   function applyLogo(slot: HTMLAnchorElement, logo: LogoItem) {
     slot.href = logo.href;
     slot.setAttribute('aria-label', logo.alt);
@@ -193,6 +205,25 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
       image.src = logo.src;
       image.alt = logo.alt;
     }
+  }
+
+  function applyLogoNow(slot: HTMLAnchorElement, logo: LogoItem) {
+    beginLogoSwap(slot);
+    applyLogo(slot, logo);
+  }
+
+  function applyLogoWhenReady(slot: HTMLAnchorElement, logo: LogoItem) {
+    const generation = beginLogoSwap(slot);
+
+    void preloadImage(logo.src)
+      .then(() => {
+        if (!isLatestLogoSwap(slot, generation)) return;
+        applyLogo(slot, logo);
+      })
+      .catch(() => {
+        if (!isLatestLogoSwap(slot, generation)) return;
+        applyLogo(slot, logo);
+      });
   }
 
   function dedupeActiveSlots(
@@ -210,7 +241,7 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
       }
 
       const logo = takeNext(occupiedClients);
-      applyLogo(slot, logo);
+      applyLogoNow(slot, logo);
       occupiedClients.add(logo.client);
     }
   }
@@ -300,14 +331,7 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
       }
 
       const logo = takeNext(occupiedClients);
-
-      void preloadImage(logo.src)
-        .then(() => {
-          applyLogo(slot, logo);
-        })
-        .catch(() => {
-          applyLogo(slot, logo);
-        });
+      applyLogoWhenReady(slot, logo);
 
       slotIndex = (slotIndex + 1) % activeSlots.length;
     }, 5000);
