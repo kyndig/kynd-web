@@ -1,11 +1,22 @@
 ---
+import ClientLogoBand from '@/components/ClientLogoBand.astro';
 import ContactUs from '@/components/ContactUs.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import OffsetProseSection from '@/components/OffsetProseSection.astro';
 import PageSection from '@/components/PageSection.astro';
 import Layout from '@/layouts/Base.astro';
 import LinkCard from '@/components/LinkCard.astro';
+import { getProjectsWithDuration } from '@/utils/projectHelpers';
 // import Link from '@/components/Link.astro';
+
+const projects = await getProjectsWithDuration();
+const clientLogos = projects.map((project) => ({
+  id: project.id,
+  client: project.data.customer,
+  href: `/prosjekter/${project.id}`,
+  src: project.data.fullLogo?.src ?? project.data.image.src,
+  alt: project.data.customer,
+}));
 ---
 
 <Layout>
@@ -22,7 +33,12 @@ import LinkCard from '@/components/LinkCard.astro';
     </p>
   </OffsetProseSection>
 
-  <PageSection heading="Tjenester" accentHeading={false}>
+  <PageSection
+    heading="Tjenester"
+    accentHeading={false}
+    subheading="Noen vi har hatt gleden av å hjelpe med digitalisering."
+  >
+    <ClientLogoBand logos={clientLogos} />
     <div class="services-grid">
       <LinkCard
         variant="default"

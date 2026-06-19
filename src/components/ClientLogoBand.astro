@@ -1,0 +1,343 @@
+---
+export type LogoItem = {
+  id: string;
+  /** Stable client identity used to avoid duplicate clients in one view. */
+  client: string;
+  href: string;
+  src: string;
+  alt: string;
+};
+
+export type Props = {
+  logos: LogoItem[];
+  /** Number of logo slots rendered and rotated. */
+  visibleCount?: number;
+};
+
+const { logos, visibleCount = 5 } = Astro.props;
+
+function shuffle<T>(items: T[]): T[] {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    const current = shuffled[index];
+    const swap = shuffled[swapIndex];
+    if (current === undefined || swap === undefined) continue;
+    shuffled[index] = swap;
+    shuffled[swapIndex] = current;
+  }
+  return shuffled;
+}
+
+function pickInitialLogos(items: LogoItem[], count: number): LogoItem[] {
+  const picked: LogoItem[] = [];
+  const visibleClients = new Set<string>();
+
+  for (const logo of shuffle(items)) {
+    if (visibleClients.has(logo.client)) continue;
+
+    visibleClients.add(logo.client);
+    picked.push(logo);
+    if (picked.length >= count) break;
+  }
+
+  return picked;
+}
+
+const initialLogos = pickInitialLogos(logos, visibleCount);
+---
+
+<div class="logo-band" data-logos={JSON.stringify(logos)} data-visible-count={visibleCount}>
+  {
+    initialLogos.map((logo) => (
+      <a
+        href={logo.href}
+        class="logo-slot"
+        aria-label={logo.alt}
+        data-logo-id={logo.id}
+        data-client-key={logo.client}
+      >
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          width="120"
+          height="48"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .logo-band {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
+    align-items: center;
+    width: 100%;
+
+    @media (--md) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  .logo-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    transition: opacity var(--animation-duration) ease;
+  }
+
+  .logo-slot:nth-child(n + 4) {
+    display: none;
+  }
+
+  .logo-slot:is(:hover, :focus-visible) {
+    opacity: 0.75;
+  }
+
+  .logo-slot img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 2rem;
+    object-fit: contain;
+
+    @media (--md) {
+      max-height: 2.5rem;
+    }
+  }
+
+  @media (--md) {
+    .logo-slot:nth-child(n + 4) {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  type LogoItem = {
+    id: string;
+    client: string;
+    href: string;
+    src: string;
+    alt: string;
+  };
+
+  function shuffle<T>(items: T[]): T[] {
+    const shuffled = [...items];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      const current = shuffled[index];
+      const swap = shuffled[swapIndex];
+      if (current === undefined || swap === undefined) continue;
+      shuffled[index] = swap;
+      shuffled[swapIndex] = current;
+    }
+    return shuffled;
+  }
+
+  function parseLogos(raw: string | undefined): LogoItem[] {
+    if (!raw) return [];
+
+    try {
+      const parsed = JSON.parse(raw) as LogoItem[];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function getVisibleClients(slots: HTMLAnchorElement[]): Set<string> {
+    return new Set(
+      slots
+        .map((slot) => slot.dataset.clientKey)
+        .filter((client): client is string => Boolean(client)),
+    );
+  }
+
+  function getActiveSlots(slots: HTMLAnchorElement[]): HTMLAnchorElement[] {
+    return slots.filter((slot) => window.getComputedStyle(slot).display !== 'none');
+  }
+
+  const imageCache = new Map<string, Promise<void>>();
+
+  function preloadImage(src: string): Promise<void> {
+    const cached = imageCache.get(src);
+    if (cached) return cached;
+
+    const promise = new Promise<void>((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error(`Failed to preload ${src}`));
+      image.src = src;
+    });
+
+    imageCache.set(src, promise);
+    return promise;
+  }
+
+  const slotSwapGeneration = new WeakMap<HTMLAnchorElement, number>();
+
+  function beginLogoSwap(slot: HTMLAnchorElement): number {
+    const generation = (slotSwapGeneration.get(slot) ?? 0) + 1;
+    slotSwapGeneration.set(slot, generation);
+    return generation;
+  }
+
+  function isLatestLogoSwap(slot: HTMLAnchorElement, generation: number): boolean {
+    return slotSwapGeneration.get(slot) === generation;
+  }
+
+  function applyLogo(slot: HTMLAnchorElement, logo: LogoItem) {
+    slot.href = logo.href;
+    slot.setAttribute('aria-label', logo.alt);
+    slot.dataset.logoId = logo.id;
+    slot.dataset.clientKey = logo.client;
+
+    const image = slot.querySelector('img');
+    if (image) {
+      image.src = logo.src;
+      image.alt = logo.alt;
+    }
+  }
+
+  function applyLogoNow(slot: HTMLAnchorElement, logo: LogoItem) {
+    beginLogoSwap(slot);
+    applyLogo(slot, logo);
+  }
+
+  function applyLogoWhenReady(slot: HTMLAnchorElement, logo: LogoItem) {
+    const generation = beginLogoSwap(slot);
+
+    void preloadImage(logo.src)
+      .then(() => {
+        if (!isLatestLogoSwap(slot, generation)) return;
+        applyLogo(slot, logo);
+      })
+      .catch(() => {
+        if (!isLatestLogoSwap(slot, generation)) return;
+        applyLogo(slot, logo);
+      });
+  }
+
+  function dedupeActiveSlots(
+    activeSlots: HTMLAnchorElement[],
+    takeNext: (visibleClients: Set<string>) => LogoItem,
+  ) {
+    const occupiedClients = new Set<string>();
+
+    for (const slot of activeSlots) {
+      const client = slot.dataset.clientKey;
+
+      if (client && !occupiedClients.has(client)) {
+        occupiedClients.add(client);
+        continue;
+      }
+
+      const logo = takeNext(occupiedClients);
+      applyLogoNow(slot, logo);
+      occupiedClients.add(logo.client);
+    }
+  }
+
+  function createQueueState(allLogos: LogoItem[]) {
+    let queue = shuffle(allLogos);
+    let queueIndex = 0;
+
+    const takeNext = (visibleClients: Set<string>): LogoItem => {
+      let attempts = 0;
+      while (attempts < queue.length) {
+        attempts += 1;
+        if (queueIndex >= queue.length) {
+          queue = shuffle(allLogos);
+          queueIndex = 0;
+        }
+
+        const candidate = queue[queueIndex];
+        queueIndex += 1;
+
+        if (candidate && !visibleClients.has(candidate.client)) {
+          return candidate;
+        }
+      }
+
+      queue = shuffle(allLogos);
+      queueIndex = 0;
+
+      const fallback = queue[queueIndex];
+      queueIndex += 1;
+
+      if (!fallback) {
+        throw new Error('ClientLogoBand requires at least one logo.');
+      }
+
+      return fallback;
+    };
+
+    return { takeNext };
+  }
+
+  const bands = document.querySelectorAll<HTMLElement>('.logo-band');
+
+  bands.forEach((band) => {
+    const logos = parseLogos(band.dataset.logos);
+    if (logos.length <= 1) return;
+
+    const slots = [...band.querySelectorAll<HTMLAnchorElement>('.logo-slot')];
+    if (slots.length === 0) return;
+
+    logos.forEach((logo) => {
+      void preloadImage(logo.src);
+    });
+
+    const uniqueClientCount = new Set(logos.map((logo) => logo.client)).size;
+    const { takeNext } = createQueueState(logos);
+    let slotIndex = 0;
+    let activeSlotCount = getActiveSlots(slots).length;
+
+    const syncActiveSlotCount = () => {
+      const nextActiveSlotCount = getActiveSlots(slots).length;
+      if (nextActiveSlotCount === activeSlotCount) return;
+
+      activeSlotCount = nextActiveSlotCount;
+      dedupeActiveSlots(getActiveSlots(slots), takeNext);
+      slotIndex = 0;
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      syncActiveSlotCount();
+    });
+    resizeObserver.observe(band);
+
+    window.setInterval(() => {
+      syncActiveSlotCount();
+
+      const activeSlots = getActiveSlots(slots);
+      if (activeSlots.length === 0) return;
+      if (activeSlots.length >= uniqueClientCount) return;
+
+      const slot = activeSlots[slotIndex % activeSlots.length];
+      if (!slot) return;
+
+      const occupiedClients = getVisibleClients(activeSlots);
+      const currentClient = slot.dataset.clientKey;
+
+      if (currentClient) {
+        occupiedClients.delete(currentClient);
+      }
+
+      const logo = takeNext(occupiedClients);
+      applyLogoWhenReady(slot, logo);
+
+      slotIndex = (slotIndex + 1) % activeSlots.length;
+    }, 5000);
+  });
+</script>
