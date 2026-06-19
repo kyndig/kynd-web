@@ -15,6 +15,7 @@ const clientLogos = projects.map((project) => ({
   client: project.data.customer,
   href: `/prosjekter/${project.id}`,
   src: project.data.fullLogo?.src ?? project.data.image.src,
+  kyndSrc: project.data.kyndLogo?.src,
   alt: project.data.customer,
 }));
 ---
