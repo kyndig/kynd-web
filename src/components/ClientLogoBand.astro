@@ -157,7 +157,9 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
 
   function getVisibleClients(slots: HTMLAnchorElement[]): Set<string> {
     return new Set(
-      slots.map((slot) => slot.dataset.clientKey).filter((client): client is string => Boolean(client)),
+      slots
+        .map((slot) => slot.dataset.clientKey)
+        .filter((client): client is string => Boolean(client)),
     );
   }
 
@@ -251,7 +253,9 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     let queueIndex = 0;
 
     const takeNext = (visibleClients: Set<string>): LogoItem => {
-      for (let attempt = 0; attempt < queue.length; attempt += 1) {
+      let attempts = 0;
+      while (attempts < queue.length) {
+        attempts += 1;
         if (queueIndex >= queue.length) {
           queue = shuffle(allLogos);
           queueIndex = 0;
