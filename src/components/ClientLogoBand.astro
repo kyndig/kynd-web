@@ -5,6 +5,7 @@ export type LogoItem = {
   client: string;
   href: string;
   src: string;
+  kyndSrc?: string;
   alt: string;
 };
 
@@ -56,15 +57,31 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
         aria-label={logo.alt}
         data-logo-id={logo.id}
         data-client-key={logo.client}
+        data-has-kynd-logo={logo.kyndSrc ? 'true' : 'false'}
       >
-        <img
-          src={logo.src}
-          alt={logo.alt}
-          width="120"
-          height="48"
-          loading="lazy"
-          decoding="async"
-        />
+        <span class="logo-image-stack">
+          <img
+            class="client-logo"
+            src={logo.src}
+            alt={logo.alt}
+            width="120"
+            height="48"
+            loading="lazy"
+            decoding="async"
+          />
+          {logo.kyndSrc && (
+            <img
+              class="kynd-logo"
+              src={logo.kyndSrc}
+              alt=""
+              aria-hidden="true"
+              width="120"
+              height="48"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </span>
       </a>
     ))
   }
@@ -98,21 +115,41 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     display: none;
   }
 
-  .logo-slot:is(:hover, :focus-visible) {
-    opacity: 0.75;
+  .logo-image-stack {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 
-  .logo-slot img {
+  .logo-image-stack img {
     display: block;
     width: auto;
     max-width: 100%;
     height: auto;
     max-height: 2rem;
     object-fit: contain;
+    transition: opacity var(--animation-duration) ease;
 
     @media (--md) {
       max-height: 2.5rem;
     }
+  }
+
+  .logo-image-stack .kynd-logo {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    opacity: 0;
+  }
+
+  .logo-slot[data-has-kynd-logo='true']:is(:hover, :focus-visible) .client-logo {
+    opacity: 0;
+  }
+
+  .logo-slot[data-has-kynd-logo='true']:is(:hover, :focus-visible) .kynd-logo {
+    opacity: 1;
   }
 
   @media (--md) {
@@ -128,6 +165,7 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     client: string;
     href: string;
     src: string;
+    kyndSrc?: string;
     alt: string;
   };
 
@@ -184,6 +222,13 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     return promise;
   }
 
+  async function preloadLogoImages(logo: LogoItem): Promise<void> {
+    const pending = [preloadImage(logo.src)];
+    if (logo.kyndSrc) pending.push(preloadImage(logo.kyndSrc));
+
+    await Promise.allSettled(pending);
+  }
+
   const slotSwapGeneration = new WeakMap<HTMLAnchorElement, number>();
 
   function beginLogoSwap(slot: HTMLAnchorElement): number {
@@ -202,10 +247,35 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     slot.dataset.logoId = logo.id;
     slot.dataset.clientKey = logo.client;
 
-    const image = slot.querySelector('img');
-    if (image) {
-      image.src = logo.src;
-      image.alt = logo.alt;
+    const imageStack = slot.querySelector<HTMLElement>('.logo-image-stack');
+    const clientImage = slot.querySelector<HTMLImageElement>('.client-logo');
+    if (clientImage) {
+      clientImage.src = logo.src;
+      clientImage.alt = logo.alt;
+    }
+
+    let kyndImage = slot.querySelector<HTMLImageElement>('.kynd-logo');
+    if (logo.kyndSrc) {
+      slot.dataset.hasKyndLogo = 'true';
+
+      if (!kyndImage && imageStack) {
+        kyndImage = document.createElement('img');
+        kyndImage.className = 'kynd-logo';
+        kyndImage.alt = '';
+        kyndImage.ariaHidden = 'true';
+        kyndImage.width = 120;
+        kyndImage.height = 48;
+        kyndImage.loading = 'lazy';
+        kyndImage.decoding = 'async';
+        imageStack.append(kyndImage);
+      }
+
+      if (kyndImage) {
+        kyndImage.src = logo.kyndSrc;
+      }
+    } else {
+      slot.dataset.hasKyndLogo = 'false';
+      kyndImage?.remove();
     }
   }
 
@@ -217,7 +287,7 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
   function applyLogoWhenReady(slot: HTMLAnchorElement, logo: LogoItem) {
     const generation = beginLogoSwap(slot);
 
-    void preloadImage(logo.src)
+    void preloadLogoImages(logo)
       .then(() => {
         if (!isLatestLogoSwap(slot, generation)) return;
         applyLogo(slot, logo);
@@ -295,7 +365,7 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
     if (slots.length === 0) return;
 
     logos.forEach((logo) => {
-      void preloadImage(logo.src);
+      void preloadLogoImages(logo);
     });
 
     const uniqueClientCount = new Set(logos.map((logo) => logo.client)).size;
