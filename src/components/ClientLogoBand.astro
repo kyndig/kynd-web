@@ -69,20 +69,18 @@ const initialLogos = pickInitialLogos(logos, visibleCount);
             loading="lazy"
             decoding="async"
           />
-          {
-            logo.kyndSrc && (
-              <img
-                class="kynd-logo"
-                src={logo.kyndSrc}
-                alt=""
-                aria-hidden="true"
-                width="120"
-                height="48"
-                loading="lazy"
-                decoding="async"
-              />
-            )
-          }
+          {logo.kyndSrc && (
+            <img
+              class="kynd-logo"
+              src={logo.kyndSrc}
+              alt=""
+              aria-hidden="true"
+              width="120"
+              height="48"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
         </span>
       </a>
     ))
